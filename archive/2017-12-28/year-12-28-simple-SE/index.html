@@ -1,0 +1,1814 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en,zh-Hans,ja,Latn,default">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda,Arial,STXingkai,"华文行楷",STKaiti,“华文楷体”,STFangsong,Lato:300,300italic,400,400italic,700,700italic|Roboto Slab,STKaiti,"华文楷体":300,300italic,400,400italic,700,700italic|Arial,STXingkai,华文行楷,STKaiti,华文楷体,STFangsong,华文仿宋:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="sentence representation,embeddings,baseline," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="这篇论文的宏观描述 基于神经网络计算 word embedding在多个下游领域的成功极大地激发了为长文本生成语义嵌入（semantic embeddings）的方法，比如句子、段落、文档。  直接生成长文本的embedding 的方法竟然被一种很简单的策略击败：  Wieting et al.(ICLR’2016)指出，这种复杂方法被超越了：采用 对已经的word embeddings做retr">
+<meta name="keywords" content="sentence representation,embeddings,baseline">
+<meta property="og:type" content="article">
+<meta property="og:title" content="A Simple Bu Tough-to-Beat Baseline for Sentence Embeddings -Note">
+<meta property="og:url" content="http://yoursite.com/archive/2017-12-28/year-12-28-simple-SE/index.html">
+<meta property="og:site_name" content="逝川">
+<meta property="og:description" content="这篇论文的宏观描述 基于神经网络计算 word embedding在多个下游领域的成功极大地激发了为长文本生成语义嵌入（semantic embeddings）的方法，比如句子、段落、文档。  直接生成长文本的embedding 的方法竟然被一种很简单的策略击败：  Wieting et al.(ICLR’2016)指出，这种复杂方法被超越了：采用 对已经的word embeddings做retr">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://yoursite.com/archive/2017-12-28/year-12-28-simple-SE/2.png">
+<meta property="og:image" content="http://yoursite.com/archive/2017-12-28/year-12-28-simple-SE/3.png">
+<meta property="og:image" content="http://yoursite.com/archive/2017-12-28/year-12-28-simple-SE/4.png">
+<meta property="og:image" content="http://yoursite.com/archive/2017-12-28/year-12-28-simple-SE/5.png">
+<meta property="og:image" content="http://yoursite.com/archive/2017-12-28/year-12-28-simple-SE/6.png">
+<meta property="og:image" content="http://yoursite.com/archive/2017-12-28/year-12-28-simple-SE/algorithm.png">
+<meta property="og:image" content="http://yoursite.com/archive/2017-12-28/year-12-28-simple-SE/7.png">
+<meta property="og:image" content="http://yoursite.com/archive/2017-12-28/year-12-28-simple-SE/8.png">
+<meta property="og:image" content="http://yoursite.com/archive/2017-12-28/year-12-28-simple-SE/9.png">
+<meta property="og:image" content="http://yoursite.com/archive/2017-12-28/year-12-28-simple-SE/10.png">
+<meta property="og:image" content="http://yoursite.com/archive/2017-12-28/year-12-28-simple-SE/11.png">
+<meta property="og:image" content="http://yoursite.com/archive/2017-12-28/year-12-28-simple-SE/12.png">
+<meta property="og:updated_time" content="2017-12-28T19:55:55.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="A Simple Bu Tough-to-Beat Baseline for Sentence Embeddings -Note">
+<meta name="twitter:description" content="这篇论文的宏观描述 基于神经网络计算 word embedding在多个下游领域的成功极大地激发了为长文本生成语义嵌入（semantic embeddings）的方法，比如句子、段落、文档。  直接生成长文本的embedding 的方法竟然被一种很简单的策略击败：  Wieting et al.(ICLR’2016)指出，这种复杂方法被超越了：采用 对已经的word embeddings做retr">
+<meta name="twitter:image" content="http://yoursite.com/archive/2017-12-28/year-12-28-simple-SE/2.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/archive/2017-12-28/year-12-28-simple-SE/"/>
+
+
+
+
+
+  <title>A Simple Bu Tough-to-Beat Baseline for Sentence Embeddings -Note | 逝川</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">逝川</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">此间且为等闲事，花开花谢不知年</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-主页">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            主页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-关于">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/archive/2017-12-28/year-12-28-simple-SE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="popoblue">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="逝川">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">A Simple Bu Tough-to-Beat Baseline for Sentence Embeddings -Note</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-12-28T10:24:28+08:00">
+                2017-12-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/NLP/" itemprop="url" rel="index">
+                    <span itemprop="name">NLP</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/NLP/text-embedding/" itemprop="url" rel="index">
+                    <span itemprop="name">text embedding</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/archive/2017-12-28/year-12-28-simple-SE/" class="leancloud_visitors" data-flag-title="A Simple Bu Tough-to-Beat Baseline for Sentence Embeddings -Note">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="这篇论文的宏观描述"><a href="#这篇论文的宏观描述" class="headerlink" title="这篇论文的宏观描述"></a>这篇论文的宏观描述</h3><ul>
+<li><p>基于神经网络计算 word embedding在多个下游领域的成功极大地激发了<strong>为长文本生成语义嵌入</strong>（semantic embeddings）的方法，比如<strong>句子、段落、文档</strong>。</p>
+</li>
+<li><p>直接生成长文本的embedding 的方法竟然被一种很简单的策略击败：</p>
+<blockquote>
+<p>Wieting et al.(ICLR’2016)指出，这种复杂方法被超越了：采用 对已经的word embeddings做retraining, 结合logistic regression方法就可以达到这个目的。 在retraining的过程中需要结合一个外挂的数据库：paraphrase database(Gantikevitch et al., 2013)</p>
+</blockquote>
+</li>
+<li><p>本文的研究更进一步，显示出本文提出的<strong>完全无监督sentence embedding</strong>（句子嵌入）方法是一种强大的baseline</p>
+<ul>
+<li>以现成的已经在大量无标签数据上（如：wikipedia）训练好的word embedding 为基础</li>
+<li>通过一种对word embedding <strong>加权平均</strong>的方式来表示句子，即：sentence embedding</li>
+<li>对上述得到的“句子表示”（sentence embedding）稍作修改，用：<strong>PCA/SVD</strong>（当然也可以试试：<strong>autoencoder</strong>）</li>
+</ul>
+<blockquote>
+<p>本文这种方法在文本相似任务中可以将性能提高：10%～30%。<br>超越了复杂的有监督模型入：RNN 和 LSTM</p>
+</blockquote>
+</li>
+<li><p><strong>本文的基本方法：</strong></p>
+<ul>
+<li>计算句子中词向量的加权平均</li>
+<li>移除average vector 在 其 first principal component 方向的projection.</li>
+</ul>
+<blockquote>
+<p>这里，一个词 w 的权重为 $\frac{a}{a+p(w)}$ 。 a 是一个参数，$p(w)$ 是 估计得到的词频（the estimated word frequency）. 这一项叫做 <strong>SIF–“smooth inverse frequency”.</strong></p>
+</blockquote>
+<ul>
+<li>针对每个句子，做前两部操作，从而得到所有句子的 sentence embeddings.</li>
+</ul>
+</li>
+<li><p><strong>与其他模型、方法的渊源</strong></p>
+<ol>
+<li><p>与$TF-IDF$的关系</p>
+<ul>
+<li><p>都是一种加权策略（weighting policy）, SIF 更是一种reweighing policy</p>
+</li>
+<li><p>$ tf-idf $ 是IR领域著名方法之一，将一个query or sentence 看作document并做了一下假设：</p>
+<blockquote>
+<p>tf-idf: 解释一下 $ tf$ 和$idf$的意义。</p>
+</blockquote>
+<ol>
+<li>一个词通常在一个query（sentence）中不多次重复出现。</li>
+<li>一个document中term frequency可以表明一个词的重要程度。</li>
+<li>一个term在corpus中所有document中被包含的次数，可以反应这个词的普遍性。</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p>与word2vec的关系</p>
+<ul>
+<li>在word2vec的基础之上，增加一个reweighting策略。</li>
+<li>word2vec被误认为是没有采用加权策略的，但实际上在深度研究其实现之后，发现word2vec<strong>隐式地采用了加权策略</strong>。而且不同于$tf-idf$ , 反而是和本文方法比较类似。</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<hr>
+<h3 id="相关工作"><a href="#相关工作" class="headerlink" title="相关工作"></a>相关工作</h3><ol>
+<li><p><strong>Word embeddings</strong></p>
+<blockquote>
+<p>可以捕获词的lexcial and semactic features 。</p>
+</blockquote>
+<ul>
+<li><p>可以用neural network model从<strong>文本的表示</strong>中获取</p>
+</li>
+<li><p>也可以从<strong>词共现统计的低秩近似</strong>来获得</p>
+<ul>
+<li><strong>Random walk model for generating words in the documents.</strong></li>
+</ul>
+<blockquote>
+<p>我们的模型可以看作是：在这个模型中对隐变量的近似推理。</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>Long peices of text embeddings(Phrase/Sentence/Paraphrase) embedding</p>
+<ul>
+<li><p><strong>Coordinate wise operation</strong></p>
+</li>
+<li><p><strong>Unweighted average</strong> policy perform well in representing <strong>short phrase.</strong></p>
+</li>
+<li><p><strong>RecNNs</strong></p>
+<blockquote>
+<p>Based on a parse tree or not.</p>
+</blockquote>
+</li>
+<li><p><strong>Latent vector assumption.</strong></p>
+<blockquote>
+<p>Le &amp; Mikolov, 2014 assume that each paragraph has a latent vector, namely <strong>paragraph vector</strong>.<br><strong>Skip-thought model</strong></p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>Taking advantage of another lexicon.(外挂词典或知识库)</p>
+<blockquote>
+<p>Wieting et al., 2016 learnd  paraphrastic sentence embeddings using:</p>
+<ul>
+<li>word averaging</li>
+<li>基于paraphrase paris 的监督更新standard word embeddings.</li>
+<li>在初始化和训练阶段都有supervision。</li>
+</ul>
+</blockquote>
+</li>
+</ol>
+<hr>
+<h3 id="本文模型-A-simple-method-for-sentence-embedding"><a href="#本文模型-A-simple-method-for-sentence-embedding" class="headerlink" title="本文模型 - A simple method for sentence embedding"></a>本文模型 - A simple method for sentence embedding</h3><h4 id="Brief-introduction-of-the-latent-variable-generative-model-for-text"><a href="#Brief-introduction-of-the-latent-variable-generative-model-for-text" class="headerlink" title="Brief introduction of the latent variable generative model for text."></a>Brief introduction of the latent variable generative model for text.</h4><blockquote>
+<p>Arora et al., 2016<br>该模型 将语料生成看做一个动态过程，且这一过程是由discourse vector $c_t\in R^d$ 的随机游走驱动的。<br>(<strong>Treats corpus generation as a dynamic process</strong> , where the $t$-th word is produced at step $t$，the process is <strong>driven by the random walk</strong> of $c_t\in R^d$.)</p>
+</blockquote>
+<ul>
+<li>Discourse vector $c_t\in R^d$ ，discourse vector 表示“（文本）正在讲什么？”</li>
+<li>Each word in the corpus has a  word vector $v_w\in R^d$ , which is the <strong>latent variable</strong> of the model， and it’s <strong>Time-invariant</strong>.</li>
+<li>$c_t \cdot v_w$ : correlations  between the discourse and the word.</li>
+</ul>
+<p>$$<br>P_r[w \ enitted\ at\ time\ t|c_t]\propto exp(\langle c_t\,,v_w\rangle). (1)<br>$$</p>
+<p>The discourse vector $c_t$ does a slow random walk, so that the nearby words are generated under similar discourses.</p>
+<blockquote>
+<p>Slow means that $c_{t+1}$ is obtained from $c_t$ by adding a small random displacement vector.</p>
+</blockquote>
+<p><strong>结论</strong></p>
+<ol>
+<li>该随机游走模型（Arora et al., 2016）可以放宽约束条件：允许在$c_t$中有偶尔的、大步长的跳跃，计算表明这样对于词共现的概率影响可以忽略不计。</li>
+<li>在一些合理假设之下，随机游走生成模型 与 word2vec 和 Glove等工作很像。</li>
+<li>？？？</li>
+</ol>
+<h4 id="Our-improved-Random-Walk-Model"><a href="#Our-improved-Random-Walk-Model" class="headerlink" title="Our improved Random Walk Model"></a>Our improved Random Walk Model</h4><p>明显地，人们很容易将sentence embedding 按照如下方式定义：在给定一个句子的前提下，对控制这个句子的discourse vector 做一个<strong>MAP</strong>估计。</p>
+<p>做一个假设：</p>
+<ul>
+<li>The discourse vector $c_t$does not change much while the words in the sentence emitted. </li>
+</ul>
+<p>因此我们用一个单独的discourse $c_s$  去代替句子 $s$ 中的所有 $c_t$’s .</p>
+<blockquote>
+<p>In (Arora et al., 2016), it was shown that MAP estimate of $c_s$  is up to multiplication by scalar— the average of the embeddings of the words in the sentence.</p>
+</blockquote>
+<p><strong>Change the models as follows:</strong></p>
+<p>考虑到两种情况：1）一些词总是出现在context之外 2）一些常见词的出现与discourse无关。提出<strong>2种“smoothing term”</strong></p>
+<ol>
+<li><p>首先，引入一个additive term, $\alpha p(w)$ in the log-linear model. </p>
+<blockquote>
+<p>$p(w)$ 是整个语料中词$w$ 的 unigram probability, $\alpha$ is scalar. 这就允许即使词向量与$c_s$ 的内积比较低的那些词也可以出现。</p>
+</blockquote>
+</li>
+<li><p>第二，我们引入一个 common discourse vector $c_0\in R^d$.</p>
+<blockquote>
+<p>Serves as a correction term for the most frequent discourse that is often related to syntax.<br>Boosts the co-occurence probability of words that have a high component along $c_0$ .</p>
+</blockquote>
+</li>
+</ol>
+<p>给定了$c_s$ , 词$w$ 在句子$s$被射出的概率可以建模为如下形式:<br>$$<br>P_r[w\ emitted\ in\ sentence\ s\,|\,c_s]=\alpha p(w)+(1-\alpha)\frac{exp(\langle \hat c\,,v_w\rangle)}{Z_{\hat c_s} }<br>$$</p>
+<p>$$<br>where\,,\hat c_s=\beta c_0+(1-\beta)c_s, c_0\perp c_s<br>$$</p>
+<p>$$<br>and\,, Z_{\hat c_s}=\sum_{w\in \nu}exp(\langle \hat c_s\,,v_w\rangle)<br>$$</p>
+<p>Our models allow a word $w$ unrelated to the discourse $c_s$ to be omitted for two reasons:</p>
+<ol>
+<li>by chance from the term $\alpha p(w)$ </li>
+<li>if $s$ is correlated with the the common discourse vector $c_0$.</li>
+</ol>
+<p><strong>Computing the sentence embedding</strong></p>
+<p><img src="2.png" alt="似然"></p>
+<p>可以再表示为如下形式：</p>
+<p>​                                                           <img src="3.png" alt="fw(cs)"></p>
+<p>计算$f_w(\hat c_s)$对 $\hat c_s$的一阶偏导数：</p>
+<p><img src="4.png" alt="梯度"></p>
+<p>然后对上述梯度公式做Taylor展开：</p>
+<p><img src="5.png" alt="taylor"></p>
+<p>因此，$\hat c_s$的最大似然估计近似等于：</p>
+<p><img src="6.png" alt="近似最大似然估计"></p>
+<p><strong>根据上述结果，可以有以下结论</strong>：</p>
+<ol>
+<li><p>MLE 是一种对在句子中的词的词向量进<strong>行加权平均的近似</strong>。</p>
+</li>
+<li><p>注意到，对于频繁出现的词，权重$\frac{a}{a+p(w)}$ 会取一个比较小的值。因此很自然的对于频繁词（<strong>in the entire corpus</strong>）赋予一个比较低的权重。</p>
+</li>
+<li><p>为了估计$c_s$，通过 计算$\hat c_s$’s 的第一主成分(for a set of sentences)去估计$c_0 $</p>
+<p>换句话说， 最终的sentence embedding 要减去所有 $\hat c_s$’s 对其第一主成分的投影。</p>
+</li>
+</ol>
+<p><em>这一过程总结在Algorithm 1 里，如下</em>：</p>
+<p><strong>Algorithm 1</strong> <strong><em>Sentence Embedding</em></strong></p>
+<p><img src="algorithm.png" alt="算法"></p>
+<h4 id="本工作与Word2Vec中的下采样概率有什么关联？"><a href="#本工作与Word2Vec中的下采样概率有什么关联？" class="headerlink" title="本工作与Word2Vec中的下采样概率有什么关联？"></a>本工作与Word2Vec中的下采样概率有什么关联？</h4><p><img src="7.png" alt="W2v&amp;Our_model"></p>
+<p>上图是在 Word2Vec 模型和我们模型中权重岁词频变化的曲线，可以看到两个模型中，权重与$p(w)$ 之间的关系十分相似。Word2Vec模型中， 梯度的期望是我们模型中估计得到的discourse vector 的一种近似。因此结论为：</p>
+<ul>
+<li>word2vec with sub-sampling gradient heuristic corresponds to a stochastic gradient update method for using our weighting scheme.</li>
+</ul>
+<hr>
+<h3 id="实验与结果分析"><a href="#实验与结果分析" class="headerlink" title="实验与结果分析"></a>实验与结果分析</h3><h4 id="文本相似任务（Textual-Similarity-Tasks）"><a href="#文本相似任务（Textual-Similarity-Tasks）" class="headerlink" title="文本相似任务（Textual Similarity Tasks）"></a>文本相似任务（Textual Similarity Tasks）</h4><ul>
+<li><p>数据集：</p>
+<ul>
+<li>22 textual similarity datasets including all the datasets from SemEval <strong>STS</strong> tasks(2012-2015). SemEval 2015 <strong>Twitter</strong> task, SemEval 2014 <strong>Semantic Relatedness</strong> task.<ul>
+<li>这些任务的目标是：预测给定的两个句子之间的相似度。</li>
+<li>评测标准(<strong>Evaluation criterion</strong>): Pearson’s coefficient.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>实验设置.  采用以下设置来比较我们的模型与其他模型的优劣：</p>
+<ul>
+<li>无监督学习<ul>
+<li>ST</li>
+<li>avg - GloVe</li>
+<li>tfidf-GloVe</li>
+</ul>
+</li>
+<li>半监督学习<ul>
+<li>avg - PSL. （from Wieting et al., 2015）</li>
+</ul>
+</li>
+<li>有监督学习<ul>
+<li>PP &amp; PP-proj.( from )</li>
+<li>DAN (Iyyer et al. 2015)</li>
+<li>RNN</li>
+<li>iRNN</li>
+<li>LSTM (Gers et al., 2002)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>结果</p>
+<ul>
+<li><p>各方法性能对比：</p>
+<p><img src="8.png" alt=""></p>
+<ul>
+<li><p>Better than LSTM and RNN.</p>
+</li>
+<li><p>Comparable to DAN.</p>
+<blockquote>
+<p>上述三种方法均为有监督学习。</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>结论</p>
+<ul>
+<li>本文提出的简单模型甚至优于highly-tuned的有监督的复杂模型。 采用tf-idf加权策略相比不加权方法性能也有所提升，但依然没本文模型效果好。</li>
+<li>半监督方法 PSL+WR取得了6各任务中4个最好结果。</li>
+<li>同时注意到，各数据集的 top singular vectors $c_0$  似乎大略地相当于语法信息或者常用词，在SICK数据集中与$c_0$ 最接近的词是 “justt”, “when”, “even”,…, “while.”, etc.</li>
+<li>最终，在附录中 我们证明了两个idea 都对性能提升做出了贡献： 对于 GolVe 向量， 单独采用ISF加权策略就提升了5%， 单独采用 common component removal 提升了 10%.  两者都用提升了 13%.</li>
+</ul>
+</li>
+</ul>
+<h5 id="权重参数对于性能的影响"><a href="#权重参数对于性能的影响" class="headerlink" title="权重参数对于性能的影响"></a>权重参数对于性能的影响</h5><p>我们研究了我们的方法对于 权重参数、计算word vecotrs的方法、以及 对 估计的词的概率 $p(w)$ 这三者的敏感性。图如下：</p>
+<p><img src="9.png" alt="parameter a"><img src="10.png" alt=""></p>
+<p>结论：</p>
+<ul>
+<li>参数a 的范围在 $10^{-4} - 10^{-3}$ 之间，性能最佳。</li>
+<li>固定a = $10^{-3}$ 的前提下，在四个数据集中对$p(w)$做估计，在测试中性能相当。</li>
+<li>我们的方法可以被应用到多种语料、多种计算词向量的方法中，这也显示了我们的方法有助于跨越不同的领域。</li>
+</ul>
+<h4 id="有监督任务"><a href="#有监督任务" class="headerlink" title="有监督任务"></a>有监督任务</h4><p>采用我们方法得到的sentence embedding可以被当做特征而应用到下游的应用中。我们考虑了三种任务：</p>
+<ul>
+<li>SICK similarity task</li>
+<li>SICK entailment task</li>
+<li>SST binary classification task</li>
+</ul>
+<p>方式如下：</p>
+<ul>
+<li>固定 embeddings 而仅仅学习classifier. i.e.,  a linear projection (Kiros et al., 2015)</li>
+<li>与 PP, DAM, RNN, LSTM等方法做了对比。</li>
+<li>与 skip-thought 的方法做了对比（Lei Ba et al., 2016）</li>
+</ul>
+<p>结果：</p>
+<p><img src="11.png" alt="supervised task"></p>
+<p>结论：</p>
+<ul>
+<li><p>我们的方法better or comparable.</p>
+</li>
+<li><p>我们采用完全无监督方法得到的 sentence embedding 甚至好于DAN, RNN, LSTM等有监督训练所得的结果。</p>
+</li>
+<li><p>Skip-thought vectors 的维度比我们的高很多。</p>
+</li>
+<li><p>性能提升没有像在textual similarity tasks中那么显著。</p>
+<blockquote>
+<p>原因可能是，在文本相似任务直接依赖cosine similarity, 而我们一处common components的做法比较符合cosine similarity的口味。而有监督任务中，标签提供了监督信息，使得分类器可以在监督之下挑选出有用的信息而忽略掉那些common的。</p>
+</blockquote>
+</li>
+<li><p>我们推测在情感分类任务中没有超越RNN 和 LSTM的原因是：</p>
+<ol>
+<li>词向量，或者更加广泛地说 词义的分布式假设，由于反义词现象使得其对于捕获情感特征的能力受到制约。</li>
+</ol>
+<blockquote>
+<p>为了解决这一方法，可以针对情感分析任务学习更好的word embeddings。比如：（<strong>Maas et al., 2011 &amp; Duyu Tang et al., 2014</strong>）</p>
+</blockquote>
+<ol>
+<li>在我们的权重平均策略中， 诸如 “not”等否定词被大大地减少了权重。但是在情感分类任务重，这类词很重要，显然应该赋予较高的权重。</li>
+</ol>
+<blockquote>
+<p>针对具体的任务（情感分析），设计独有的加权策略（or 学习权重）</p>
+</blockquote>
+</li>
+</ul>
+<h4 id="句子中的词序信息的作用"><a href="#句子中的词序信息的作用" class="headerlink" title="句子中的词序信息的作用"></a>句子中的词序信息的作用</h4><p>我们方法的一个有趣的特点是：它忽略了词序信息。 可是相较于RNN, LSTM 等可以潜在利用词序信息的方法，在这些benchmarks上我们却取得了better or comparable的方法，这就引出一个问题：</p>
+<p><strong><em>在这些benchmarks中，词序真的重要吗？</em></strong></p>
+<p><strong>实际上，词序还真的重要。</strong></p>
+<p>通过实验证明：在有监督任务上，把句子中的词随机搅乱，然后再训练和测试 RNN and LSTM. 结果，性能下降很多。</p>
+<p><img src="12.png" alt="word_order_matters"></p>
+<p>同时结合之前的发现：在有监督任务中，我们的方法- 忽略词序，但在两个任务中取胜，在一个任务中(sentiment analysis)性能低一些(但是比打乱词序之后的RNN 和 LSTM要好很多)。这就说明：</p>
+<p><strong><em>我们的方法一定在 exploiting semantics 方面强过 RNN and LSTM.</em></strong></p>
+<hr>
+<h3 id="最后的最后"><a href="#最后的最后" class="headerlink" title="最后的最后"></a>最后的最后</h3><ol>
+<li>本文提供了一种简单的基于随机游走文本生成模型中 discourse vectors 获得sentence embedding 的方法。</li>
+<li>它简单且无监督，性能优越，超过很多诸如：RNN 和 LSTM等方法。</li>
+<li>其可用在下游任务中。</li>
+</ol>
+<p>$$<br>Thank\,\,\,you\,\,\,for\,\,\, reading!<br>$$</p>
+<hr>
+<h3 id="论文中待进一步研究的概念"><a href="#论文中待进一步研究的概念" class="headerlink" title="论文中待进一步研究的概念"></a>论文中待进一步研究的概念</h3><ul>
+<li style="list-style: none"><input type="checkbox"> <strong>first principal component</strong> (“common compinent removal”)</li>
+<li style="list-style: none"><input type="checkbox"> what’s the exact meaning of <strong>latent variables</strong>?</li>
+<li style="list-style: none"><input type="checkbox"> <strong>ramdom walk</strong>  in text domain</li>
+<li style="list-style: none"><input type="checkbox"> Maximum a posteriori <strong>(MAP</strong>)Estimation</li>
+<li style="list-style: none"><input type="checkbox"> 复习Taylor级数单元，多元 变量。</li>
+<li style="list-style: none"><input type="checkbox"> 补充Pearson’s coefficient 相关内容。</li>
+<li style="list-style: none"><input type="checkbox"> MLE 和 MAP 在哪个Context 下，是指对参数的estimate。 值得深入研究。</li>
+<li style="list-style: none"><input type="checkbox"> Perarson’s 系数简单了解一下，弄清原理和推论过程。</li>
+<li style="list-style: none"><input type="checkbox"> log-linear word production model (from Mnih and Hinton) </li>
+</ul>
+<h3 id="强相关性论文"><a href="#强相关性论文" class="headerlink" title="强相关性论文"></a>强相关性论文</h3><ol>
+<li><strong>Wieting et al., 2016</strong></li>
+<li><strong>Arora et al., 2016</strong></li>
+<li><strong>Lei Ba et al., 2016</strong></li>
+<li><strong>Bownman et al., 2015</strong></li>
+<li><strong>Kiros et al., 2015</strong></li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创分享，您的支持是我继续创作的动力!</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="popoblue WeChat Pay"/>
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="popoblue Alipay"/>
+        <p>Alipay</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:</strong>
+    popoblue
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link:</strong>
+    <a href="http://yoursite.com/archive/2017-12-28/year-12-28-simple-SE/" title="A Simple Bu Tough-to-Beat Baseline for Sentence Embeddings -Note">http://yoursite.com/archive/2017-12-28/year-12-28-simple-SE/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice: </strong>
+    All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> unless stating additionally.
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/sentence-representation/" rel="tag"># sentence representation</a>
+          
+            <a href="/tags/embeddings/" rel="tag"># embeddings</a>
+          
+            <a href="/tags/baseline/" rel="tag"># baseline</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/archive/2017-12-23/在校大学生出国基本流程/" rel="next" title="在校大学生出国基本流程">
+                <i class="fa fa-chevron-left"></i> 在校大学生出国基本流程
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/archive/2018-01-03/belief/" rel="prev" title="几个男人的信念">
+                几个男人的信念 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">popoblue</p>
+              <p class="site-description motion-element" itemprop="description">知行合一，一个功夫！</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">33</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">80</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/yazhouhao" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:me@yazhouhao.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://twitter.com/yazhouhao" target="_blank" title="Twitter">
+                    
+                      <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://www.facebook.com/yazhouhao" target="_blank" title="FB Page">
+                    
+                      <i class="fa fa-fw fa-facebook"></i>FB Page</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#这篇论文的宏观描述"><span class="nav-number">1.</span> <span class="nav-text">这篇论文的宏观描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#相关工作"><span class="nav-number">2.</span> <span class="nav-text">相关工作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#本文模型-A-simple-method-for-sentence-embedding"><span class="nav-number">3.</span> <span class="nav-text">本文模型 - A simple method for sentence embedding</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Brief-introduction-of-the-latent-variable-generative-model-for-text"><span class="nav-number">3.1.</span> <span class="nav-text">Brief introduction of the latent variable generative model for text.</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Our-improved-Random-Walk-Model"><span class="nav-number">3.2.</span> <span class="nav-text">Our improved Random Walk Model</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#本工作与Word2Vec中的下采样概率有什么关联？"><span class="nav-number">3.3.</span> <span class="nav-text">本工作与Word2Vec中的下采样概率有什么关联？</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实验与结果分析"><span class="nav-number">4.</span> <span class="nav-text">实验与结果分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#文本相似任务（Textual-Similarity-Tasks）"><span class="nav-number">4.1.</span> <span class="nav-text">文本相似任务（Textual Similarity Tasks）</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#权重参数对于性能的影响"><span class="nav-number">4.1.1.</span> <span class="nav-text">权重参数对于性能的影响</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#有监督任务"><span class="nav-number">4.2.</span> <span class="nav-text">有监督任务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#句子中的词序信息的作用"><span class="nav-number">4.3.</span> <span class="nav-text">句子中的词序信息的作用</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最后的最后"><span class="nav-number">5.</span> <span class="nav-text">最后的最后</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#论文中待进一步研究的概念"><span class="nav-number">6.</span> <span class="nav-text">论文中待进一步研究的概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#强相关性论文"><span class="nav-number">7.</span> <span class="nav-text">强相关性论文</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">popoblue</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count"></span>
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('5');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'manual') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.3"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("fgig2ECgFUUIzHQxQ6UEGBsw-gzGzoHsz", "qwf4KMNBL2n522kimTswJY9w");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Linkedin,Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+  </script>
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

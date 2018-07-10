@@ -1,0 +1,1592 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en,zh-Hans,ja,Latn,default">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda,Arial,STXingkai,"华文行楷",STKaiti,“华文楷体”,STFangsong,Lato:300,300italic,400,400italic,700,700italic|Roboto Slab,STKaiti,"华文楷体":300,300italic,400,400italic,700,700italic|Arial,STXingkai,华文行楷,STKaiti,华文楷体,STFangsong,华文仿宋:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Linear Algebra,Matrix,Linear Mapping,Transformation," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="学习目标   把矩阵看成是一种操作 把做变换的矩阵与其另外一组基联系起来 基于这些transformation matrices来写代码实现这些映射 写代码找到标准正交基   矩阵是一种映射To-DO…(这部分恐怕得参考 Gilbert strang的教材和我的笔记去完善。。) 矩阵变换-&amp;gt; 将向量映射到新的基Matrices changing basis前面讲过， columns of t">
+<meta name="keywords" content="Linear Algebra,Matrix,Linear Mapping,Transformation">
+<meta property="og:type" content="article">
+<meta property="og:title" content="四.矩阵做线性变换">
+<meta property="og:url" content="http://yoursite.com/archive/2018-06-28/Matrices-make-linear-mappings/index.html">
+<meta property="og:site_name" content="逝川">
+<meta property="og:description" content="学习目标   把矩阵看成是一种操作 把做变换的矩阵与其另外一组基联系起来 基于这些transformation matrices来写代码实现这些映射 写代码找到标准正交基   矩阵是一种映射To-DO…(这部分恐怕得参考 Gilbert strang的教材和我的笔记去完善。。) 矩阵变换-&amp;gt; 将向量映射到新的基Matrices changing basis前面讲过， columns of t">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://yoursite.com/archive/2018-06-28/Matrices-make-linear-mappings/changing_basis1.png">
+<meta property="og:image" content="http://yoursite.com/archive/2018-06-28/Matrices-make-linear-mappings/bearbasis_in_my.png">
+<meta property="og:image" content="http://yoursite.com/archive/2018-06-28/Matrices-make-linear-mappings/mybasis_in_bear.png">
+<meta property="og:image" content="http://yoursite.com/archive/2018-06-28/Matrices-make-linear-mappings/projection_changing_basis.png">
+<meta property="og:image" content="http://yoursite.com/archive/2018-06-28/Matrices-make-linear-mappings/transformation_in_changed_basis.png">
+<meta property="og:image" content="http://yoursite.com/archive/2018-06-28/Matrices-make-linear-mappings/translate_a_matrix.png">
+<meta property="og:updated_time" content="2018-07-04T16:08:14.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="四.矩阵做线性变换">
+<meta name="twitter:description" content="学习目标   把矩阵看成是一种操作 把做变换的矩阵与其另外一组基联系起来 基于这些transformation matrices来写代码实现这些映射 写代码找到标准正交基   矩阵是一种映射To-DO…(这部分恐怕得参考 Gilbert strang的教材和我的笔记去完善。。) 矩阵变换-&amp;gt; 将向量映射到新的基Matrices changing basis前面讲过， columns of t">
+<meta name="twitter:image" content="http://yoursite.com/archive/2018-06-28/Matrices-make-linear-mappings/changing_basis1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/archive/2018-06-28/Matrices-make-linear-mappings/"/>
+
+
+
+
+
+  <title>四.矩阵做线性变换 | 逝川</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">逝川</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">此间且为等闲事，花开花谢不知年</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-主页">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            主页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-关于">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/archive/2018-06-28/Matrices-make-linear-mappings/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="popoblue">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="逝川">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">四.矩阵做线性变换</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-06-28T13:59:41+08:00">
+                2018-06-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/课程笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">课程笔记</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/课程笔记/Mathematics-for-Machine-Learning/" itemprop="url" rel="index">
+                    <span itemprop="name">Mathematics for Machine Learning</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/课程笔记/Mathematics-for-Machine-Learning/Linear-Algebra/" itemprop="url" rel="index">
+                    <span itemprop="name">Linear Algebra</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/archive/2018-06-28/Matrices-make-linear-mappings/" class="leancloud_visitors" data-flag-title="四.矩阵做线性变换">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>学习目标</p>
+<blockquote>
+<ol>
+<li>把矩阵看成是一种操作</li>
+<li>把做变换的矩阵与其另外一组基联系起来</li>
+<li>基于这些transformation matrices来写代码实现这些映射</li>
+<li>写代码找到标准正交基</li>
+</ol>
+</blockquote>
+<h1 id="矩阵是一种映射"><a href="#矩阵是一种映射" class="headerlink" title="矩阵是一种映射"></a>矩阵是一种映射</h1><p>To-DO…(这部分恐怕得参考 Gilbert strang的教材和我的笔记去完善。。)</p>
+<h1 id="矩阵变换-gt-将向量映射到新的基"><a href="#矩阵变换-gt-将向量映射到新的基" class="headerlink" title="矩阵变换-&gt; 将向量映射到新的基"></a>矩阵变换-&gt; 将向量映射到新的基</h1><h2 id="Matrices-changing-basis"><a href="#Matrices-changing-basis" class="headerlink" title="Matrices changing basis"></a>Matrices changing basis</h2><p>前面讲过，</p>
+<font color="blue">columns of transformation matrix are the axis of the new basis vector of the mapping in the old coordinate.</font>
+
+<p>我们现在研究的重点换一下：如何把一个向量从一个 set of basis vectors 变换到另一个 set of basis vectors。</p>
+<p>换句话说，就是研究一个向量在不同的坐标系间如何转换？如下图，</p>
+<p><img src="changing_basis1.png" alt=""></p>
+<p>现在做一些说明：<br>$$<br>\begin{align}<br>&amp;\text{one world} \leftrightarrow \text{one set of basis vectors} \leftrightarrow \text{one coordinate}\\<br>&amp;\text{My world}: \text{the set of basis vectors is } {\vec e_1=\begin{bmatrix}1\\ 0 \end{bmatrix}, \vec e_2=\begin{bmatrix}0\\ 1 \end{bmatrix}}.\\<br>&amp;\text{Bear’s world}: \text{the set of basis vectors is }: {\vec e_{1}^{\prime}=\begin{bmatrix}3\\ 1\end{bmatrix}, \vec e_2^\prime=\begin{bmatrix}1\\ 1\end{bmatrix}}.\text{(in my coordinate)}<br>\end{align}<br>$$<br>上面的话说的意思是：在我的眼里，看bear’s basis vectors 是$\begin{bmatrix}3\\1\end{bmatrix}, \begin{bmatrix}1\\1\end{bmatrix}$, 但是在bear 的眼里看它自己的basis vectors 是$\begin{bmatrix}1\\0\end{bmatrix},\begin{bmatrix}0\\1\end{bmatrix}$. 这很好理解，因为所谓基张成整个space的意思就是，基是整个space 的基础度量。空间中任何向量（点）都是由基向量线性组合而成的，其大小、方向 都是相对于basis vectors来讲的，因此 basis vector 对于同一空间中的其他向量来说就是相当于”unit vector”.</p>
+<p>我们的问题：</p>
+<ol>
+<li>在  Bear’s world 有一个向量 $\color{blue}{\vec v_b=\frac{1}{2}\begin{bmatrix}3\\1\end{bmatrix}}$, 求他在My world 中的坐标（表示）$\color{red}{\vec v_{my}}$是什么？</li>
+<li>在 My world 中的向量 $\color{red}{\vec v_{my}}$ 在 Bear’s world 中是什么？</li>
+</ol>
+<p>根据之前的说明，在My world 的坐标系下，Bear‘s transformation matrix 是 $\mathbf{B}=\begin{bmatrix}3 &amp; 1\\1&amp;1\end{bmatrix}$.</p>
+<p>因此 $\begin{bmatrix}3&amp;1\\1&amp;1\end{bmatrix}\color{blue}{\vec v_b}=\begin{bmatrix}3&amp;1\\1&amp;1\end{bmatrix} \color{blue}{\begin{bmatrix}\frac{3}{2}\\ \frac{1}{2} \end{bmatrix}}=\color{red}{\begin{bmatrix}5\\2\end{bmatrix}}=\color{red}{\vec v_{my}}$</p>
+<p>上式把Bear’s world 的向量变换到 My world.</p>
+<p>我们现在考虑反方向的变换：如何把一个My world 的向量变换到Bear’s world? 与之前类似（Bear‘s world的基向量在我们坐标系的表示$\mathbf{B}$），对应地就需要My world 的基向量在Bear’s world的表示（坐标））.</p>
+<p>我们之前使用$\mathbf{B}$ 把一个 Bear’s world 的向量变换到 My world中，我们现在要进行一个逆过程，自然是使用$\mathbf{B}^{-1}$.</p>
+<p>$\mathbf{B}^{-1}\color{red}{\vec v_{my}}=\mathbf{B}^{-1}\mathbf{B}\color{blue}{\vec v_b}=\color{blue}{\vec v_{b}}$ 即：</p>
+<p>$\frac{1}{2}\begin{bmatrix}1&amp;-1\\ -1&amp;3 \end{bmatrix}\color{red}{\begin{bmatrix}5\\2\end{bmatrix}}=\color{blue}{\begin{bmatrix}\frac{3}{2}\\ \frac{1}{2}\end{bmatrix}}$</p>
+<p>其实，我们只是回答了如何将我们coordinate 中的一个vector 如何变换到 Bear’s coordinate，并没有回答上面的$\mathbf{B}^{-1}$ 其本质是什么？</p>
+<p>根据我们之前讲过的内容，我们知道 $\mathbf{B}^{-1}$ 是一个transformation matrix, 它的列$\begin{bmatrix}\frac{1}{2}\\ -\frac{1}{2}\end{bmatrix}，\begin{bmatrix}-\frac{1}{2}\\ \frac{3}{2}\end{bmatrix}$ 是basis vectors，我们只是不知道它是谁的basis vectors 在什么coordinate 下？</p>
+<p>其实，$\color{red}{\vec v_{my}}$ 是我们坐标系下的向量，最终的$\color{blue}{\vec v_b}$ 是Bear‘s coordinate 下的向量，由此可见$\mathbf{B}^{-1}$ 是 <strong>My basis in Bear’s world!</strong></p>
+<p>可总结为如下图所示的关系:</p>
+<p>Changing of basis matrix changes bear’s basis into my coordinate,</p>
+<p><img src="bearbasis_in_my.png" alt=""></p>
+<p>Then you inverse the changing of basis matrix,  this changes my basis into bear’s coordinate(columns of this inverse of changing of basis matrix are my basis vectors in bear’s coordinate),</p>
+<p><img src="mybasis_in_bear.png" alt=""></p>
+<h3 id="一种特殊的基变换"><a href="#一种特殊的基变换" class="headerlink" title="一种特殊的基变换"></a>一种特殊的基变换</h3><p><img src="projection_changing_basis.png" alt=""></p>
+<p>如果 basis of my world 以及 basis of bear’s world 都是正交的，我们可以使用projection 来做 changing of basis.</p>
+<p>⚠️， 上图中的basis vectors 都是 unit vector。在实际计算中记得做 normalization。（参考：二.向量是空间中移动的对象一课中 基变换-&gt;坐标系统 一节的内容）</p>
+<h2 id="在改变后的基上做线性变换"><a href="#在改变后的基上做线性变换" class="headerlink" title="在改变后的基上做线性变换"></a>在改变后的基上做线性变换</h2><p>这节要回答的问题是：在 My world 中做一个linear transformation such as rotation,  在 Bear‘s world 中是如何看待这个变换的？过程如下图，</p>
+<p><img src="transformation_in_changed_basis.png" alt=""></p>
+<p>现在对上述问题具体化:</p>
+<p>已知</p>
+<ol>
+<li>Bear’s basis in My world is: $\mathbf{B}=\begin{bmatrix}3&amp;1\\1&amp;1\end{bmatrix}$.</li>
+<li>在 Bear’s world中的一个向量 $\vec v_b = \begin{bmatrix}x\\y\end{bmatrix}$.</li>
+<li>我们不知道这个transformation matrix 在 Bear’s world中是什么样子，但是我们知道在 My world 中的这个变换是$\mathbf{R}，$ e.g. for rotation，$\mathbf{B}=\begin{bmatrix}\end{bmatrix}$</li>
+</ol>
+<p>问题：这个transformation matrix 在 Bear’s world 中是什么样子？或者等价问题，The vector in bear’s world is transformed by the transformation(described in my world), what does it look like in bear’s world?</p>
+<p>解决方案如下，</p>
+<ol>
+<li>首先$\mathbf{B}$ 将在 Bear’s world 中的向量 $\color{blue}{\vec v_b=\begin{bmatrix}x\\y\end{bmatrix}}$ 转换成 My world中的向量$\color{red}{\vec v_{my}}$。这是前面讲过的内容。</li>
+<li>然后用transformation matrix in My world $\mathbf{R}$ 来对$\color{red}{\vec v_{my}}$ 做 transform，得到 transformed version of $\color{red}{\vec v_{my}}$, 记为：$\color{red}{\vec v_{my}^{transformed}}$.</li>
+<li>再用 My basis in Bear’s world- Inverse of Bear’s transformation matrix $\mathbf{B}$ , i.e. $\mathbf{B}^{-1}$，to transform the $\color{red}{\vec v_{my}^{transformed}}$  back to Bear’s world, get $\color{blue}{\vec v_{b}^{transformed}}$.</li>
+</ol>
+<p>上述三个过程可总结为(从右向左看下述公式)，<br>$$<br>\color{blue}{\vec v_{b}^{transformed}}=\mathbf{B}^{-1}\color{red}{\mathbf{R}}\mathbf{B}\color{blue}{\vec v_b}\\<br>\color{red}{\text{Analogy: Considering the same tranformation/matrix, }\mathbf{R} \text{ for My world is in analogy with }\\  \mathbf{B^{-1}RB } \text{ for Bear’s world, means :}} \\<br>\mathbf{R}\vec v_{my}  =\vec v_{my}^{transformed}\\<br>(\mathbf{B^{-1}RB})\vec v_b=\vec v_b^{transformed}\\<br>$$<br>所以，the same transformation in Bear’s world is: $\mathbf{B^{-1}RB}​$.</p>
+<p>下图总结这个过程总结的很好，采用拿来主义:</p>
+<p><img src="translate_a_matrix.png" alt=""></p>
+<p>更加形象、精彩的解释在<a href="https://www.youtube.com/watch?v=P2LTAUO1TdA&amp;list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab&amp;index=13" target="_blank" rel="noopener">这里</a>（需要翻墙）。</p>
+<p>总结：</p>
+<p>$\mathbf{B^{-1}RB}$ do the transformation translation from my world into the world of the new basis system. 它就是我们空间中的变换 $\mathbf{B}$ 在新空间中的存在形式。</p>
+<h2 id="怎么确定基变换的方向？"><a href="#怎么确定基变换的方向？" class="headerlink" title="怎么确定基变换的方向？"></a>怎么确定基变换的方向？</h2><p>我们知道 $\mathbf{B^{-1}RB}$ 使得我们空间中的变换$\mathbf{R}$ 可以在另一个空间体现，它的作用是：对另一个空间中的向量（在该空间坐标系下的表示），通过$\mathbf{B}$（-另一个空间的基在我们坐标系下的表示）将其转换成我们空间坐标系下的表示，然后施以我们空间中的变换$\mathbf{R}$ ，最后通过$\mathbf{B^{-1}}$(我们空间的基在另一个空间坐标系下的表示)转换回另一个空间。简而言之上述公式回答了：</p>
+<p><strong>我们空间有一个变换$\mathbf{R}$, 其在另一个空间中是何种存在。 </strong></p>
+<p>可见，上述对于公式起到了一个“翻译”作用，是:<strong>my world -&gt; a new world</strong></p>
+<p>那如果我们需要从: <strong>new world-&gt; my world</strong> 的“翻译”过程呢？</p>
+<p>使用的公式为：$\mathbf{BRB^{-1}}$ （注意，两个公式中各个字母的含义根据不同描述可能有所变化！）</p>
+<p><strong>具体问题是这样的</strong>：现有一个我们空间的向量, 在我们坐标系下的表示为 $\vec v_{my}$, 现在我们像对其做一个变换-比如reflection。 但是我们发现直接计算，复杂度太大。我们发现在其他空间下这个变换的形式很简单，为$\mathbf{R}$，便于计算。因此我们需要将向量$\vec v_{my}$ 变换到另一个空间，然后使该空间的变换 $\mathbf{R}$ 来作用于它，然后将结果再次变换到我们坐标系下，从而达到了我们最初的目的。</p>
+<p>我们把另一个空间代称为:Bear’s world, 计算过程如下<br>$$<br>\begin{align}<br>&amp; \mathbf{B^{-1}}\vec v_{my} =\vec v_{b}\\<br>&amp; \mathbf{R}\vec v_b = \vec v_b^{transformed} \\<br>&amp; \mathbf{B}\vec v_b^{transformed} = \vec v_{my}^{transformed}<br>\end{align}<br>$$</p>
+<p>总结起来即为：<br>$$<br>\color{red}{\vec v_{my}^{transformed}}=\mathbf{B}\color{blue}{\mathbf{R}}\mathbf{B^{-1}}\color{red}{\vec v_{my}}<br>$$</p>
+<p><strong>现在问题来了？什么时候我们需要: my world-&gt; new world, 什么时候需要 new world-&gt; my world? 决定的标准在于计算的便利性。哪个路径方便于我们计算，我们就采用相应的基变换的方式，在那个空间下计算，然后将计算结果再变换回来即可。</strong></p>
+<h1 id="变换是否可逆"><a href="#变换是否可逆" class="headerlink" title="变换是否可逆"></a>变换是否可逆</h1><p>基-&gt;正交基</p>
+<p>Matrix: 矩阵的列是“一组新的基向量” 在我们坐标系中的表示。如果矩阵的列两两正交，那么由他的列所构成的基就是正交基，如果这些列还是单位向量，那么这个矩阵的列就构成了一组标准正交基。这个矩阵叫做正交矩阵。</p>
+<p><strong>正交矩阵一定可逆！</strong></p>
+<p>$\mathbf{U}$ is a <u>orthogonal matrix</u>, then $\mathbf{UU^{T}=U^TU=I}$,  也就意味着 $\mathbf{U^{-1}=U^T}$</p>
+<p>$\det(\mathbf{U})=\pm 1$ , 因为正交矩阵每一列都是 unit vector, 没有改变 the volume/area of the space.(但是可能改变了方向，因此行列式可能是-1)</p>
+<p>正交矩阵还有一个可贵的性质：正交变换不改变向量的2-范数, i.e. $\Vert \mathbf{U}\vec x\Vert =\Vert \vec x  \Vert$.<br>$$<br>\begin{align}<br>\Vert \mathbf{U}\vec x\Vert ^2 &amp;= (\mathbf{U}\vec x)^T(\mathbf{U}\vec x)\\<br>&amp;=\vec x^T \mathbf{U}^T \mathbf{U}\vec x\\<br>&amp;=\vec x^T\vec x \\<br>&amp;=\Vert \vec x \Vert^2<br>\end{align}<br>$$</p>
+<h1 id="正交化"><a href="#正交化" class="headerlink" title="正交化"></a>正交化</h1><p><strong>Gram-schmit Process</strong></p>
+<p>标准正交基有很多优良的性质：</p>
+<ul>
+<li>我们可以方便的用projection做线性变换</li>
+<li>以这些基为列构成的矩阵-正交矩阵，有很多好的性质比如：$\det(\mathbf{U})=1,\mathbf{U^{-1}=U^T}$</li>
+</ul>
+<p>因此，当我们面对一组仅仅是线性无关的vectors（可以作为某个space 的基）时，我们希望能够将这组linear independent vectors 转换成 orthogonal vectors.</p>
+<p>其流程如下，</p>
+<p>线性无关 ${v_1,v_2,…,v_n}$ -&gt; 正交 ${v_1^\prime,v_2^\prime …,v_n^\prime}$ -&gt; 标准正交 ${\frac{v_1^\prime}{\Vert v_1^\prime \Vert},…,\frac{v_n^\prime}{\Vert v_n^\prime \Vert} }$, 表示为${e_1,e_2,..,e_n}$</p>
+<p>正交化是核心。</p>
+<p>Gram-schmit Process:<br>$$<br>\begin{align}<br>&amp;v_1^\prime = v_1\\<br>&amp;v_2^\prime = v_2 - \text{Proj}_{v_1^\prime} v_2 = v_2 - \frac{v_2\cdot v_1^\prime}{\Vert v_1^\prime\Vert ^2}v_1^\prime \\<br>&amp;v_3^\prime = v_3 - \text{Proj}_{v_1^\prime}v_3 - \text{Proj}_{v_2^\prime}v_3= v_3 - \frac{v_3\cdot v_1^\prime}{\Vert v_1^\prime \Vert ^2} v_1^\prime - \frac{v_3\cdot v_2^\prime}{\Vert v_2^\prime \Vert ^2} v_2^\prime \\<br>&amp;…<br>\end{align}<br>$$</p>
+<p>Then we normalize the set of orthogonal vectors:<br>$$<br>\begin{align}<br>&amp;e_1 = \frac{v_1^\prime}{\Vert v_1^\prime \Vert} \\<br>&amp;e_2 = \frac{v_2^\prime}{\Vert v_2^\prime \Vert}\\<br>&amp;… \\<br>&amp;e_n = \frac{v_n^\prime}{\Vert v_n^\prime \Vert}<br>\end{align}<br>$$</p>
+<p>最后得到的向量集: ${e_1,e_2,…,e_n}$ 就是标准正交基。</p>
+<p><strong>小插曲</strong></p>
+<p>我们观察(向量)投影公式：</p>
+<p>$\text{Proj}_{\vec v}\vec u=\frac{\vec u \cdot \vec v}{\Vert \vec v\Vert ^2}\vec v$</p>
+<p>分母中有一个 $\Vert \vec v \Vert ^2 = \vec v^T \vec v$ ,分子中的$\vec u \cdot \vec v = \vec v ^T\vec u$ </p>
+<p>那么<br>$$<br>\begin{align}<br>\text{Proj}_{\vec v} \vec u &amp;= \frac{\vec v ^T\vec u}{\vec v ^T \vec v} \vec v \\<br>&amp;=\vec v \frac{\vec v ^T\vec u}{\vec v ^T \vec v} \text{ (scalar multiplication)}\\<br>&amp;=\frac{\vec v \vec v ^T}{\vec v ^T \vec v}\vec u \text{ (associativeness of matrix multiplication)}<br>\end{align}<br>$$<br>我们把上面公式最后一项中的单独看，<br>$$<br>\mathbf{P}=\color{blue}{\frac{\vec v \vec v ^T}{\vec v ^T \vec v}}<br>$$<br>$\mathbf{P}$ 称为将 $\vec u$ 向 $\vec v$ 方向投影的 <strong>Projection Matrix</strong>，这就将投影从几何概念提升到了线性变换的层次。也即是说，在线性变换的概念中，一个向量的投影是什么呢？就是经过某个 Projection Matrix 变换之后的结果。（当然，这是针对将向量向另一个向量投影的情况，此外还有将向量向一个平面或超平面投影的情况，那个时候projection matrix 的概念是类似的，不过将公式中的向量 $\vec v$ 换成了一个矩阵$\mathbf{A}$, 那是的$\mathbf{P=A(A^TA)^{-1}A^T}$, 其作用是将向量投影到矩阵$\mathbf{A}$ 的列空间）</p>
+<p>实际上，我们通过Gram-Schmit Process 把一个矩阵正交化，等同于对矩阵做分解:<br>$$<br>\mathbf{A=QR}<br>$$<br>其中$\mathbf{Q}$ 是一个正交矩阵。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创分享，您的支持是我继续创作的动力!</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="popoblue WeChat Pay"/>
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="popoblue Alipay"/>
+        <p>Alipay</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:</strong>
+    popoblue
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link:</strong>
+    <a href="http://yoursite.com/archive/2018-06-28/Matrices-make-linear-mappings/" title="四.矩阵做线性变换">http://yoursite.com/archive/2018-06-28/Matrices-make-linear-mappings/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice: </strong>
+    All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> unless stating additionally.
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Linear-Algebra/" rel="tag"># Linear Algebra</a>
+          
+            <a href="/tags/Matrix/" rel="tag"># Matrix</a>
+          
+            <a href="/tags/Linear-Mapping/" rel="tag"># Linear Mapping</a>
+          
+            <a href="/tags/Transformation/" rel="tag"># Transformation</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/archive/2018-06-24/Matrices-in-Linear-Algebra/" rel="next" title="三.线性代数中的矩阵">
+                <i class="fa fa-chevron-left"></i> 三.线性代数中的矩阵
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/archive/2018-07-01/Eigenvalues-and-Eigenvectors/" rel="prev" title="五.特征向量与特征值">
+                五.特征向量与特征值 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">popoblue</p>
+              <p class="site-description motion-element" itemprop="description">知行合一，一个功夫！</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">33</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">80</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/yazhouhao" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:me@yazhouhao.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://twitter.com/yazhouhao" target="_blank" title="Twitter">
+                    
+                      <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://www.facebook.com/yazhouhao" target="_blank" title="FB Page">
+                    
+                      <i class="fa fa-fw fa-facebook"></i>FB Page</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#矩阵是一种映射"><span class="nav-number">1.</span> <span class="nav-text">矩阵是一种映射</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#矩阵变换-gt-将向量映射到新的基"><span class="nav-number">2.</span> <span class="nav-text">矩阵变换-&gt; 将向量映射到新的基</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Matrices-changing-basis"><span class="nav-number">2.1.</span> <span class="nav-text">Matrices changing basis</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一种特殊的基变换"><span class="nav-number">2.1.1.</span> <span class="nav-text">一种特殊的基变换</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在改变后的基上做线性变换"><span class="nav-number">2.2.</span> <span class="nav-text">在改变后的基上做线性变换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#怎么确定基变换的方向？"><span class="nav-number">2.3.</span> <span class="nav-text">怎么确定基变换的方向？</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#变换是否可逆"><span class="nav-number">3.</span> <span class="nav-text">变换是否可逆</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#正交化"><span class="nav-number">4.</span> <span class="nav-text">正交化</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">popoblue</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count"></span>
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('5');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'manual') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.3"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("fgig2ECgFUUIzHQxQ6UEGBsw-gzGzoHsz", "qwf4KMNBL2n522kimTswJY9w");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Linkedin,Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+  </script>
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,1598 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en,zh-Hans,ja,Latn,default">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda,Arial,STXingkai,"华文行楷",STKaiti,“华文楷体”,STFangsong,Lato:300,300italic,400,400italic,700,700italic|Roboto Slab,STKaiti,"华文楷体":300,300italic,400,400italic,700,700italic|Arial,STXingkai,华文行楷,STKaiti,华文楷体,STFangsong,华文仿宋:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="N-Grams,Markov Models,Markov Assumption," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Markov Models在上一篇文章中对语言模型进行了感性认知和形式化地定义，并给出一个最简单的LMs,虽然它不强大。 现在基于我们之前的形式化定义，系统性地分析：如何estimate 一个句子的联合概率？ 考虑一个随机变量序列，$X_1,X_2,…,X_n$ . 每个随机变量的取值都可能是 $\color{blue}{\mathbb{V}}$ 中的任意一个值。现在我们假设：序列的长度 n 是一">
+<meta name="keywords" content="N-Grams,Markov Models,Markov Assumption">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Language Model-(二)">
+<meta property="og:url" content="http://yoursite.com/archive/2018-06-15/Language-Model-二/index.html">
+<meta property="og:site_name" content="逝川">
+<meta property="og:description" content="Markov Models在上一篇文章中对语言模型进行了感性认知和形式化地定义，并给出一个最简单的LMs,虽然它不强大。 现在基于我们之前的形式化定义，系统性地分析：如何estimate 一个句子的联合概率？ 考虑一个随机变量序列，$X_1,X_2,…,X_n$ . 每个随机变量的取值都可能是 $\color{blue}{\mathbb{V}}$ 中的任意一个值。现在我们假设：序列的长度 n 是一">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2018-06-20T01:04:00.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Language Model-(二)">
+<meta name="twitter:description" content="Markov Models在上一篇文章中对语言模型进行了感性认知和形式化地定义，并给出一个最简单的LMs,虽然它不强大。 现在基于我们之前的形式化定义，系统性地分析：如何estimate 一个句子的联合概率？ 考虑一个随机变量序列，$X_1,X_2,…,X_n$ . 每个随机变量的取值都可能是 $\color{blue}{\mathbb{V}}$ 中的任意一个值。现在我们假设：序列的长度 n 是一">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/archive/2018-06-15/Language-Model-二/"/>
+
+
+
+
+
+  <title>Language Model-(二) | 逝川</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">逝川</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">此间且为等闲事，花开花谢不知年</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-主页">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            主页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-关于">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/archive/2018-06-15/Language-Model-二/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="popoblue">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="逝川">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Language Model-(二)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-06-15T19:07:56+08:00">
+                2018-06-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/NLP/" itemprop="url" rel="index">
+                    <span itemprop="name">NLP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/archive/2018-06-15/Language-Model-二/" class="leancloud_visitors" data-flag-title="Language Model-(二)">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Markov-Models"><a href="#Markov-Models" class="headerlink" title="Markov Models"></a>Markov Models</h2><p>在上一篇文章中对语言模型进行了感性认知和形式化地定义，并给出一个最简单的LMs,虽然它不强大。</p>
+<p>现在基于我们之前的形式化定义，系统性地分析：如何estimate 一个句子的联合概率？</p>
+<p>考虑一个随机变量序列，$X_1,X_2,…,X_n$ . 每个随机变量的取值都可能是 $\color{blue}{\mathbb{V}}$ 中的任意一个值。现在我们假设：序列的长度 n 是一个固定的值，比如：n=100. 我们的目标是：面对任意序列 $x_1,x_2,…,x_n$ ，其中- </p>
+<ul>
+<li>$n\ge 1$, </li>
+<li>$x_i \in \color{blue}{\mathbb{V}}$ for $i=1,2,…,n-1$</li>
+</ul>
+<p>我们需要estimate 一个联合概率：<br>$$<br>P(X_1=x_1,X_2=x_2,…,X_n=x_n)<br>$$<br>根据概率论中的链式法则(Chain Rule):<br>$$<br>\begin{align}<br>&amp;P(X_1=x_1,X_2=x_2,…,X_n=x_n)\\<br>&amp;= P(X_1=x_1)P(X_2=x_2|X_1=x_1)…P(X_n=x_n|X_1=x_1,…,X_{n-1}=x_{n-1})\\<br>&amp;=\prod_{i=1}^{n} P(x_i|x_{1}^{i-1})<br>\end{align}<br>$$</p>
+<h3 id="Markov-Assumption"><a href="#Markov-Assumption" class="headerlink" title="Markov Assumption"></a>Markov Assumption</h3><p>上面，我们已经将联合概率转化为一些列条件概率的乘积，但似乎亦然无法帮助我们计算一整个句子的联合概率。因为我们不知道什么方法能够计算$P(x_i|x_1^{i-1})$, 也即：我们无法计算给定一个特定词之前很长的词序列的情况下，该词出现的概率。正如前一篇文章提到的那样，我们无法数出 $C(x_1,x_2,…,x_{i-1},x_i)$, 因为句子是无穷的，任何一个特定的context都可能是从来没有出现过的。</p>
+<p>因此，我们需要通过一些假设约束来使得这个计算可行。<strong>马尔可夫假设背后的朴素想法是这样的</strong>：</p>
+<p><strong>在一个随机变量序列,$X_1,X_2,…,X_n$ 中, 任何一个随机变量取某一个特定值的概率只与它之前的少数几个随机变量相关，而与离它更远的随机变量没有关系。</strong></p>
+<p>我们现在形式化地表示马尔可夫假设，</p>
+<ul>
+<li><p><strong>一阶马尔可夫假设</strong>(First-Order markov assumption)：</p>
+<p>$P(x_i|x_1^{i-1})\approx P(x_i|x_{i-1})$，从而整个随机变量序列的联合概率为<br>$$<br>P(X_1=x_1,X_2=x_2,…,X_n=x_n)=\prod_{i=1}^{n} P(x_i|x_{i-1})<br>$$</p>
+</li>
+<li><p><strong>二阶马尔可夫假设</strong>(Second-Order Markov assumption):</p>
+<p>$P(x_i|x_1^{i-1})\approx P(x_i|x_{i-2},x_{i-1})$, 此时整个随机变量序列的联合概率为<br>$$<br>P(X_1=x_1,X_2=x_2,…,X_n=x_n)=\prod_{i=1}^{n}P(x_i|x_{i-2},x_{i-1})<br>$$</p>
+</li>
+</ul>
+<p>这样，我们计算联合概率就简单多了，将这个思想用来建模句子的联合概率，就是N-Grams Language Model。</p>
+<h2 id="N-Grams-语言模型"><a href="#N-Grams-语言模型" class="headerlink" title="N-Grams 语言模型"></a>N-Grams 语言模型</h2><p>将上述概率理论应用于语言模型，即：estimate 一个句子的联合概率：$P(w_1,w_2,…,w_n)$</p>
+<p>基于Markov 假设，很容易理解N-Grams语言模型。这里一用Dan Jurafsky一句很形象的话来描述：</p>
+<blockquote>
+<p>The intuition of the N-gram model is that instead of computing the probability of a word given its entire history, we can <strong>approximate</strong> the history by just the last few words.</p>
+</blockquote>
+<ul>
+<li><p><strong>Bigram</strong> </p>
+<p>用来 $P(w_n|w_{n-1})$ 近似$P(w_n|w_1^{n-1})$.  换句话说，我们不是计算：<br>$$<br>P(\text{university}|\text{Clition’s book store near my})<br>$$<br>而是计算：<br>$$<br>P(\text{university}|\text{my})<br>$$<br>总之，我们做了以下近似：<br>$$<br>P(w_n|w_1^{n-1})\approx P(w_n|w_{n-1})<br>$$</p>
+</li>
+<li><p><strong>N-gram</strong></p>
+<p>类似的思想，我们做以下近似：<br>$$<br>P(w_n|w_1^{n-1})\approx P(w_n|w_{n-N+1}^{n-1})<br>$$</p>
+</li>
+</ul>
+<h2 id="计算整个句子的联合概率"><a href="#计算整个句子的联合概率" class="headerlink" title="计算整个句子的联合概率"></a>计算整个句子的联合概率</h2><p>如果基于bigram模型，整个句子的联合概率可以按照下面公式计算：<br>$$<br>P(w_1^{n})\approx \prod_{i=1}^n P(w_i|w_{i-1})<br>$$<br>可见只要我们会计算$P(w_i|w_{i-1})$ , 句子的联合概率我们就可以计算了。那么现在的问题是，我们如何计算bgrams or N-gram 概率呢？一个直观的估计概率的方法叫做极大似然估计(Maximim likelihood estimation,MLE).</p>
+<h3 id="极大似然估计（MLE）"><a href="#极大似然估计（MLE）" class="headerlink" title="极大似然估计（MLE）"></a>极大似然估计（MLE）</h3><p>用MLE对N-Grams模型的参数进行估计：从语料库中计数，并把这个计数归一化(<strong>Normalize</strong>), 使得计数在0，1之间。</p>
+<p>举个例子，要计算一个具体的bigram：$\text{xy}$ 的概率，我们要数一下$C(\text{xy})$, 然后用所有第一个字是 $\text{x}$ 的bigram的个数进行归一化，即：<br>$$<br>P(w_n|w_{n-1})=\frac{C(w_{n-1}w_n)}{\sum_{w} C(w_{n-1}w)}<br>$$<br>其实，我们可以简化上述公式：因为$C(w_{n-1}w_n)=C(w_{n-1})$ . 即：以 $\text{x}$ 为首词的 bigram 的个数必然等于 $\text{x}$ 出现的次数。所以，<br>$$<br>P(w_n|w_{n-1})=\frac{C(w_{n-1}w_n)}{C(w_{n-1})}<br>$$</p>
+<h3 id="一个具体例子-bigram"><a href="#一个具体例子-bigram" class="headerlink" title="一个具体例子-bigram"></a>一个具体例子-bigram</h3><p>终于到了具体例子了，我平时在看书的时候最怕全是逻辑描述、定义、公式而没有具体例子。实际上具体例子对于概念和问题的理解是非常重要的！</p>
+<ul>
+<li>考虑我们现在有一个微型语料库（Corpus），只包含三个句子。</li>
+<li>我们需要在语料库中每个句子的开头添加个一个<strong>特殊符号</strong>：<strong>[BOS]</strong> 标明这是句子的开始。</li>
+<li>在每个句子的结束也添加一个特殊符号：<strong>[EOS]</strong> ，标明这是句子的结束。</li>
+</ul>
+<p>语料库为：</p>
+<p>[BOS]  I am Sam [EOS]</p>
+<p>[BOS] Sam am I [EOS]</p>
+<p>[BOS]  I do not  like green eggs and ham [EOS]</p>
+<p>我们现在计算一些bigrams的概率：</p>
+<p>$$<br>\begin{align}<br>&amp;P(\text{I|[BOS]})=\frac{2}{3},   &amp;&amp;P(\text{Sam|[BOS]})=\frac{1}{3},   &amp;&amp;&amp;P(\text{am|I})=\frac{1}{3}\\<br>&amp;P(\text{[EOS]|Sam})=\frac{1}{2},  &amp;&amp;P(\text{Sam|am})=\frac{1}{2},  &amp;&amp;&amp;P(\text{do|I})=\frac{1}{3}<br>\end{align}<br>$$</p>
+<p>通用情况的MLE N-gram参数估计：</p>
+<p>$$<br>P(w_n|w_{n-N+1}^{n-1})= \frac{C(w_{n-N+1}^{n-1}w_n)}{C(w_{n-N+1}^{n-1})}<br>$$</p>
+<p>也就是就是我们上面讲过的：用一个特定的N-grams的个数除以其prefix的个数。这个比值我们称为相对频率（<strong>relative frequency</strong>）. 这种方法在MLE中是估计参数的一种常用手段（不是唯一手段）。在MLE中，在给定模型的情况下，最后的结果参数集(resulting parameter set)会最大化训练数据 T 的似然，i.e. $P(T|M)$。</p>
+<p><strong>现在我们基于bigram语法计算一下整个句子的联合概率</strong>：</p>
+<p>$$<br>\begin{align}<br>P(\text{[BOS] I am Sam [EOS]})&amp;= P(I|[BOS])P(am|I)P(Sam|am)P([EOS]|Sam)\\<br>&amp;=\frac{2}{3} \cdot \frac{1}{3}\cdot \frac{1}{2}\cdot \frac{1}{2}\\<br>&amp;=0.056<br>\end{align}<br>$$</p>
+<p>以上的内容，就是所谓基于计数的N-gram语言模型（<strong>Count-based</strong> N-gram Language Model），此外还有Neural Language Model等其他模型，会在之后的文章中陆续介绍。</p>
+<h3 id="N-Gram-能捕获什么？"><a href="#N-Gram-能捕获什么？" class="headerlink" title="N-Gram 能捕获什么？"></a>N-Gram 能捕获什么？</h3><p>如果我们的语料库足够大的话，我们计算的 bi-gram 概率确实能够<strong>encode</strong>一些语言学现象，比如<strong>syntantic</strong></p>
+<ul>
+<li>动词之后往往接名词、代词、介词(这类bigram的概率较高)</li>
+<li>形容词之后往往接名词</li>
+</ul>
+<p>有些可能捕获不是syntantic现象，而是个人习惯：</p>
+<ul>
+<li>I want…</li>
+<li>I should….</li>
+</ul>
+<p>有些可能捕获的是文化方面的现象：</p>
+<ul>
+<li>Chinese food…</li>
+<li>English book…</li>
+</ul>
+<p>总之，N-gram 模型确实可以捕获到很多语言学、文化、社会、个人偏好等现象，所谓 <strong>Encode Some Facts</strong>。可想而知，随着N不断变大，<strong>Trigram, 4-gram, 5-gram</strong> 等将会encode 更多有意义的信息。</p>
+<h3 id="一些特殊问题"><a href="#一些特殊问题" class="headerlink" title="一些特殊问题"></a>一些特殊问题</h3><p>上面的例子为了计算简单，我们举了基于bigram的例子。实际上，当我们的语料库足够大的时候，Trigram，乃至4-gram，5-gram是更加合理的选择（更加强大！）。这里我们以 Trigram为例 进行说明。</p>
+<ol>
+<li><p>在我们选择 Trigram 模型时，我们对语料中<strong>每个句子</strong><u>开始</u>和<u>结尾</u>的context 都需要进行扩展。即：语料中的句子应该处理成这样：</p>
+<p>$$<br>\text{[BOS] [BOS] I want to drink beer [EOS] [EOS]}<br>$$</p>
+</li>
+<li><p><strong>Log format of probability.</strong></p>
+<p>我们在计算和表示语言模型的概率的时候常常采用它的对数形式。因为概率值是一个[0,1]区间的数值，语言模型中概率值是连乘的形式，因此<strong>一个句子的联合概率可能会是一个非常小的数字</strong>，可能会导致下溢出。因此我们采用<u>Log Probability</u> 来避免下溢出的问题。</p>
+<p>在log space 中做加法与在linear space做乘法是等价的。我们所有对log probability 进行的计算和存储都可以转化回概率,</p>
+</li>
+</ol>
+<p>$$<br>   p_1\times p_2 \times p_3…\times p_n = exp(\log p_1 +\log p_2 +…+\log p_n)<br>$$</p>
+<h2 id="如何评价语言模型"><a href="#如何评价语言模型" class="headerlink" title="如何评价语言模型"></a>如何评价语言模型</h2><p>评价语言模型的方式主要分为两类。</p>
+<h3 id="外部性方法（Extrinsic）"><a href="#外部性方法（Extrinsic）" class="headerlink" title="外部性方法（Extrinsic）"></a>外部性方法（Extrinsic）</h3><p>将语言模型嵌入到一个实际的应用中，然后测量这个应用的性能的提升有多少，这本质是一种End-to-End的评价方式，也是最好的评价方式。Extrinsic 的评测方式是唯一的一种可以评价一个组件中性能的提升是否真的帮助了你的任务的评测方式。其过程如下：</p>
+<ol>
+<li><p>找一个实际Task（这个任务必须以LM作为其组件(components)之一）</p>
+</li>
+<li><p>End-to-End的训练</p>
+<ul>
+<li><p>Task with $LM_a$ , 计算性能, $P_a$.（比如：Acc，P，R，F）</p>
+</li>
+<li><p>Task with $LM_b$, 计算性能, $P_b$.</p>
+</li>
+<li>比较 $P_a$ and $P_b$，得到比较的结果$C$. ( Compare with some certain metric.)</li>
+</ul>
+</li>
+<li>重复步骤2（N-次，N=0,…,1），计算加权平均的$C_{avg}$, 以此来衡量 $LM_a$ 与 $LM_b$ 哪个好，有多好。</li>
+</ol>
+<p>然而，这种“最好”的评测方式有一个很大的缺点，那就是为了评测语言模型本身性能的好坏，你还需要找另外一个实际的任务，并以end-to-end的方式训练，比较若干次训练结果的（训练若干次）。这个整个过程非常昂贵的(时间、计算资源)。</p>
+<h3 id="内部性方法（Intrinsic）"><a href="#内部性方法（Intrinsic）" class="headerlink" title="内部性方法（Intrinsic）"></a>内部性方法（Intrinsic）</h3><p>鉴于Extrinsic的评测方法的缺点，我们希望有一种测量指标可以快速地评测语言模型其潜在性能。Intrinsic 的评价方法就是一种可以独立于具体应用来评测一个语言模型的性能的评价方法。</p>
+<p>用Intrinsic的评价方法来评测语言模型，其过程如下：</p>
+<ul>
+<li>在<strong>training set</strong>（training corpus） 上训练我们的语言模型 $LM_a, LM_b$.</li>
+<li>用已经训练好的语言模型 $LM_a,LM_b$ （trained），来<strong><u>model</u></strong> <strong>test set </strong>（test corpus）。以此比较哪个语言模型更好。</li>
+</ul>
+<p><strong><em>然而，所谓的 “<u>model test set</u>“ 是什么意思？</em></strong></p>
+<p><strong>答案很简单</strong>：哪个模型给 <strong>test set</strong> 赋予了更高的概率-即：更准确地在test set上做出了预测，那么它就是一个更好的模型。</p>
+<p>其核心institution就是：在给定两个概率模型（probability model）的情况下，更好的那个模型更好地拟合了test data，或者说更好的预测了test data的细节，也就因此会对test data 赋予一个更高的概率。</p>
+<p>此外还需要注意几个问题：</p>
+<ol>
+<li>test set 不能和 training set 有重合。</li>
+</ol>
+<p>如果重合，那么在训练model 的时候就已经引入了一些偏见（bias），即：model更加侧重那些重合的部分（可以这样考虑，同样的句子多次被model拟合，模型就更加偏向给这些句子打更高的概率），这会使得在 test set 上的预测出奇的好，这很容易理解：因为模型已经见过一大部分这些数据了，模型对它们“不陌生”，自然就预测的好。但实际上，这对模型的泛化（generalization）能力有很大的影响。</p>
+<ol>
+<li>有些时候，我们还需要一个dev set. 那corpus 如何划分为：training set， dev set，test set呢？<ul>
+<li>我们需要尽可能多的training data，因为我们希望模型learning 的足够充分（不要欠拟合！）</li>
+<li>test set 不能太小，因为太小的话它的代表性不够强。</li>
+<li>上述两条似乎有些冲突，此刻怎么办呢？我们希望选择：<u>能够使我们有足够的统计信息来评测两个语言模型在统计上显著性差异的最小test set</u>。</li>
+</ul>
+</li>
+</ol>
+<h4 id="困惑度（Perplexity）"><a href="#困惑度（Perplexity）" class="headerlink" title="困惑度（Perplexity）"></a>困惑度（Perplexity）</h4><p>在具体的实践中，我们往往不采用raw probability 作为metric来评价语言模型，而是采用了一个变种-perplexity。</p>
+<p><strong>定义：</strong></p>
+<blockquote>
+<p>“The perplexity(sometimes called PP for short) of a language model on <strong>test set</strong> is the <u>inverse probability</u> of the <strong>test set</strong>, normalized by the number of words.”</p>
+</blockquote>
+<p>给定一个<strong><em>test set</em></strong>, $W=w_1w_2…w_N$ :<br>$$<br>\begin{align}<br>PP(W) &amp;= P(w_1w_2….w_N)^{-\frac{1}{N}}\\<br>&amp;=\sqrt[N]{\frac{1}{P(w_1w_2…w_N)}}<br>\end{align}<br>$$<br>我们可以用Chain-Rule来扩展上述公式，<br>$$<br>PP(W)=\sqrt[N]{\prod_{i=1}^N\frac{1}{P(w_i|w_1…w_{i-1})}}<br>$$<br>因此，如果我们基于一个<strong>bigram</strong> 语言模型来计算perplexity，我们得到：<br>$$<br>PP(W)=\sqrt[N]{\prod_{i=1}^N \frac{1}{P(w_{i}|w_{i-1})}}<br>$$<br>根据上述公式可知：word sequence的条件概率越高，perplexity的值越小，反之亦然。因此，minimize perplexity等同于maximize test set上的probability。</p>
+<p>有以下2个细节需要注意：</p>
+<ul>
+<li>上面公式中我们的计算是基于 <strong>test set中所有words 的序列</strong>，这就必然会跨越很多句子的边界。因此我们在计算概率的时候要记得加入[BOS] 和 [EOS]，也就是句子开始和结束的标志符。</li>
+<li>我们还需要在test set中token总数N中计入每个句子的[EOS]，切记：不包括[BOS]!!</li>
+</ul>
+<h4 id="一个例子-计算perplexity"><a href="#一个例子-计算perplexity" class="headerlink" title="一个例子-计算perplexity"></a>一个例子-计算perplexity</h4><p>TO-DO…</p>
+<h2 id="泛化和计数0的问题"><a href="#泛化和计数0的问题" class="headerlink" title="泛化和计数0的问题"></a>泛化和计数0的问题</h2><h2 id="平滑-Smoothing"><a href="#平滑-Smoothing" class="headerlink" title="平滑-Smoothing"></a>平滑-Smoothing</h2><h2 id="Kneser-Ney-Smoothing"><a href="#Kneser-Ney-Smoothing" class="headerlink" title="Kneser-Ney Smoothing"></a>Kneser-Ney Smoothing</h2><h2 id="困惑度与熵的关系"><a href="#困惑度与熵的关系" class="headerlink" title="困惑度与熵的关系"></a>困惑度与熵的关系</h2><h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创分享，您的支持是我继续创作的动力!</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="popoblue WeChat Pay"/>
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="popoblue Alipay"/>
+        <p>Alipay</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:</strong>
+    popoblue
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link:</strong>
+    <a href="http://yoursite.com/archive/2018-06-15/Language-Model-二/" title="Language Model-(二)">http://yoursite.com/archive/2018-06-15/Language-Model-二/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice: </strong>
+    All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> unless stating additionally.
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/N-Grams/" rel="tag"># N-Grams</a>
+          
+            <a href="/tags/Markov-Models/" rel="tag"># Markov Models</a>
+          
+            <a href="/tags/Markov-Assumption/" rel="tag"># Markov Assumption</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/archive/2018-06-15/Language-Model-一/" rel="next" title="Language Model-(一)">
+                <i class="fa fa-chevron-left"></i> Language Model-(一)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/archive/2018-06-20/一-The-Learning-Problem/" rel="prev" title="一.The Learning Problem">
+                一.The Learning Problem <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">popoblue</p>
+              <p class="site-description motion-element" itemprop="description">知行合一，一个功夫！</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">33</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">80</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/yazhouhao" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:me@yazhouhao.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://twitter.com/yazhouhao" target="_blank" title="Twitter">
+                    
+                      <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://www.facebook.com/yazhouhao" target="_blank" title="FB Page">
+                    
+                      <i class="fa fa-fw fa-facebook"></i>FB Page</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Markov-Models"><span class="nav-number">1.</span> <span class="nav-text">Markov Models</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Markov-Assumption"><span class="nav-number">1.1.</span> <span class="nav-text">Markov Assumption</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#N-Grams-语言模型"><span class="nav-number">2.</span> <span class="nav-text">N-Grams 语言模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#计算整个句子的联合概率"><span class="nav-number">3.</span> <span class="nav-text">计算整个句子的联合概率</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#极大似然估计（MLE）"><span class="nav-number">3.1.</span> <span class="nav-text">极大似然估计（MLE）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一个具体例子-bigram"><span class="nav-number">3.2.</span> <span class="nav-text">一个具体例子-bigram</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#N-Gram-能捕获什么？"><span class="nav-number">3.3.</span> <span class="nav-text">N-Gram 能捕获什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一些特殊问题"><span class="nav-number">3.4.</span> <span class="nav-text">一些特殊问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何评价语言模型"><span class="nav-number">4.</span> <span class="nav-text">如何评价语言模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#外部性方法（Extrinsic）"><span class="nav-number">4.1.</span> <span class="nav-text">外部性方法（Extrinsic）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#内部性方法（Intrinsic）"><span class="nav-number">4.2.</span> <span class="nav-text">内部性方法（Intrinsic）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#困惑度（Perplexity）"><span class="nav-number">4.2.1.</span> <span class="nav-text">困惑度（Perplexity）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#一个例子-计算perplexity"><span class="nav-number">4.2.2.</span> <span class="nav-text">一个例子-计算perplexity</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#泛化和计数0的问题"><span class="nav-number">5.</span> <span class="nav-text">泛化和计数0的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#平滑-Smoothing"><span class="nav-number">6.</span> <span class="nav-text">平滑-Smoothing</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Kneser-Ney-Smoothing"><span class="nav-number">7.</span> <span class="nav-text">Kneser-Ney Smoothing</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#困惑度与熵的关系"><span class="nav-number">8.</span> <span class="nav-text">困惑度与熵的关系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#后记"><span class="nav-number">9.</span> <span class="nav-text">后记</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">popoblue</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count"></span>
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('5');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'manual') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.3"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("fgig2ECgFUUIzHQxQ6UEGBsw-gzGzoHsz", "qwf4KMNBL2n522kimTswJY9w");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Linkedin,Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+  </script>
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

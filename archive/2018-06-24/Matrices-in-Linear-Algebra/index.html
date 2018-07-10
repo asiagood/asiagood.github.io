@@ -1,0 +1,1618 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en,zh-Hans,ja,Latn,default">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda,Arial,STXingkai,"华文行楷",STKaiti,“华文楷体”,STFangsong,Lato:300,300italic,400,400italic,700,700italic|Roboto Slab,STKaiti,"华文楷体":300,300italic,400,400italic,700,700italic|Arial,STXingkai,华文行楷,STKaiti,华文楷体,STFangsong,华文仿宋:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Linear Algebra,Matrix," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="学习目标  理解什么是矩阵以及矩阵如何对应一个变换 解释并计算矩阵的逆和行列式 判断矩阵是否可逆   矩阵：对向量的操作矩阵、向量及线性方程组考虑下面方程组，$$\begin{align}2x_1+3x_2=8\\10x_1+x_2 = 13\end{align}$$我们可以将上述方程写成矩阵的形式，$$\begin{bmatrix}2 &amp;amp;3 \\10 &amp;amp; 1\end{bmatr">
+<meta name="keywords" content="Linear Algebra,Matrix">
+<meta property="og:type" content="article">
+<meta property="og:title" content="三.线性代数中的矩阵">
+<meta property="og:url" content="http://yoursite.com/archive/2018-06-24/Matrices-in-Linear-Algebra/index.html">
+<meta property="og:site_name" content="逝川">
+<meta property="og:description" content="学习目标  理解什么是矩阵以及矩阵如何对应一个变换 解释并计算矩阵的逆和行列式 判断矩阵是否可逆   矩阵：对向量的操作矩阵、向量及线性方程组考虑下面方程组，$$\begin{align}2x_1+3x_2=8\\10x_1+x_2 = 13\end{align}$$我们可以将上述方程写成矩阵的形式，$$\begin{bmatrix}2 &amp;amp;3 \\10 &amp;amp; 1\end{bmatr">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://yoursite.com/archive/2018-06-24/Matrices-in-Linear-Algebra/transformed_basis.png">
+<meta property="og:image" content="http://yoursite.com/archive/2018-06-24/Matrices-in-Linear-Algebra/transformation.png">
+<meta property="og:image" content="http://yoursite.com/archive/2018-06-24/Matrices-in-Linear-Algebra/flip_inversion.png">
+<meta property="og:image" content="http://yoursite.com/archive/2018-06-24/Matrices-in-Linear-Algebra/mirrors.png">
+<meta property="og:image" content="http://yoursite.com/archive/2018-06-24/Matrices-in-Linear-Algebra/sheared.png">
+<meta property="og:image" content="http://yoursite.com/archive/2018-06-24/Matrices-in-Linear-Algebra/rotation.png">
+<meta property="og:image" content="http://yoursite.com/archive/2018-06-24/Matrices-in-Linear-Algebra/composition_transform.png">
+<meta property="og:image" content="http://yoursite.com/archive/2018-06-24/Matrices-in-Linear-Algebra/determinant.png">
+<meta property="og:image" content="http://yoursite.com/archive/2018-06-24/Matrices-in-Linear-Algebra/determinant_area.png">
+<meta property="og:image" content="http://yoursite.com/archive/2018-06-24/Matrices-in-Linear-Algebra/determinant_singular.png">
+<meta property="og:updated_time" content="2018-06-28T07:15:53.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="三.线性代数中的矩阵">
+<meta name="twitter:description" content="学习目标  理解什么是矩阵以及矩阵如何对应一个变换 解释并计算矩阵的逆和行列式 判断矩阵是否可逆   矩阵：对向量的操作矩阵、向量及线性方程组考虑下面方程组，$$\begin{align}2x_1+3x_2=8\\10x_1+x_2 = 13\end{align}$$我们可以将上述方程写成矩阵的形式，$$\begin{bmatrix}2 &amp;amp;3 \\10 &amp;amp; 1\end{bmatr">
+<meta name="twitter:image" content="http://yoursite.com/archive/2018-06-24/Matrices-in-Linear-Algebra/transformed_basis.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/archive/2018-06-24/Matrices-in-Linear-Algebra/"/>
+
+
+
+
+
+  <title>三.线性代数中的矩阵 | 逝川</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">逝川</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">此间且为等闲事，花开花谢不知年</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-主页">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            主页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-关于">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/archive/2018-06-24/Matrices-in-Linear-Algebra/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="popoblue">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="逝川">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">三.线性代数中的矩阵</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-06-24T20:28:17+08:00">
+                2018-06-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/课程笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">课程笔记</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/课程笔记/Mathematics-for-Machine-Learning/" itemprop="url" rel="index">
+                    <span itemprop="name">Mathematics for Machine Learning</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/课程笔记/Mathematics-for-Machine-Learning/Linear-Algebra/" itemprop="url" rel="index">
+                    <span itemprop="name">Linear Algebra</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/archive/2018-06-24/Matrices-in-Linear-Algebra/" class="leancloud_visitors" data-flag-title="三.线性代数中的矩阵">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>学习目标</p>
+<ul>
+<li>理解什么是矩阵以及矩阵如何对应一个变换</li>
+<li>解释并计算矩阵的逆和行列式</li>
+<li>判断矩阵是否可逆</li>
+</ul>
+</blockquote>
+<h1 id="矩阵：对向量的操作"><a href="#矩阵：对向量的操作" class="headerlink" title="矩阵：对向量的操作"></a>矩阵：对向量的操作</h1><h2 id="矩阵、向量及线性方程组"><a href="#矩阵、向量及线性方程组" class="headerlink" title="矩阵、向量及线性方程组"></a>矩阵、向量及线性方程组</h2><p>考虑下面方程组，<br>$$<br>\begin{align}<br>2x_1+3x_2=8\\<br>10x_1+x_2 = 13<br>\end{align}<br>$$<br>我们可以将上述方程写成矩阵的形式，<br>$$<br>\begin{bmatrix}<br>2 &amp;3 \\<br>10 &amp; 1<br>\end{bmatrix}<br>\begin{bmatrix}<br>x_1\\<br>x_2<br>\end{bmatrix}<br>=\begin{bmatrix}<br>8 \\<br>13<br>\end{bmatrix}<br>$$<br>我们泛化上述公式，<br>$$<br>\color{red}{\mathbf{Ax=b}}<br>$$<br>矩阵乘以向量可以从两种角度看待,</p>
+<ol>
+<li>向量作用于矩阵：是矩阵列向量的 linear combination, with the components of $x$ as the corresponding weight. The result of linear combination of the columns of $\mathbf{A}$ is $\mathbf{b}$.</li>
+<li>矩阵作用于向量：matrix $\mathbf{A}$ transform the vector $\mathbf{x}$ to output $\mathbf{b}$.  Say, $\mathbf{A}$ maps $\mathbf{x}$ to $\mathbf{b}$ or $\mathbf{x}$ is transformed by $\mathbf{A}$ to be $\mathbf{b}$.</li>
+</ol>
+<p>我们现在侧重第二种角度。</p>
+<p><strong>回到之前方程组对应的矩阵形式，我们要问:</strong><br>$$<br>\text{what  vector }<br>\begin{bmatrix}<br>x_1\\<br>x_2<br>\end{bmatrix}<br>\text{could be transformed by}<br>\begin{bmatrix}<br>2 &amp; 3 \\<br>10 &amp; 1<br>\end{bmatrix}<br>\text{to output }<br>\begin{bmatrix}<br>8\\<br>13<br>\end{bmatrix}<br>$$<br>我们先看看矩阵对标准向量做了变换会得到什么，<br>$$<br>\begin{align}<br>\mathbf{Ae_1}=<br>\begin{bmatrix}<br>2 &amp; 3\\<br>10 &amp; 1<br>\end{bmatrix}<br>\begin{bmatrix}<br>1\\<br>0<br>\end{bmatrix}&amp;=<br>\begin{bmatrix}<br>2\\<br>10<br>\end{bmatrix}=\mathbf{e_1}’ ,\\<br>\mathbf{Ae_2}=<br>\begin{bmatrix}<br>2 &amp; 3\\<br>10 &amp; 1<br>\end{bmatrix}<br>\begin{bmatrix}<br>0\\<br>1<br>\end{bmatrix}&amp;=<br>\begin{bmatrix}<br>3\\<br>1<br>\end{bmatrix}=\mathbf{e_2}’<br>\end{align}<br>$$<br><img src="transformed_basis.png" alt=""></p>
+<p>上图展示了变换的结果，矩阵$\mathbf{A}$ 对标准正交基做了变换： $\mathbf{A}$ map ${\mathbf{e_1,e_2}}$ to ${\mathbf{e_1^\prime,e_2^\prime}}$.  </p>
+<font color="red"><strong>Matrix transform the basis vectors, so it changes the space.</strong></font>
+
+<p>我们可以从这样的视角看待矩阵：</p>
+<p>Matrix is a function which acts on input vectors and generate other output vectors. 矩阵转换向量，向量被矩阵转换。</p>
+<font color="green">实际上所谓线性代数，不过是对空间中向量进行操作的一个系统。</font>
+
+<h2 id="矩阵如何对空间进行变换"><a href="#矩阵如何对空间进行变换" class="headerlink" title="矩阵如何对空间进行变换"></a>矩阵如何对空间进行变换</h2><p>上小节内容讲明了一个矩阵如何对标准正交基做变换- each axis is transformed by the corresponding column of matrix.</p>
+<blockquote>
+<p>why? tips:  Basis is orthonormal， hence the there is 0 in the basis vectors. 根据矩阵乘法的定义，只有矩阵对应列才会最终影响到transformed basis 对应的axis（component）。</p>
+</blockquote>
+<p>任何向量都可以由基的线性组合表示，因此矩阵对一个向量变换的结果也同样是基向量的线性组合。这意味着，</p>
+<ul>
+<li>我们空间的格子线保持平行和等间隔</li>
+<li>它们可能被拉升，但原点位置没变，空间没有被弯曲</li>
+</ul>
+<p>上述结论是<strong>向量加法和数乘</strong>操作的结果。</p>
+<p>下面我们给出一些矩阵乘法的性质，并结合这些性质来展示矩阵是如何对空间做变换的：<br>$$<br>\begin{align}<br>\mathbf{A}\vec r &amp;= \vec r ^\prime \\<br>\mathbf{A}(n\vec r )&amp;= n\vec r ^\prime\\<br>\mathbf{A}(\vec r+\vec s) &amp;= \vec r ^\prime +\vec s^\prime \\<br>\color{red}{\mathbf{A}(n\vec e_1 +m\vec e_2)}&amp;\color{red}{= n\vec e_1 ^\prime + m\vec e_2^\prime }<br>\end{align}<br>$$<br>从上述公式有如下结论</p>
+<ul>
+<li>basis vecotrs is transformed：$e_1,e_2$ move to $e_1^\prime,e_2^\prime$.</li>
+<li>Vector  $\vec r$ is transformed to be $\vec r^\prime$. $\vec r$ is a linear combination of $e_1,e_2$ with some weights, $\vec r^\prime$ is a also linear combination of $e_1^\prime,e_2^\prime$ with some weights.</li>
+<li>But,<strong>the weights in original space is the same as the weights in the transformed space.</strong>(see last equation), and the weight is the components of vector $\vec r$ : $n,m$.</li>
+<li>$\color{blue}{\text{First column of }\mathbf{A} =\vec e_1^\prime, \text{Second column of }\mathbf{A}=\vec e_2^\prime}$</li>
+</ul>
+<p>看一个具体的例子 $\mathbf{A}\vec r =\vec r^\prime$at the same time as $\mathbf{A}{\vec e_1,\vec e_2}={\vec e_1^\prime,\vec e_2^\prime}$ ，</p>
+<p>$$<br>\begin{align}<br>\begin{bmatrix}<br>2 &amp; 3\\<br>10 &amp; 1<br>\end{bmatrix}<br>\begin{bmatrix}<br>3\\<br>2<br>\end{bmatrix}=<br>\begin{bmatrix}<br>12\\<br>32<br>\end{bmatrix}&amp;\Rightarrow \\<br>\begin{bmatrix}<br>2 &amp; 3\\<br>10 &amp; 1<br>\end{bmatrix}<br>(3 \begin{bmatrix}<br>1\\<br>0<br>\end{bmatrix} + 2\begin{bmatrix}<br>0\\<br>1<br>\end{bmatrix})&amp;= 3 (\begin{bmatrix}<br>2 &amp; 3\\<br>10 &amp; 1<br>\end{bmatrix}<br>\begin{bmatrix}<br>1\\<br>0<br>\end{bmatrix})+2(\begin{bmatrix}<br>2 &amp; 3\\<br>10 &amp; 1<br>\end{bmatrix}<br>\begin{bmatrix}<br>0\\<br>1<br>\end{bmatrix})\\<br>&amp;=<br>3\begin{bmatrix}<br>2\\<br>10<br>\end{bmatrix}+<br>2\begin{bmatrix}<br>3\\<br>1<br>\end{bmatrix}\\<br>&amp;=\begin{bmatrix}<br>12\\<br>32<br>\end{bmatrix}<br>\end{align}<br>$$</p>
+<p>验证了我们之前的结论，矩阵乘法的结果可以看作是new basis vector i.e. transformed basis vector 的加权和，矩阵对向量的变换过程改变了basis vectors，但保持权重不变。</p>
+<p>$$<br>\color{green}{\begin{align}<br>&amp;\text{Means: Any vector } \vec r\ or\ \vec s \text{ could be represented as }{n\vec e_1+m\vec e_2}, \text{after the vector is transformed by matrix }\mathbf{A}\\<br>&amp;\text{it could be represented as } {ne_1^\prime+me_2^\prime}<br>\end{align}}<br>$$<br>之前我们说过矩阵乘向量可以从两种角度来看，殊途同归, 我们以 $\mathbf{Ax=b}$为例 ：<br>$$<br>\begin{align}<br>&amp;\text{Linear combination of columns of matrix } \mathbf{A}:\\<br>&amp;\mathbf{Ax}=\mathbf{A}\begin{bmatrix}<br>x_1 \\<br>x_2<br>\end{bmatrix}=<br>x_1\text{(1st column of }\mathbf{A})+x_2(\text{2nd column of }\mathbf{A})\\<br>&amp;\text{Matrix operation on vectors } \mathbf{A}:\\<br>&amp;\mathbf{Ax} =\mathbf{A}\begin{bmatrix}<br>x_1 \\<br>x_2<br>\end{bmatrix}= \mathbf{A}(x_1\begin{bmatrix}1\\0\end{bmatrix}+x_2\begin{bmatrix}0\\1 \end{bmatrix} )<br>=x_1(\mathbf{A}\begin{bmatrix} 1\\0 \end{bmatrix})+x_2(\mathbf{A}\begin{bmatrix}0\\1\end{bmatrix} )\\<br>&amp;= x_1(\color{blue}{\mathbf{A}\vec e_1}) + x_2(\color{blue}{\mathbf{A}\vec e_2})\longrightarrow \color{blue}{\text{Matrix operation on vectors: basis transformation}} \\<br>&amp;= x_1\color{blue}{\vec e_1^\prime} + x_2\color{blue}{\vec e_2^\prime}\\<br>&amp;= x_1(\color{red}{\text{1st column of matrix }\mathbf{A}})+x_2(\color{red}{\text{2nd column of matrix }\mathbf{A}}) \longrightarrow \color{red}{\text{Linear combination}}<br>\end{align}<br>$$</p>
+<h2 id="矩阵变换的类型"><a href="#矩阵变换的类型" class="headerlink" title="矩阵变换的类型"></a>矩阵变换的类型</h2><blockquote>
+<p>transform basis $\Leftrightarrow$ transform all the vectors $\Leftrightarrow$ transform the space.</p>
+</blockquote>
+<p>介绍一些特殊的矩阵，看看他们能对basis-向量-space做什么变换。</p>
+<p><strong>Identifity Matrix</strong></p>
+<p>$\begin{bmatrix}1&amp;0 \\ 0&amp;1 \end{bmatrix}\begin{bmatrix}x\\y \end{bmatrix}=\begin{bmatrix}x \\ y \end{bmatrix}$</p>
+<p>没有对向量作出任何改变，也没有改变basis vector</p>
+<p><strong>Diagonal Matrix</strong></p>
+<p>$\begin{bmatrix}3&amp;0 \\ 0&amp;2 \end{bmatrix}\begin{bmatrix}x\\y \end{bmatrix}=\begin{bmatrix}3x \\ 2y \end{bmatrix}=x\begin{bmatrix}3\\0 \end{bmatrix}+y\begin{bmatrix}0\\2 \end{bmatrix}$</p>
+<p>改变了basis vectors：拉长了basis vectors，当然也拉长了空间所有的vector，拉长了空间。如下图所示，</p>
+<p><img src="transformation.png" alt=""></p>
+<p>$\begin{bmatrix}-1&amp;0 \\ 0&amp;2 \end{bmatrix}\begin{bmatrix}x\\y \end{bmatrix}=\begin{bmatrix}-x \\ 2y \end{bmatrix}=x\begin{bmatrix}-1\\0 \end{bmatrix}+y\begin{bmatrix}0\\2 \end{bmatrix}$</p>
+<p>改变了basis vectors: flip the first basis vector,and strech the second basis vector, 当然其作用于全部向量（作用于the space，反转了第一个axis，拉升了第二个axis）。</p>
+<p>$\begin{bmatrix}-1&amp;0 \\ 0&amp;-1 \end{bmatrix}\begin{bmatrix}x\\y \end{bmatrix}=\begin{bmatrix}-x \\ -y \end{bmatrix}=x\begin{bmatrix}-1\\0 \end{bmatrix}+y\begin{bmatrix}0\\-1 \end{bmatrix}$</p>
+<p>将两个axis 旋转$180^\circ$ 且没有scale（保持空间中所有向量norm/长度不变），叫做<strong>“inversion”</strong>。新旧space关于原点对称。</p>
+<p>以上2种情况如下图所示，</p>
+<p><img src="flip_inversion.png" alt=""></p>
+<p><strong>Mirror Matrix</strong></p>
+<p>$\begin{bmatrix}0&amp;1 \\ 1&amp;0 \end{bmatrix}\begin{bmatrix}x\\y \end{bmatrix}=\begin{bmatrix}y \\ x \end{bmatrix}=x\begin{bmatrix}0\\1 \end{bmatrix}+y\begin{bmatrix}1\\0 \end{bmatrix}$</p>
+<p>将basis vectors沿着$45^\circ$ 直线对折，将第一个axis逆时针旋转$45^\circ$, 第二个axis顺时针旋转$45^\circ$ .</p>
+<p>$\begin{bmatrix}0&amp;-1 \\ -1&amp;0 \end{bmatrix}\begin{bmatrix}x\\y \end{bmatrix}=\begin{bmatrix}-y \\ -x \end{bmatrix}=x\begin{bmatrix}0\\-1 \end{bmatrix}+y\begin{bmatrix}-1\\0 \end{bmatrix}$</p>
+<p>将第一个axis顺时针旋转$90^\circ$,将第二个axis 逆时针旋转$90^\circ$ ，将 basis vectors 沿$135^\circ$ 线对折，新旧space沿着$135^\circ$ 线堆成。</p>
+<p>$\begin{bmatrix}-1&amp;0 \\ 0&amp;1 \end{bmatrix}\begin{bmatrix}x\\y \end{bmatrix}=\begin{bmatrix}-x \\ y\end{bmatrix}=x\begin{bmatrix}-1\\0 \end{bmatrix}+y\begin{bmatrix}0\\1 \end{bmatrix}$</p>
+<p>将第一个axis inverse，第二个axis不变，将第一个basis vector inverse，第二个basis不变。变换后的space 与之前的space 沿着第二个axis对称（关于y轴对称）。</p>
+<p>$\begin{bmatrix}1&amp;0 \\ 0&amp;-1 \end{bmatrix}\begin{bmatrix}x\\y \end{bmatrix}=\begin{bmatrix}x \\ -y \end{bmatrix}=x\begin{bmatrix}1\\0 \end{bmatrix}+y\begin{bmatrix}0\\-1 \end{bmatrix}$</p>
+<p>保持第一个axis不变，将第二个axis旋转$180^\circ$. 新旧space 沿着第一个axis对称（关于x轴对称）。</p>
+<p>以上几种沿轴对称的情况如下图，</p>
+<p><img src="mirrors.png" alt=""></p>
+<p><strong>Shear Matrix</strong></p>
+<p>$\begin{bmatrix}1&amp;1 \\ 0&amp;1 \end{bmatrix}\begin{bmatrix}x\\y \end{bmatrix}=\begin{bmatrix}x+y \\ y \end{bmatrix}=(x+y)\begin{bmatrix}1\\0 \end{bmatrix}+y\begin{bmatrix}0\\1 \end{bmatrix}$</p>
+<p>没改变第一个axis, 第二个axis顺时针旋转$45^\circ$. 如下图，</p>
+<p><img src="sheared.png" alt=""></p>
+<p><strong>Rotation Matrix</strong></p>
+<p>$\begin{bmatrix}0&amp;-1 \\ 1&amp;0 \end{bmatrix}\begin{bmatrix}x\\y \end{bmatrix}=\begin{bmatrix}-y \\ x \end{bmatrix}=x\begin{bmatrix}0\\1 \end{bmatrix}+y\begin{bmatrix}-1\\0 \end{bmatrix}$</p>
+<p>空间逆时间旋转$90^\circ$, 如图，</p>
+<p><img src="rotation.png" alt=""></p>
+<h2 id="矩阵变换的组合"><a href="#矩阵变换的组合" class="headerlink" title="矩阵变换的组合"></a>矩阵变换的组合</h2><p>上小节讲了通过矩阵进行 stretch、mirror、shear、rotation 等变换，本节考虑将这些对空间的变换进行组合时的情况，e.g. 先对向量 rotation，然后shear, etc.</p>
+<hr>
+<p><strong>初始量：</strong></p>
+<p>$\mathbf{A_2}\mathbf{A_1}\vec r=\mathbf{A_2}(\mathbf{A_1}\vec r)=(\mathbf{A_2}\mathbf{A_1})\vec r$</p>
+<p>Let $\mathbf{A_1}=\begin{bmatrix}0&amp;1\\-1&amp;0\end{bmatrix}$,$\mathbf{A_2}=\begin{bmatrix}1&amp;1\\0&amp;1\end{bmatrix}$</p>
+<p>Basis vectors：$\vec e_1=\begin{bmatrix} 1\\0\end{bmatrix}$, $\vec e_2 = \begin{bmatrix}0\\1 \end{bmatrix}$</p>
+<p>$\vec r=\begin{bmatrix}n\\m \end{bmatrix}=n\vec e_1+m\vec e_2=n\vec e_1^\prime+m\vec e_2^\prime=n\vec e_1^{\prime\prime}+m\vec e_2^{\prime\prime}$</p>
+<hr>
+<p><strong>变换过程</strong></p>
+<p>$$<br>\begin{align}<br>&amp;\mathbf{A_1}\vec e_1=\vec e_1^\prime=\begin{bmatrix}0\\-1\end{bmatrix},&amp;&amp;\mathbf{A_1}\vec e_2=\vec e_2^\prime = \begin{bmatrix} 1\\0\end{bmatrix}\\<br>&amp;\mathbf{A_2}(\mathbf{A_1}\vec e_1)=\mathbf{A_2}\vec e_1^\prime=\vec e_1^{\prime\prime}=\begin{bmatrix}-1\\-1 \end{bmatrix}, &amp;&amp;\mathbf{A_2}(\mathbf{A_1}\vec e_2)=\mathbf{A_2}\vec e_2^{\prime}=\vec e_2^{\prime\prime}=\begin{bmatrix}1\\0 \end{bmatrix}<br>\end{align}<br>$$</p>
+<p>从上面过程就可以得到，$\mathbf{A_1A_2}=\begin{bmatrix}-1&amp;1\\-1&amp;0 \end{bmatrix}$，其过程图示如下，</p>
+<p><img src="composition_transform.png" alt=""></p>
+<p><strong>Note！</strong>： $\mathbf{A_1A_2}\vec r \ne \mathbf{A_2A_1}\vec r$, 矩阵变换的顺序是不能变的！</p>
+<font color="blue"><strong>Summary:</strong></font>
+
+<ol>
+<li>matrix is linear transformation</li>
+<li>matrix composition means combination of lienar transformation</li>
+<li>linear transformation is also function</li>
+<li>so, matrix composition is also function composition which is much related with calculus.</li>
+<li>matrix multiplication is in fact is combination of linear transformation.</li>
+</ol>
+<h1 id="逆矩阵"><a href="#逆矩阵" class="headerlink" title="逆矩阵"></a>逆矩阵</h1><h2 id="高斯消元"><a href="#高斯消元" class="headerlink" title="高斯消元"></a>高斯消元</h2><p>解决线性方程组：$\mathbf{Ax=b}$</p>
+<p>Gaussian-Jordan Elimination<br>$$<br>[\mathbf{A|b}] \stackrel{\text{Gaussian Elimination}}\longrightarrow  [\mathbf{U\vert c}]   \stackrel{\text{Jordan Elimination}}\longrightarrow [\mathbf{I|x}]<br>$$</p>
+<h2 id="从高斯消元到逆矩阵"><a href="#从高斯消元到逆矩阵" class="headerlink" title="从高斯消元到逆矩阵"></a>从高斯消元到逆矩阵</h2><p><strong>逆矩阵</strong><br>$$<br>\text{Given a square matrix }\mathbf{A}, \text{if and only if there exist a matrix }\mathbf{A}^{-1} \text{satisfy}:\\<br>\mathbf{AA^{-1}}=\mathbf{A^{-1}A}=\mathbf{I}\\<br>\text{The matrix }\mathbf{A^{-1}} \text{is refered as the Inverse of  }\mathbf{A}.<br>$$<br><strong>高斯消元–解方程—求逆矩阵</strong></p>
+<p>我们知道高斯消元是用来解方程的，其实，他也同样是求解逆矩阵的过程，理由如下，</p>
+<p>对于矩阵乘法有，<br>$$<br>\mathbf{AB=A[b1\ \ b2\ \ b3]}=[\mathbf{Ab_1\ \ Ab_2\ \ Ab_3}]=\mathbf{[(AB)_1\ \ (AB)_2\ \ (AB)_3]}<br>$$<br>将上述结论带入逆矩阵的定义我们有，<br>$$<br>\mathbf{AA^{-1}=A[c_1\ \ c_2\ \ c_3]=[Ac_1\ \ Ac_2\ \ Ac_3]=I}<br>$$<br>因此<br>$$<br>\mathbf{[Ac_1]}=\begin{bmatrix}1\\0\\0\end{bmatrix}, \mathbf{[Ac_2]}=\begin{bmatrix}0\\1\\0\end{bmatrix},\mathbf{[Ac_3]}=\begin{bmatrix}0\\0\\1\end{bmatrix},<br>$$<br>其实上面是3个 $\mathbf{Ax=b}$ 形式的方程，根据高斯消元我们可以求得：$\mathbf{c_1,c_2,c_3}$。也就得到$\mathbf{A^{-1}=[c_1\ \ c_2\ \ c_3]}$. 实际上我们可以合并解三个方程组的过程，一次得到 $\mathbf{A^{-1}}$,<br>$$<br>\mathbf{[A|I]}\stackrel{Gauss Elimination}  \longrightarrow \mathbf{[I|A^{-1}]}<br>$$<br><strong>只有方阵才有逆矩阵的概念</strong></p>
+<h2 id="用逆矩阵解决线性方程"><a href="#用逆矩阵解决线性方程" class="headerlink" title="用逆矩阵解决线性方程"></a>用逆矩阵解决线性方程</h2><p>$\mathbf{Ax=b}\Rightarrow \mathbf{x=A^{-1}b}$</p>
+<p> 用逆矩阵解方程的前提是：系数矩阵$\mathbf{A}$ 的逆矩阵得存在。</p>
+<h1 id="行列式"><a href="#行列式" class="headerlink" title="行列式"></a>行列式</h1><p>什么是行列式？</p>
+<p>根据前面的内容知道：</p>
+<p>Linear transformation change the space.  线性变换改变了空间，改变了多少？这是由determinant 回答的。</p>
+<font color="red">几何上直观理解什么是行列式</font>：<br><br><strong>The factor by which a linear transformation change any area(2-D) or volume(3-D) is called -determinant of that transformation.</strong><br><br><img src="determinant.png" alt=""><br><br>一般的二阶行列式$\begin{vmatrix}a &amp; b\\c &amp; d\end{vmatrix}=ab-cd$<br><br>其几何意义如下图，<br><br><img src="determinant_area.png" alt=""><br><br>前面讲到matrix composition，也即：transformation combination，其是就是复合函数的概念。 前面讲的行列式，针对单个变换，是刻画 transformation/matrix 对空间改变的程度的量。那么行列式对于组合变换呢？即：<br><br>$\mathbf{M_1M_2}$ 这个组合变换的determinant 是什么呢？其几何意义是什么？<br><br>$\det(\mathbf{M_2M_1})=\det (\mathbf{M_2})\det (\mathbf{M_1})$<br><br><font color="blue">其可以看作是在$\mathbf{M_1}$ 对空间变换的基础上，用 $\mathbf{M_2}$ 对中间态空间再做一次变换。其中第一次变换的结果对第二次变换来讲，可以看作 “unit square”.</font>
+
+<h2 id="行列式和逆"><a href="#行列式和逆" class="headerlink" title="行列式和逆"></a>行列式和逆</h2><p>前面讲到，行列式衡量了一个线性变换对 area or volume of a region in the space 改变的程度（系数），那如果这个系数为0 呢？ 如下图，</p>
+<p><img src="determinant_singular.png" alt=""></p>
+<h2 id="形式化定义"><a href="#形式化定义" class="headerlink" title="形式化定义"></a>形式化定义</h2><p>TO-DO…</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ol>
+<li>行列式只针对方阵，是线性变换相伴随的量。No  Linear transformation, No determinant.</li>
+<li>行列式是线性变换对volum of space 改变的系数, 衡量改变大小。</li>
+<li>行列式是一个scalar, 有正负，体现线性变换对space改变的oritiention。</li>
+<li>行列式为0的意思是：the corresponding linear transformation squash the volume or are of any region of the space into 0,say a plane, a line or extreme case, a single point. 因此，矩阵是singular, 当然不可逆。</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创分享，您的支持是我继续创作的动力!</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="popoblue WeChat Pay"/>
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="popoblue Alipay"/>
+        <p>Alipay</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:</strong>
+    popoblue
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link:</strong>
+    <a href="http://yoursite.com/archive/2018-06-24/Matrices-in-Linear-Algebra/" title="三.线性代数中的矩阵">http://yoursite.com/archive/2018-06-24/Matrices-in-Linear-Algebra/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice: </strong>
+    All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> unless stating additionally.
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Linear-Algebra/" rel="tag"># Linear Algebra</a>
+          
+            <a href="/tags/Matrix/" rel="tag"># Matrix</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/archive/2018-06-23/Learning-to-answer-yes-or-no/" rel="next" title="二.Learning to Answer Yes or No">
+                <i class="fa fa-chevron-left"></i> 二.Learning to Answer Yes or No
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/archive/2018-06-28/Matrices-make-linear-mappings/" rel="prev" title="四.矩阵做线性变换">
+                四.矩阵做线性变换 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">popoblue</p>
+              <p class="site-description motion-element" itemprop="description">知行合一，一个功夫！</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">33</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">80</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/yazhouhao" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:me@yazhouhao.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://twitter.com/yazhouhao" target="_blank" title="Twitter">
+                    
+                      <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://www.facebook.com/yazhouhao" target="_blank" title="FB Page">
+                    
+                      <i class="fa fa-fw fa-facebook"></i>FB Page</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#矩阵：对向量的操作"><span class="nav-number">1.</span> <span class="nav-text">矩阵：对向量的操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#矩阵、向量及线性方程组"><span class="nav-number">1.1.</span> <span class="nav-text">矩阵、向量及线性方程组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#矩阵如何对空间进行变换"><span class="nav-number">1.2.</span> <span class="nav-text">矩阵如何对空间进行变换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#矩阵变换的类型"><span class="nav-number">1.3.</span> <span class="nav-text">矩阵变换的类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#矩阵变换的组合"><span class="nav-number">1.4.</span> <span class="nav-text">矩阵变换的组合</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#逆矩阵"><span class="nav-number">2.</span> <span class="nav-text">逆矩阵</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#高斯消元"><span class="nav-number">2.1.</span> <span class="nav-text">高斯消元</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#从高斯消元到逆矩阵"><span class="nav-number">2.2.</span> <span class="nav-text">从高斯消元到逆矩阵</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用逆矩阵解决线性方程"><span class="nav-number">2.3.</span> <span class="nav-text">用逆矩阵解决线性方程</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#行列式"><span class="nav-number">3.</span> <span class="nav-text">行列式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#行列式和逆"><span class="nav-number">3.1.</span> <span class="nav-text">行列式和逆</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#形式化定义"><span class="nav-number">3.2.</span> <span class="nav-text">形式化定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">3.3.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">popoblue</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count"></span>
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('5');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'manual') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.3"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("fgig2ECgFUUIzHQxQ6UEGBsw-gzGzoHsz", "qwf4KMNBL2n522kimTswJY9w");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Linkedin,Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+  </script>
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
