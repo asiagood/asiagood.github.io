@@ -1,0 +1,1622 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en,zh-Hans,ja,Latn,default">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda,Arial,STXingkai,"华文行楷",STKaiti,“华文楷体”,STFangsong,Lato:300,300italic,400,400italic,700,700italic|Roboto Slab,STKaiti,"华文楷体":300,300italic,400,400italic,700,700italic|Arial,STXingkai,华文行楷,STKaiti,华文楷体,STFangsong,华文仿宋:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Taylor Series,Linearisation,Approximation,泰勒级数,线性化," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="学习目标：   掌握幂级数对函数的近似 理解线性化的意义及关联 学会多元函数的近似表示方法   Taylor Series for approximationsTaylor级数的核心思想是： 对于一个复杂函数$f(x)$, 我们希望用若干其他简单函数的组合去近似$f(x)$, 并且我们的目标函数$f(x)$ 是behave good（e.g. 连续的）的时候，这种方法一定是可行的。指导我们appr">
+<meta name="keywords" content="Taylor Series,Linearisation,Approximation,泰勒级数,线性化">
+<meta property="og:type" content="article">
+<meta property="og:title" content="四.泰勒级数和线性化">
+<meta property="og:url" content="http://yoursite.com/archive/2018-07-12/Taylor-series-and-linearisation/index.html">
+<meta property="og:site_name" content="逝川">
+<meta property="og:description" content="学习目标：   掌握幂级数对函数的近似 理解线性化的意义及关联 学会多元函数的近似表示方法   Taylor Series for approximationsTaylor级数的核心思想是： 对于一个复杂函数$f(x)$, 我们希望用若干其他简单函数的组合去近似$f(x)$, 并且我们的目标函数$f(x)$ 是behave good（e.g. 连续的）的时候，这种方法一定是可行的。指导我们appr">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://yoursite.com/archive/2018-07-12/Taylor-series-and-linearisation/approximation.png">
+<meta property="og:image" content="http://yoursite.com/archive/2018-07-12/Taylor-series-and-linearisation/maclaurin_taylor.png">
+<meta property="og:image" content="http://yoursite.com/archive/2018-07-12/Taylor-series-and-linearisation/examples.png">
+<meta property="og:image" content="http://yoursite.com/archive/2018-07-12/Taylor-series-and-linearisation/approx1.png">
+<meta property="og:image" content="http://yoursite.com/archive/2018-07-12/Taylor-series-and-linearisation/approx2.png">
+<meta property="og:image" content="http://yoursite.com/archive/2018-07-12/Taylor-series-and-linearisation/approx3.png">
+<meta property="og:image" content="http://yoursite.com/archive/2018-07-12/Taylor-series-and-linearisation/approx4.png">
+<meta property="og:image" content="http://yoursite.com/archive/2018-07-12/Taylor-series-and-linearisation/approx5.png">
+<meta property="og:image" content="http://yoursite.com/archive/2018-07-12/Taylor-series-and-linearisation/2taylors.png">
+<meta property="og:image" content="http://yoursite.com/archive/2018-07-12/Taylor-series-and-linearisation/2dimgaussian.png">
+<meta property="og:image" content="http://yoursite.com/archive/2018-07-12/Taylor-series-and-linearisation/2dim0order.png">
+<meta property="og:image" content="http://yoursite.com/archive/2018-07-12/Taylor-series-and-linearisation/2dim1order.png">
+<meta property="og:image" content="http://yoursite.com/archive/2018-07-12/Taylor-series-and-linearisation/2dim2order.png">
+<meta property="og:image" content="http://yoursite.com/archive/2018-07-12/Taylor-series-and-linearisation/2dimtaylor.png">
+<meta property="og:updated_time" content="2018-07-13T22:17:51.427Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="四.泰勒级数和线性化">
+<meta name="twitter:description" content="学习目标：   掌握幂级数对函数的近似 理解线性化的意义及关联 学会多元函数的近似表示方法   Taylor Series for approximationsTaylor级数的核心思想是： 对于一个复杂函数$f(x)$, 我们希望用若干其他简单函数的组合去近似$f(x)$, 并且我们的目标函数$f(x)$ 是behave good（e.g. 连续的）的时候，这种方法一定是可行的。指导我们appr">
+<meta name="twitter:image" content="http://yoursite.com/archive/2018-07-12/Taylor-series-and-linearisation/approximation.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/archive/2018-07-12/Taylor-series-and-linearisation/"/>
+
+
+
+
+
+  <title>四.泰勒级数和线性化 | 逝川</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">逝川</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">此间且为等闲事，花开花谢不知年</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-主页">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            主页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-关于">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/archive/2018-07-12/Taylor-series-and-linearisation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="popoblue">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="逝川">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">四.泰勒级数和线性化</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-12T23:59:46+08:00">
+                2018-07-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/课程笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">课程笔记</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/课程笔记/Mathematics-for-Machine-Learning/" itemprop="url" rel="index">
+                    <span itemprop="name">Mathematics for Machine Learning</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/课程笔记/Mathematics-for-Machine-Learning/Multivariate-Calculus/" itemprop="url" rel="index">
+                    <span itemprop="name">Multivariate Calculus</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/archive/2018-07-12/Taylor-series-and-linearisation/" class="leancloud_visitors" data-flag-title="四.泰勒级数和线性化">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>学习目标：</p>
+<blockquote>
+<ol>
+<li>掌握幂级数对函数的近似</li>
+<li>理解线性化的意义及关联</li>
+<li>学会多元函数的近似表示方法</li>
+</ol>
+</blockquote>
+<h1 id="Taylor-Series-for-approximations"><a href="#Taylor-Series-for-approximations" class="headerlink" title="Taylor Series for approximations"></a>Taylor Series for approximations</h1><p><strong>Taylor级数的核心思想是</strong>：</p>
+<p>对于一个复杂函数$f(x)$, 我们希望用若干其他简单函数的组合去近似$f(x)$, 并且我们的目标函数$f(x)$ 是behave good（e.g. 连续的）的时候，这种方法一定是可行的。指导我们approximate $f(x)$ 的原则如下：</p>
+<p>选择函数$f(x)$ 的某一点$(x_0,y_0)$ 作为切入，并且要保证在该点处：</p>
+<ol>
+<li>$g(x_0)=f(x_0)$</li>
+<li>$g^\prime (x_0)=f^\prime(x_0)$   </li>
+<li>$g^{\prime\prime}(x_0) =f^{\prime\prime}(x_0) $</li>
+<li>…</li>
+</ol>
+<p>换句话说，我用来approximate $f(x)$ 的函数需要在事先选好的某一点处：与$f(x)$ 函数值相同，一阶导数相同，二阶导数相同….n 阶导数相同….. 最终我们的$g(x)$ 可以无限接近$f(x)$。 </p>
+<p>上面讲到，我们选择$f(x)$ 上的某一点处切入，在满足若干要求之后得到$g(x)$ 可以无限接近$f(x)$. 这就意味着我们通过知道函数上某一点的所有信息（e.g. 函数值，一阶导数，二阶导数,….,n阶导数），就可以获得整个函数$f(x)$ 的全部信息。这是非常令人吃惊的现实，函数$f(x)$ 上的每一个点竟然蕴含了该函数所有的信息，这不能不令人惊叹！这有点像中国有句古语：管中窥豹，可见一斑。 因此，使用Taylor series approximate 函数$f(x)$有另外一种称呼：在一点处将函数$f(x)$ Taylor展开。</p>
+<p><strong>简言之，Taylor serise 是用函数的局部来描述整体，而且可以描述的任意接近。</strong></p>
+<p>当然，Taylor series 还有一些其他的细节问题，但是上面的内容就是Taylor series 的核心了。</p>
+<h2 id="Power-series-derivation"><a href="#Power-series-derivation" class="headerlink" title="Power series derivation"></a>Power series derivation</h2><p>Power series 是Taylor series 的一种特例，其核心思想是：</p>
+<font collor="blue"><strong>You can use a series of increasing power of x to re-express functions</strong>.</font>
+
+<p>如下图所示，</p>
+<p><img src="approximation.png" alt=""></p>
+<p>我们下面推导函数的幂级数表示：</p>
+<p>幂函数的集合为： ${1=x^0,x,x^2,x^3,…,x^n,…}$, 我们需要找到它们的线性组合权重系数，使得组合的结果接近$f(x)$. 我们令：</p>
+<p>$g(x) = a_0 + a_1x + a_2x^2 + a_3x^3+….a_nx^n+…$</p>
+<p>我们需要找到这些权重系数：${a_0,a_1,…,a_n }$</p>
+<p>我们选择在$(x=0,f(0))$ 这一点做切入点，那么依照上小节的结论我们有：<br>$$<br>\begin{align}<br>g(0) &amp;= f(0) \Rightarrow a_0 = f(0)  \\<br>g^\prime(0) &amp;= f^\prime(0) \Rightarrow a_1 = f^\prime(0) \\<br>g^{\prime\prime}(0) &amp;= f^{\prime\prime}(0) \Rightarrow a_2 = \frac{f^{\prime\prime}(0)}{2} \\<br>g^{(3)}(0) &amp;= f^{(3)}(0) \Rightarrow a_3 = \frac{f^{(3)}(0)}{6} \\<br>\cdots \\<br>g^{(n)}(0) &amp;= f^{(n)}(0) \Rightarrow a_n = \frac{f^{(n)}(0)}{n!}\\<br>\cdots \\<br>\end{align}<br>$$<br>我们得到了所有我们想要的权重系数，并且只用函数在$x = 0$ 这一点处的全部信息。此时，我们就知道了函数$f(x)$ 的全部， 即：<br>$$<br>\begin{align}<br>&amp;\color{blue}{ f(x) = g(x) = f(0) + f^\prime(0)x + \frac{f^{\prime\prime}(0)}{2} x^2 + \cdots + \frac{f^{(n)}(0)}{n!}x^n + \cdots= \sum_{n=0}^{\infty} \frac{f^{(n)}(0)}{n!} x^n }\\<br>\end{align}<br>$$<br><strong>PEND.</strong></p>
+<p>在上图中，我们会明显地发现当高阶term不断加入的时候，之前已经有的低阶项会保持不变，高阶项的加入扩大了接近的范围。</p>
+<p>上面我们在$x=0$ 点处将函数$f(x)$ Taylor 展开，这种特例叫做：<strong>Maclaurin Expansion</strong>。</p>
+<p><strong>上述Taylor展开是针对一元函数$f(x)$进行的，这种思想可以扩展到n元函数的情况。届时我们就不是approximate 曲线，而是appriximate hyper surfaces。</strong></p>
+<p><u>Example</u>:</p>
+<p>根据 Maclaurin series 我们可得：<br>$$<br>e^x = g(x) = 1 +  x + \frac{1}{2}x^2 + \frac{1}{3!}x^3 + \cdots + \frac{1}{n!}x^n+\cdots<br>$$<br>我们从这里也可以发现，对$g(x)$ 求导之后：<br>$$<br>g^\prime(x) = g(x) , i.e. (e^x)^\prime = e^x<br>$$<br>即：$e^x$ 的各阶导数等于 $e^x$.</p>
+<p>PS: 这里有一个可视化的例子用来帮助理解 Taylor Series: <a href="https://www.coursera.org/learn/multivariate-calculus-machine-learning/ungradedWidget/SgnFT/visualising-taylor-series" target="_blank" rel="noopener">link</a></p>
+<h2 id="Power-series-Details"><a href="#Power-series-Details" class="headerlink" title="Power series Details"></a>Power series Details</h2><p>在$x=0$ 点处用来reconstruct or re-express $f(x)$ 的series 我们称之为： Maclaurin serise.</p>
+<p>实际上，我们可以选择在任何一点处对函数做Taylor 展开- 用Taylor series approximate 函数。</p>
+<p>对比图如下，</p>
+<p><img src="maclaurin_taylor.png" alt=""></p>
+<p>上半部分是Maclaurin 展开，下半部分是在$x=p$ 处 Taylor展开。</p>
+<p>在P点：$(p,f(p))$ 即 $x=p$ 处用 Taylor series approximate 函数$f(x)$ （把函数在P点处Taylor泰勒展开）</p>
+<p><strong>通用的 Taylor Series 为</strong>：<br>$$<br>\color{blue}{f(x) = g(x) = f(p) + f^\prime(p)(x-p) + \frac{f^{\prime\prime}(p)}{2!}(x-p)^2 \cdots+\frac{f^{(n)}(p)}{n!}(x-p)^n \cdots  = \sum_{n=0}^{\infty} \frac{f^{(n)}(p)}{n!}(x-p)^n}<br>$$<br>推导过程与Maclaurin Series类似，这里不展开讲。</p>
+<ul>
+<li><p>区别在于 $x \rightarrow (x-p)$, 实际上相当于在Maclaurin serise 基础上对整个$g(x)$ 沿着 $x$ 轴做了一次平移: 平移量 = $p$.</p>
+</li>
+<li><p>在$x=0$ 处 我们需要对$\lbrace1=x^0,x^1,x^2,…,x^n,..\rbrace$ 进行组合来approximate $f(x)$. </p>
+</li>
+<li><p>在$x=p$ 处 我们需要对 $\lbrace1=(x-p)^0,(x-p)^1,(x-p)^2,…, (x-p)^n,… \rbrace$ 进行组合来approximate $f(x)$.</p>
+</li>
+</ul>
+<p>以上两种情况我们<strong>都用了统一的原则</strong>去求解那些<strong>权重系数</strong>：$a_0,a_1,…,a_n,…$.且 $a_n = \frac{f^{(n)}(p)}{n!}$.</p>
+<p>PS: 所谓统一的原则就是第一小节讲到的 “$g(x)$ 与 $f(x)$ 在$x=p$ 处：函数值相等，一阶导数相等，二阶导数相等,…，n阶导数相等，…”.</p>
+<font color="red"><strong>Taylor Series 将函数 $f(x)$ 重构成幂函数的线性组合, 此即所谓的linearisation.</strong> </font>
+
+<h2 id="Examples"><a href="#Examples" class="headerlink" title="Examples"></a>Examples</h2><p>Example 1:</p>
+<p>将 $cos(x)$ 在$x=0$ 点展开为 Maclaurin serise. $cos(x)$ 函数有两个特点保证我们可以这样做：</p>
+<ul>
+<li>连续</li>
+<li>无穷阶可导</li>
+</ul>
+<p>Example 2:</p>
+<p>将 $\frac{1}{x}$ 在 $x=1$ 点展开为Taylor serise. $\frac{1}{x}$ 函数并不是一个“nice”的函数：</p>
+<ul>
+<li>在$x=0$ 处并不连续</li>
+</ul>
+<p>两个展开见下图</p>
+<p><img src="examples.png" alt=""></p>
+<p><strong>有以下几个特点需要注意</strong>：</p>
+<ul>
+<li>随着不断增加$x$ 的次幂$n$, 近似范围越来越大。但是在近似范围之外，$g(x)$ 与 $f(x)$ 差距很大。因此无论是用Maclaurin series 还是 Taylor series ，都要注意 函数的定义域范围，超出范围的部分并不是approximation</li>
+<li>$cos(x)$ 的 Maclaurin series 展开式中，含有$x$ 的奇次幂的项都消失了，剩下的都是偶次幂项：$1,x^2,x^4…,$ . 换句话说就是这些 basis functions 也都会偶函数，和它们要approximate 的函数 $cos(x)$ 在这方面保持了一致性。</li>
+<li>$\frac{1}{x}$ 在 approximate的过程中，$g(x)$ 直接跨越了渐近线。</li>
+<li>$\frac{1}{x}$ 函数的 Taylor series 展开结果，我们发现只在 $x&gt;0$ 的部分 $g(x)$ 试图approximate 函数$\frac{1}{x}$, 而 $g(x)$ 对于 $x&lt;0$ 的部分, 却完全没有考虑在内。</li>
+<li>在两个例子中，Taylor series 都表现出$g(x)$ 值 正、负交替出现的情况：这种情况下 $g(x)$ 收敛会很慢。</li>
+</ul>
+<h1 id="Multivariable-Taylor-Series"><a href="#Multivariable-Taylor-Series" class="headerlink" title="Multivariable Taylor Series"></a>Multivariable Taylor Series</h1><h2 id="Linearisation"><a href="#Linearisation" class="headerlink" title="Linearisation"></a>Linearisation</h2><p>本节主要解决的问题是：我们想知道当我们用了 Taylor series 对$f(x)$ 做approximation之后，与$f(x)$ 之间的误差-error 是多少.</p>
+<p><img src="approx1.png" alt=""></p>
+<p>上图是将 $f(x)$ 在$x=p$ 点处 Taylor 展开，i.e.<br>$$<br>f(x) = g(x) = \sum_{n=0}^{\infty} \frac{f^{(n)}(p)}{n!} (x-p)^n<br>$$<br>其中，first order approximation 是绿色直线，i.e.<br>$$<br>\color{green}{g_1(x) = f(p) + f^\prime (p)(x-p)}<br>$$<br>first order approximation其实就是在$x=p$ 附近用直线来近似$f(x)$. p 附近的点$x$ 与其距离为: $x-p$，我们将这里距离记为：$\Delta p$ ,此时$x= p+\Delta p$. 如下图所示，</p>
+<p><img src="approx2.png" alt=""></p>
+<p>我们可以将 first order approximation 中的 $x$ 替换为 $p$, 如下图所示</p>
+<p><img src="approx3.png" alt=""></p>
+<p>此时一阶近似为，<br>$$<br>\color{green}{g_1 (p + \Delta p) = f(p) + f^\prime (p) \Delta p}<br>$$<br>$p$ 是我们任意选择的一点，我们把上述图和公式中的 $p$  替换为 $x$. 替换没有改变任何概念上的事实，只是更符合大家常见的形式。如下图，</p>
+<p><img src="approx4.png" alt=""></p>
+<p>此时一阶近似为，<br>$$<br>\color{green}{g_1(x+\Delta x) = f(x) + f^\prime (x) \Delta x}<br>$$<br>这个时候，我们按照上述形式可以重写 Taylor series 公式为：<br>$$<br>f(x+ \Delta x) = \sum_{n=0}^\infty \frac{f^{(n)}(x)}{n!} (\Delta x)^n<br>$$<br><strong>上述公式表示：在任意点$x$ 处函数$f(x)$ 的 Taylor series展开。</strong></p>
+<p>我们基于此来考察 我们的 first order approximation 与$f(x)$ 的误差情况。</p>
+<p>现在我们把 “新的” Taylor series 公式展开看一下，<br>$$<br>f(x + \Delta x) = f(x) + f^\prime(x)\Delta x + \frac{f^{\prime\prime}(x)}{2!} \Delta x^2 + \frac{f^{(3)}(x)}{3!} \Delta x^3 + \cdots<br>$$<br><strong>我们只保留一阶项，忽略二阶及以上的项并将他们看作误差</strong>：这一过程称之为 <strong>Linearisation.</strong> 如下，<br>$$<br>\color{orange}{f(x + \Delta x) = f(x) + f^\prime \Delta x + O(\Delta x^2)}<br>$$<br><strong>换句话说，对$f(x)$ linearise 是要带误差项的</strong>， 相比于最初的不带误差项的 first order approximation：$\color{green}{g_1(x+\Delta x) = f(x) + f^\prime (x) \Delta x}$ 而言多了一个 $\color{orange}{\Delta x^2}$.</p>
+<p>如下图所示，</p>
+<p><img src="approx5.png" alt=""></p>
+<p>通过 “新的” Taylor series 公式，我们可以得到其导数的近似表达式，<br>$$<br>f^\prime(x) = \frac{f(x+ \Delta x) - f(x)}{\Delta x} + O(\Delta x)<br>$$<br>当我们使用数值方法通过计算机计算导数或者函数值的时候，上面讲到的所有近似思想和公式有重要的意义。</p>
+<p>这里有一个关于 Taylor series 的练习帮助理解，<a href="https://www.coursera.org/learn/multivariate-calculus-machine-learning/quiz/9mymJ/taylor-series-special-cases" target="_blank" rel="noopener">link</a></p>
+<h2 id="Multivariate-Taylor"><a href="#Multivariate-Taylor" class="headerlink" title="Multivariate Taylor"></a>Multivariate Taylor</h2><p>之前我们讨论的是用 Taylor serise 对一元函数 $f(x)$ 做approximation。 对于多元函数的情况 Taylor series 同样起作用。</p>
+<p><img src="2taylors.png" alt=""></p>
+<p>上面的对比图显了2种 Taylor series一项一项的对比，出于简便的目的现采用如下形式的 Taylor series：<br>$$<br>f(x+\Delta x) = f(x) + f^\prime(x)\Delta x + \frac{f^{\prime\prime}(x)}{2}\Delta x^2 +…<br>$$<br><strong>假设有2元函数</strong> $f=f(x,y)$,  我们要回答如下问题<br>$$<br>f(x+\Delta x, y+\Delta y)= \color{red}{\ ?}<br>$$<br>考虑的如下现实原因，</p>
+<ul>
+<li>多元函数二阶以上导数是 Tensor，不方便表示和计算</li>
+<li>多元函数的二阶 Taylor series 在小范围内已经可以做到很好的approximation。</li>
+</ul>
+<p>针对二元函数（or 多元函数）我们只考虑截断到二阶的 Taylor series。</p>
+<p><strong>Example：</strong> Gaussian function $f(x,y) = e^{-(x^2+y^2)}$ 入下图所示，</p>
+<p><img src="2dimgaussian.png" alt=""></p>
+<p><strong>0 order approximation</strong>  $\color{blue}{g_0(x+\Delta x, y+ \Delta y)}$. 如下图所示，</p>
+<p><img src="2dim0order.png" alt=""></p>
+<p><strong>1 order approximation</strong> $\color{blue}{g_1(x + \Delta x, y+\Delta y)}$. 如下图所示，</p>
+<p><img src="2dim1order.png" alt=""></p>
+<p><strong>2 order approximation</strong> $g_2(x + \Delta x,y+ \Delta y)$. 如下图所示，</p>
+<p><img src="2dim2order.png" alt=""></p>
+<p>现在我们给出 2元 Taylor series（二阶）如下图，</p>
+<p><img src="2dimtaylor.png" alt=""></p>
+<p><strong>综上，我们有一个简洁的针对多元函数$f(\mathbf{x})$ 的二阶泰勒级数：</strong><br>$$<br>\color{blue}{f(\mathbf{x+\Delta x}) = f(\mathbf{x}) + \mathbf{J}_f \mathbf{\Delta x} + \frac{1}{2} \mathbf{\Delta x}^T \mathbf{H}_f \mathbf{\Delta x} + \cdots }<br>$$<br>其中，</p>
+<ul>
+<li>$\mathbf{x}\in \mathbb{R}^n$ is vector</li>
+<li>$\mathbf{\Delta x}$  means  $[\Delta x_1,\Delta x_2,\cdots,\Delta x_n]^T$.</li>
+</ul>
+<p><strong>这里有一个2个练习帮助理解：</strong></p>
+<ol>
+<li>2-D Taylor series <a href="https://www.coursera.org/learn/multivariate-calculus-machine-learning/quiz/kgD38/2d-taylor-series" target="_blank" rel="noopener">link</a>.</li>
+<li>整个Taylor series 概念的考察 <a href="https://www.coursera.org/learn/multivariate-calculus-machine-learning/exam/MdRmY/taylor-series-assessment" target="_blank" rel="noopener">link</a>.</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创分享，您的支持是我继续创作的动力!</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="popoblue WeChat Pay"/>
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="popoblue Alipay"/>
+        <p>Alipay</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:</strong>
+    popoblue
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link:</strong>
+    <a href="http://yoursite.com/archive/2018-07-12/Taylor-series-and-linearisation/" title="四.泰勒级数和线性化">http://yoursite.com/archive/2018-07-12/Taylor-series-and-linearisation/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice: </strong>
+    All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> unless stating additionally.
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Taylor-Series/" rel="tag"># Taylor Series</a>
+          
+            <a href="/tags/Linearisation/" rel="tag"># Linearisation</a>
+          
+            <a href="/tags/Approximation/" rel="tag"># Approximation</a>
+          
+            <a href="/tags/泰勒级数/" rel="tag"># 泰勒级数</a>
+          
+            <a href="/tags/线性化/" rel="tag"># 线性化</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/archive/2018-07-09/Multivariate-chain-rule-and-its-applications/" rel="next" title="三.多元链式法则及其应用">
+                <i class="fa fa-chevron-left"></i> 三.多元链式法则及其应用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">popoblue</p>
+              <p class="site-description motion-element" itemprop="description">知行合一，一个功夫！</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">88</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/yazhouhao" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:me@yazhouhao.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://twitter.com/yazhouhao" target="_blank" title="Twitter">
+                    
+                      <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://www.facebook.com/yazhouhao" target="_blank" title="FB Page">
+                    
+                      <i class="fa fa-fw fa-facebook"></i>FB Page</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Taylor-Series-for-approximations"><span class="nav-number">1.</span> <span class="nav-text">Taylor Series for approximations</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Power-series-derivation"><span class="nav-number">1.1.</span> <span class="nav-text">Power series derivation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Power-series-Details"><span class="nav-number">1.2.</span> <span class="nav-text">Power series Details</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Examples"><span class="nav-number">1.3.</span> <span class="nav-text">Examples</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Multivariable-Taylor-Series"><span class="nav-number">2.</span> <span class="nav-text">Multivariable Taylor Series</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Linearisation"><span class="nav-number">2.1.</span> <span class="nav-text">Linearisation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Multivariate-Taylor"><span class="nav-number">2.2.</span> <span class="nav-text">Multivariate Taylor</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">popoblue</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count"></span>
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('5');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'manual') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.3"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("fgig2ECgFUUIzHQxQ6UEGBsw-gzGzoHsz", "qwf4KMNBL2n522kimTswJY9w");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Linkedin,Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+  </script>
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
