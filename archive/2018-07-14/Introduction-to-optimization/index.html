@@ -148,7 +148,7 @@
 <meta property="og:image" content="http://yoursite.com/archive/2018-07-14/Introduction-to-optimization/contour2.png">
 <meta property="og:image" content="http://yoursite.com/archive/2018-07-14/Introduction-to-optimization/contour22.png">
 <meta property="og:image" content="http://yoursite.com/archive/2018-07-14/Introduction-to-optimization/constrained_optimization.png">
-<meta property="og:updated_time" content="2018-07-16T13:21:08.004Z">
+<meta property="og:updated_time" content="2018-07-16T15:42:27.596Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="五.优化基础">
 <meta name="twitter:description" content="简介  If we want to find the minimum and maximum points of a function then we can use multivariate calculus to do this, say to optimise the parameters (the space) of a function to fit some data. First w">
@@ -591,7 +591,8 @@
 <h3 id="Directional-derivative"><a href="#Directional-derivative" class="headerlink" title="Directional derivative"></a>Directional derivative</h3><p>对一个函数, e.g. $f(x,y) = x^2y$,  the partial derivative with respect to $ x$ gives the rate of change of f in the $x$ direction, the partial dericate with respect to $y$ gives the rate of change of f in the $y$ direction; Gradient gives  a overall indication about the rate of change of $f$.</p>
 <font color="blue">How do we compute the rate of change of f in arbitrary direction?</font>
 
-<p> <strong>Defition:</strong><br>The rate of change of a multivarite function in the direction $\mathbf{u}$ is called the directional derivative in the direction $\mathbf{u}$.  Here $\mathbf{u}$ is assumed to be a <strong>unit vector</strong>.  Assuming that:<br>$$<br>\begin{align}<br>f = f(x,y) \\<br>\mathbf{u}=<br>\begin{bmatrix}<br>u_1\\<br>u_2<br>\end{bmatrix}<br>\end{align}<br>$$<br>那么，我们有：<br>$$<br>\color{blue}{D_{\mathbf{u}}f } = \color{orange}{\nabla_{\mathbf{x}}f } \cdot \color{green}{\mathbf{u}} = \color{orange}{\frac{\partial f}{\partial x}} \color{green}{u_1} + \color{orange}{\frac{\partial f}{\partial y}} \color{green}{u_2}<br>$$<br>因此，方向导数是梯度与$\mathbf{u}$ 的点积。</p>
+<p> <strong>Defition:</strong><br>The rate of change of a multivarite function in the direction $\mathbf{u}$ is called the directional derivative in the direction $\mathbf{u}$.  Here $\mathbf{u}$ is assumed to be a <strong>unit vector</strong>.  Assuming that:<br>$$<br>\begin{align}<br>f = f(x,y) \\<br>\mathbf{u}=<br>\begin{bmatrix}<br>u_1\\<br>u_2<br>\end{bmatrix}<br>\end{align}<br>$$</p>
+<p>那么，我们有：<br>$$<br>\color{blue}{D_{\mathbf{u}}f } = \color{orange}{\nabla_{\mathbf{x}}f } \cdot \color{green}{\mathbf{u}} = \color{orange}{\frac{\partial f}{\partial x}} \color{green}{u_1} + \color{orange}{\frac{\partial f}{\partial y}} \color{green}{u_2}<br>$$<br>因此，方向导数是梯度与$\mathbf{u}$ 的点积。</p>
 <p>注意： 如果 $\mathbf{u}$ 是$x$轴方向的单位向量，i.e. $\mathbf{u}=\begin{bmatrix}1\\0 \end{bmatrix}$, 那么方向导数就是函数对$x$ 偏导数, i.e. $D_u f = \frac{\partial f}{\partial x}$.</p>
 <p><strong>一般情况</strong></p>
 <p>一般情况下，<strong>the directional derivative is the linear combination of all the partial derivaties.</strong></p>
@@ -677,7 +678,12 @@
 <p>二.$f(x,y)=x^2y$</p>
 <p><img src="contour2.png" alt=""></p>
 <p><img src="contour22.png" alt=""></p>
-<h3 id="Constrained-Optimization-simple"><a href="#Constrained-Optimization-simple" class="headerlink" title="Constrained Optimization (simple)"></a>Constrained Optimization (simple)</h3><p>$f(x,y)=x^2y$,  s.t. $x^2+y^2=r^2$ where $r&gt;0$ and is constant.</p>
+<h3 id="Constrained-Optimization-simple"><a href="#Constrained-Optimization-simple" class="headerlink" title="Constrained Optimization (simple)"></a>Constrained Optimization (simple)</h3><p><strong>General Case:</strong></p>
+<p>Exist function $f(\mathbf x)$, s.t. $g(\mathbf x) = c$, where $c$ is constant.</p>
+<p><strong>Optimization:</strong></p>
+<p>Find the specific $\mathbf {\hat x}$ which make $f(\mathbf {\hat x})=f_{min}$ or  $f_{max}$.</p>
+<p><u>Example</u> :</p>
+<p>$f(x,y)=x^2y$,  s.t. $x^2+y^2=r^2$ where $r&gt;0$ and is constant.</p>
 <p> <strong>Optimization</strong>:  Find $(\hat x,\hat y)$ which make $f(\hat x,\hat y)=f_{min}$or $f_{max}$.</p>
 <p><strong>分析：</strong></p>
 <p> $x^2+y^2=r$ 在x-o-y平面内是一个以原点为圆心，半径为$r$ 的圆。我们记：$g(x,y)=x^2+y^2$, 那个半径为 $r$ 的圆就是 <strong>a specific contour of the contours of function</strong> $g(x,y)$.</p>
@@ -702,14 +708,15 @@
 <p><strong>那么， Lagrange Multipliers的核心思想是什么呢？</strong></p>
 <p>我个人有两种理解方式，</p>
 <ol>
-<li><p>我么找到函数$f(x,y)$ 的梯度: $\nabla_{\mathbf x}f(\mathbf x)$, 也找到constrained function $g(x,y)$ 的梯度 $\nabla_{\mathbf x}g(\mathbf x)$, 根据 两个函数的contour 相切点，是$f(x,y)$最大or最小值点, 因此让：<br>$$<br>\nabla_{\mathbf x}f(\mathbf x) = \lambda \nabla_{\mathbf x}g(x,y)<br>$$<br>从而求得: $\mathbf {\hat x}$.</p>
+<li><p>我么找到函数$f(x,y)$ 的梯度: $\nabla_{\mathbf x}f(\mathbf x)$, 也找到constrained function $g(x,y)$ 的梯度 $\nabla_{\mathbf x}g(\mathbf x)$, 根据 两个函数的contour 相切点，是$f(x,y)$最大or最小值点, 因此让：<br>$$<br>\nabla_{\mathbf x}f(\mathbf x) = \lambda \nabla_{\mathbf x} g(\mathbf x)<br>$$<br>从而求得: $\mathbf {\hat x}$.</p>
 </li>
-<li><p>Lagrange 通过 $\lambda$ 将constrained equation 与 original objective function $f(x,y)$ <strong>结合</strong>起来形成一个<strong>新的 objective function</strong>: $\mathcal L (\mathbf x,\lambda)$. 把它当作 unconstrained function 去优化它。</p>
+<li><p>Lagrange 通过 $\lambda$ 将constrained equation 与 original objective function $f(x,y)$ <strong>结合</strong>起来形成一个<strong>新的 objective function</strong>: $\mathcal L (\mathbf x,\lambda)$. 把它当作 unconstrained function 去优化它:</p>
 </li>
 </ol>
+<p>$$<br>\begin{align}<br>&amp;\color{blue}{\mathcal L(\mathbf x,\lambda) = f(\mathbf x) - \lambda (g(\mathbf x)-c)} \\<br>&amp;\color{blue}{\text{Let: }\nabla \mathcal L(\mathbf x, \lambda) = 0 } \Rightarrow \begin{bmatrix}<br>\frac{\partial f}{x_1} - \lambda \frac{\partial g}{\partial x_1} \\<br>\frac{\partial f}{x_2} - \lambda \frac{\partial g}{\partial x_2} \\<br>\vdots \\<br>\frac{\partial f}{x_n} - \lambda \frac{\partial g}{\partial x_n} \\<br>\color{purple}{ -g(\mathbf x)}<br>\end{bmatrix}= 0<br>\end{align}<br>$$</p>
+<p>求解上述方程，即得：$\mathbf {\hat x}$. (这里，我们同样不关心 $\lambda$.)</p>
 <hr>
-<p>关于Constrained optimization 有几个很好的视频资源：</p>
-<p><a href="https://www.khanacademy.org/math/multivariable-calculus/applications-of-multivariable-derivatives/lagrange-multipliers-and-constrained-optimization/v/constrained-optimization-introduction" target="_blank" rel="noopener">link1</a>, <a href="https://www.khanacademy.org/math/multivariable-calculus/applications-of-multivariable-derivatives/lagrange-multipliers-and-constrained-optimization/v/lagrange-multipliers-using-tangency-to-solve-constrained-optimization" target="_blank" rel="noopener">link2</a>.</p>
+<p>关于Constrained optimization 有几个很好的视频资源：<a href="https://www.khanacademy.org/math/multivariable-calculus/applications-of-multivariable-derivatives/lagrange-multipliers-and-constrained-optimization/v/constrained-optimization-introduction" target="_blank" rel="noopener">link1</a>, <a href="https://www.khanacademy.org/math/multivariable-calculus/applications-of-multivariable-derivatives/lagrange-multipliers-and-constrained-optimization/v/lagrange-multipliers-using-tangency-to-solve-constrained-optimization" target="_blank" rel="noopener">link2</a>. 一个在线练习，<a href="https://www.coursera.org/learn/multivariate-calculus-machine-learning/quiz/NsmpI/lagrange-multipliers" target="_blank" rel="noopener">link</a>.</p>
 
       
     </div>
