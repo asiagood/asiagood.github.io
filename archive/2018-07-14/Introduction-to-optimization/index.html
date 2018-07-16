@@ -1,0 +1,1660 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en,zh-Hans,ja,Latn,default">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda,Arial,STXingkai,"华文行楷",STKaiti,“华文楷体”,STFangsong,Lato:300,300italic,400,400italic,700,700italic|Roboto Slab,STKaiti,"华文楷体":300,300italic,400,400italic,700,700italic|Arial,STXingkai,华文行楷,STKaiti,华文楷体,STFangsong,华文仿宋:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Optimization,Gradient Descent,Newton Method,Parameters Space," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="简介  If we want to find the minimum and maximum points of a function then we can use multivariate calculus to do this, say to optimise the parameters (the space) of a function to fit some data. First w">
+<meta name="keywords" content="Optimization,Gradient Descent,Newton Method,Parameters Space">
+<meta property="og:type" content="article">
+<meta property="og:title" content="五.优化基础">
+<meta property="og:url" content="http://yoursite.com/archive/2018-07-14/Introduction-to-optimization/index.html">
+<meta property="og:site_name" content="逝川">
+<meta property="og:description" content="简介  If we want to find the minimum and maximum points of a function then we can use multivariate calculus to do this, say to optimise the parameters (the space) of a function to fit some data. First w">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://yoursite.com/archive/2018-07-14/Introduction-to-optimization/newtonmethod.gif">
+<meta property="og:image" content="http://yoursite.com/archive/2018-07-14/Introduction-to-optimization/newton_geometry.gif">
+<meta property="og:image" content="http://yoursite.com/archive/2018-07-14/Introduction-to-optimization/gradient.png">
+<meta property="og:image" content="http://yoursite.com/archive/2018-07-14/Introduction-to-optimization/gradient2.png">
+<meta property="og:updated_time" content="2018-07-16T00:00:03.844Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="五.优化基础">
+<meta name="twitter:description" content="简介  If we want to find the minimum and maximum points of a function then we can use multivariate calculus to do this, say to optimise the parameters (the space) of a function to fit some data. First w">
+<meta name="twitter:image" content="http://yoursite.com/archive/2018-07-14/Introduction-to-optimization/newtonmethod.gif">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/archive/2018-07-14/Introduction-to-optimization/"/>
+
+
+
+
+
+  <title>五.优化基础 | 逝川</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">逝川</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">此间且为等闲事，花开花谢不知年</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-主页">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            主页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-关于">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/archive/2018-07-14/Introduction-to-optimization/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="popoblue">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="逝川">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">五.优化基础</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-14T12:18:21+08:00">
+                2018-07-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/课程笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">课程笔记</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/课程笔记/Mathematics-for-Machine-Learning/" itemprop="url" rel="index">
+                    <span itemprop="name">Mathematics for Machine Learning</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/课程笔记/Mathematics-for-Machine-Learning/Multivariate-Calculus/" itemprop="url" rel="index">
+                    <span itemprop="name">Multivariate Calculus</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/archive/2018-07-14/Introduction-to-optimization/" class="leancloud_visitors" data-flag-title="五.优化基础">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>简介</p>
+<blockquote>
+<p>If we want to find the minimum and maximum points of a function then we can use multivariate calculus to do this, <strong>say to optimise the parameters (the space) of a function to fit some data</strong>. First we’ll do this in one dimension and use the gradient to give us estimates of where the zero points of that function are, and then iterate in the Newton-Raphson method. Then we’ll extend the idea to multiple dimensions by finding the gradient vector, Grad, which is the vector of the Jacobian. This will then let us find our way to the minima and maxima in what is called the <strong>gradient descent</strong> method. We’ll then take a moment to use Grad to find the minima and maxima <strong>along a constraint in the space</strong>, which is the <strong>Lagrange multipliers method</strong>.</p>
+</blockquote>
+<p>学习目标</p>
+<blockquote>
+<ol>
+<li>掌握优化的原理</li>
+<li>用多元微积分实现优化</li>
+<li>分析一些算法失效的情况–没有返回最优解的情况</li>
+<li>用拉格朗日乘数法解决受约束的 Gradient Descent问题。</li>
+</ol>
+</blockquote>
+<h1 id="Fitting-as-Optimization-Problem"><a href="#Fitting-as-Optimization-Problem" class="headerlink" title="Fitting as Optimization Problem"></a>Fitting as Optimization Problem</h1><p><img src="newtonmethod.gif" alt="Newton Method from Wiki"></p>
+<p><strong>Optimization 的目的是</strong>：Find the specific variables $\mathbf{x} = \begin{bmatrix}x_1\\x_2\\ \vdots\\x_n \end{bmatrix}$ , let $f(\mathbf{x})=f_{min}$ or $f(\mathbf{x})=f_{max}$. </p>
+<p>为了描述统一下面只说 minimize function $f$ 的情况，maximize的情况是完全类似的。</p>
+<p><strong>Optimization 的过程是</strong>：Starting at a specific point $\mathbf{x}_0$, Iteratively update the variable using the following process, </p>
+<p>$$<br>\color{blue}{\mathbf x_{i+1} := \mathbf x_{i} +\Delta \mathbf x} \text{ , where } i=0,1,…,n \\<br>\color{blue}{f(\mathbf x_n) = f_{min}}<br>$$</p>
+<p><strong>各种优化算法的区别往往在于如何确定</strong> $\color{blue}{\Delta \mathbf{x}}$，比如对下文即将要讲到的两种优化算法而言：</p>
+<table>
+<thead>
+<tr>
+<th>Optimization Algorithm</th>
+<th>$\Delta \mathbf{x}$</th>
+<th>自变量变化的方向（i.e. $\Delta \mathbf{x}$ 的方向）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Newton Method</td>
+<td>$-\frac{f(x)}{\color{blue}{f^\prime(x)}}$</td>
+<td>导数的反方向</td>
+</tr>
+<tr>
+<td>Gradient Descent</td>
+<td>$- \alpha \color{blue}{\nabla_{\mathbf{x}}f}$</td>
+<td>梯度的反方向</td>
+</tr>
+</tbody>
+</table>
+<p><u>可以看出二者对 $\Delta \mathbf{x}$ 的选取是不一样的。</u></p>
+<p>按道理讲，因为$\Delta \mathbf{x}$ 是向量，因此不同的优化算法选取$\Delta \mathbf{x}$ 的这个所谓“不一样” 应该包括：</p>
+<ul>
+<li>方向不一样</li>
+<li>大小不一样 （i.e. $\Vert \Delta \mathbf{x}\Vert$ 不一样）</li>
+</ul>
+<p>但实际上，我们仔细看上面表格的话会发现：牛顿法和梯度下降法选择的 $\Delta \mathbf{x}$ 仅仅是大小不一样，方向是一样的：都是梯度（导数）的反方向。</p>
+<p>这个现象<strong>不是偶然的</strong>，在下面的内容中会讲到。</p>
+<h2 id="Linear-Approximation-Newton-Method"><a href="#Linear-Approximation-Newton-Method" class="headerlink" title="Linear Approximation / Newton Method"></a>Linear Approximation / Newton Method</h2><p><strong>Newton Method is used to solve the root of function.</strong></p>
+<p><strong>问题</strong>：存在一个函数 $f(x)$, 已知 $f(x)=0$ 有解，求$x=?$</p>
+<p><strong>核心思想：</strong></p>
+<p>我们虽然无法直接找到方程的解 $\hat x$, 但是我们可以<strong>先选择</strong>一个相对<strong>“靠谱”</strong>的点 $x_0$, 基于$x_0$ 再选择出一个$x_1$, <strong>不断迭代这个过程</strong>，最后我们选择的$x_n$ 就与真正的解 $\hat x$ 比较接近了。</p>
+<blockquote>
+<p>“靠谱”的意思是，$f(x_0)$ 的值与 $f(\hat x)$ 差别不要过大，即：$x_0$ 选在 $\hat x$ 附近。</p>
+</blockquote>
+<p>核心思想之下，可以从两个角度来思考牛顿法的原理。</p>
+<p>一. <strong>从 Linear Approximation 的角度</strong></p>
+<p>我们在某个点 $x=x_0$ 处 linearize 函数 $f(x)$ 的时候，我们可以问一个问题：$x_0$ 附近（a short distance way）的点 $x_0 + \Delta x$ 处的函数值是多少, i.e. $f(x_0 + \Delta x)=?$</p>
+<p>根据我们之前学习的知识我们知道，在一个点处linear approximation of function 可以通过一阶 Taylor serise解决：<br>$$<br>f(x_0 + \Delta x) \approx f(x_0) + f^\prime(x_0)\Delta x<br>$$</p>
+<blockquote>
+<p>实际上 linear approximation of function 可以并不依赖于Taylor series 的相关知识，我们可以直接从导数的定义公式推导出来：</p>
+<p>$f^\prime(x_0) = \lim_{\Delta x \to 0} \frac{f(x_0 + \Delta x) - f(x_0)}{\Delta x} \Rightarrow$ 即在$x_0$ 附近不远的范围有: $f^\prime(x_0) \approx \frac{f(x_0 + \Delta x) - f(x_0)}{\Delta x} \Rightarrow$ </p>
+<p>$f(x_0 + \Delta x) \approx f(x_0) + f^\prime(x_0)\Delta x$. 与 Taylor series得出的结论是一致的。</p>
+</blockquote>
+<p>现在，我们选择 $x_0$ 作为我们的初始点。根据牛顿法的思想，如果现在我们假设函数在$x_0$ 点附近有0值，我们可以re-arrange to find how far away, i.e. 我们现在转换一下问题：这个使 $f(x)=0$ 的点$\hat x$ 距离$x_0$ 的距离多远？<strong>当然，由于我们采用了first order approximation, 我们最多只能得到真实距离的近似值。</strong></p>
+<blockquote>
+<p>为什么将问题转换为寻找$\hat x$ 距 $x_0$ 的距离呢？这是因为，如果我们能找到这个距离，我们把最初选择的点按照这个距离移动不就更加接近真实的 $\hat x$ 了吗？这个距离不就是</p>
+</blockquote>
+<p>这就得到：$f(x_0 + \Delta x)=0$, 进一步：<br>$$<br>\Delta x \approx -\frac{f(x_0)}{f^\prime(x_0)}<br>$$<br>这个 “距离的近似值” 我们得到了，我们就可以得到$x_0 +\Delta x$，记为 $x_1$, 这个点就比 $x_0$ 更接近真实的解 $\hat x$ 了。应为是近似距离，只移动一次是不够的，因此我们要<strong>迭代地进行上述过程</strong>。 迭代次数$n$可以趋于无穷大，因此在下面的公式中就是用等号而不用约等于了，如下：<br>$$<br>x_{i+1} = x_i + \Delta x =x_i - \frac{f(x_i)}{f^\prime(x_i)}, i = 0,1,…,n<br>$$<br>我们迭代 $n$ 次，当$\vert f(x_n )\vert &lt; \varepsilon$ 的时候（$\varepsilon$ 是最够小的正数），我们就认为 $x_n$ 是 $\hat x$ 的合理近似值。<strong>此时，我们称为Newton Methond Converges.</strong></p>
+<p><strong>二. 从几何结构</strong> </p>
+<p><img src="newton_geometry.gif" alt=""></p>
+<p>上图中，$x_0$处的蓝色切线与 $x-axis$ 的截距为记为 $x_1$， 夹角为$\theta$. 那么有，根据几何及函数在点处导数的关系可知，<br>$$<br>\tan(\theta) = \frac{f(x_0)}{x_1 - x_0} =f^\prime (x_0)<br>$$<br>即：<br>$$<br>x_1 = x_0 - \frac{f(x_0)}{f^\prime(x_0)}<br>$$<br>我们把这个过程迭代$n$ 次，可得<br>$$<br>x_{i+1} = x_i - \frac{f(x_i)}{f^\prime(x_i)}<br>$$<br>与上面从 Linear Approximation of function 的角度得到的结果是一致的。</p>
+<p><strong>此外，Newton Method 虽然和 Linear Approximation of function 有密切关系，但是也有本质区别：</strong></p>
+<ul>
+<li>Approximation 是在自变量已知的情况下，对函数在该点附近做近似。</li>
+<li>Newton Method 刚好反过来，是在函数值已知情况下$f(x) = 0$, 求满足条件的自变量的取值。</li>
+</ul>
+<h2 id="Abnormality-of-Newton-Method"><a href="#Abnormality-of-Newton-Method" class="headerlink" title="Abnormality of Newton Method"></a>Abnormality of Newton Method</h2><p>一. 拐点附近</p>
+<p>我们知道$\Delta x \approx -\frac{f(x)}{f^\prime(x)}$ , 在拐点附近$f^\prime(x)$ 会很小， step 会变得很大，会导致收敛变得比较慢；甚至会导致无法收敛，i.e. <strong>diverge</strong></p>
+<p>二. 震荡</p>
+<p>有些 starting point 会导致Newton Methond 既不收敛同时也不发散，而是<strong>震荡</strong>。此时，迭代过程是一种会陷入一种死循环。</p>
+<h2 id="梯度下降算法"><a href="#梯度下降算法" class="headerlink" title="*梯度下降算法"></a>*梯度下降算法</h2><p> $\color{red}{\text{WoW! This is the most promising algorithm in this course.}}$ </p>
+<p>Gradient descent 核心思想与Newton Method 有点类似：迭代地移动自变量$\mathbf{x} \rightarrow \mathbf{x + \Delta x}$, 使函数值逐渐变小。区别在于：</p>
+<ul>
+<li>只不过gradient descent 对于Multivariate function 也适用；Newton method 只用于单变量函数。</li>
+<li>Newton method 是知道函数值求解自变量；Gradient descent 并不知道函数的具体取值，而是不断地通过改变自变量来获得更小的函数值。</li>
+</ul>
+<p><img src="gradient.png" alt=""></p>
+<h3 id="Gradient"><a href="#Gradient" class="headerlink" title="Gradient"></a>Gradient</h3><p>以上图中函数 $f(x,y)=x^2y$ 为例, 函数的梯度定义为如下形式：<br>$$<br>\text{Grad}f=\frac{\partial f}{\partial\mathbf{x}}= \nabla_{\mathbf{x}}f = \begin{bmatrix}\frac{ \partial f}{\partial x} \\ \frac{\partial f}{\partial y} \end{bmatrix} = \frac{\partial f}{\partial x}\begin{bmatrix} 1\\0 \end{bmatrix} + \frac{\partial f}{\partial y}\begin{bmatrix}0\\1 \end{bmatrix} =\frac{\partial f}{\partial x}\vec i + \frac{\partial f}{\partial y}\vec j<br>$$</p>
+<ul>
+<li><p>n 元实值函数的梯度 is a vector with n components. Each component of gradient is a partial derivative of function $f​$ with respect to a corresponding variable. In this example, say $x,y​$.</p>
+</li>
+<li><p><strong>Each component of a gradient vector(i.e. Grad) 表示函数沿着那个分量方向的变化速度。</strong></p>
+<blockquote>
+<p>Gradient is a collection of the derivatives of function with repsect to all variables.</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="Directional-derivative"><a href="#Directional-derivative" class="headerlink" title="Directional derivative"></a>Directional derivative</h3><p>对一个函数, e.g. $f(x,y) = x^2y$,  the partial derivative with respect to $ x$ gives the rate of change of f in the $x$ direction, the partial dericate with respect to $y$ gives the rate of change of f in the $y$ direction; Gradient gives  a overall indication about the rate of change of $f$.</p>
+<font color="blue">How do we compute the rate of change of f in arbitrary direction?</font>
+
+<p> <strong>Defition:</strong><br>The rate of change of a multivarite function in the direction $\mathbf{u}$ is called the directional derivative in the direction $\mathbf{u}$.  Here $\mathbf{u}$ is assumed to be a <strong>unit vector</strong>.  Assuming that:<br>$$<br>\begin{align}<br>f = f(x,y) \\<br>\mathbf{u}=<br>\begin{bmatrix}<br>u_1\\<br>u_2<br>\end{bmatrix}<br>\end{align}<br>$$<br>那么，我们有：<br>$$<br>\color{blue}{D_{\mathbf{u}}f } = \color{orange}{\nabla_{\mathbf{x}}f } \cdot \color{green}{\mathbf{u}} = \color{orange}{\frac{\partial f}{\partial x}} \color{green}{u_1} + \color{orange}{\frac{\partial f}{\partial y}} \color{green}{u_2}<br>$$<br>因此，方向导数是梯度与$\mathbf{u}$ 的点积。</p>
+<p>注意： 如果 $\mathbf{u}$ 是$x$轴方向的单位向量，i.e. $\mathbf{u}=\begin{bmatrix}1\\0 \end{bmatrix}$, 那么方向导数就是函数对$x$ 偏导数, i.e. $D_u f = \frac{\partial f}{\partial x}$.</p>
+<p><strong>一般情况</strong></p>
+<p>一般情况下，<strong>the directional derivative is the linear combination of all the partial derivaties.</strong></p>
+<p><u>Example</u>:</p>
+<p>$\mathbf{u} = \begin{bmatrix}2\\1 \end{bmatrix}$, $f(x,y) = x^2y$ .  求函数$f$ 在$(2,3)$ 点, 在 $\mathbf{u}$ 方向的导数？</p>
+<p>$D_{\mathbf{u}}f = \nabla_{x}f \cdot \mathbf{u} =\begin{bmatrix}12\\4 \end{bmatrix} \cdot \begin{bmatrix}2\\1 \end{bmatrix}=28$.</p>
+<h3 id="Directions-of-Greatest-Increase-and-Decrease"><a href="#Directions-of-Greatest-Increase-and-Decrease" class="headerlink" title="Directions of Greatest Increase and Decrease"></a>Directions of Greatest Increase and Decrease</h3><p>根据前面的知识，我们可以把方向导数可以写成下面的形式，</p>
+<p>$D_{\mathbf{u}}f = \nabla_{\mathbf{x}}f \cdot \mathbf{u} = \Vert \nabla_{\mathbf{x}}f \Vert \Vert \mathbf{u} \Vert cos\theta$</p>
+<p>$\theta$ 是gradient vector 与方向向量 $\mathbf{u}$ 之间的夹角。</p>
+<p>那么我们有如下结论：</p>
+<ul>
+<li>当 $\theta = 0$ ，方向导数 $D_{\mathbf{u}}$ 取得其<strong>最大的正值</strong>。Hence, the direction of <strong>greatest increase $f$ is the same as the direction of gradient vector</strong>.</li>
+<li>当 $\theta = \pi$ ，方向导数 $D_{\mathbf{u}}$ 取得其<strong>最大的负值</strong>。Hence, the direction of <strong>greatest decrease $f$ is the direction opposite to gradient vector</strong>.</li>
+</ul>
+<p>Ok, 实际上，以上结论也就是 Gradient descent 算法的思想来源和理论基础。</p>
+<p>根据上述结论，我们可以给梯度一个描述性的定义，</p>
+<font color="blue">梯度是这样一个向量：<br>1. 沿着它的方向函数增加最快；沿着它的反方向函数减小最快。<br>2. 梯度的size(norm) 表明了函数增加的速率（快慢）。</font>
+
+<h3 id="偏导、梯度和方向导数"><a href="#偏导、梯度和方向导数" class="headerlink" title="偏导、梯度和方向导数"></a>偏导、梯度和方向导数</h3><p>对于 <strong>n 元实值函数</strong> $f=f(x_1,x_2,…,x_n)$,</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">概念</th>
+<th>记号</th>
+<th>含义</th>
+<th>表示</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Partial derivative</td>
+<td>$\frac{\partial f}{\partial x_i}$</td>
+<td>函数在 $x_i$ 方向的变化速度；绝对值代表变化率，正、负表示方向</td>
+<td>scalar</td>
+</tr>
+<tr>
+<td style="text-align:center">Gradient</td>
+<td>$\nabla_{\mathbf{x}}f$ , $\frac{\partial f}{\partial \mathbf{x}}$</td>
+<td>是所有偏导数集合而成的向量, 因此它包含函数在各个自变量方向的变化速度；而且gradient 的方向是函数增加最快的方向；norm of gradient 表明函数变化速率（大小）</td>
+<td>vecotr</td>
+</tr>
+<tr>
+<td style="text-align:center">Directional derivative</td>
+<td>$D_u f$</td>
+<td>函数在 $\mathbf{u}$ 方向的变化速度，绝对值代表变化率，正、负表示方向</td>
+<td>scalar</td>
+</tr>
+</tbody>
+</table>
+<h3 id="梯度下降的过程"><a href="#梯度下降的过程" class="headerlink" title="梯度下降的过程"></a>梯度下降的过程</h3><p><img src="gradient2.png" alt=""></p>
+<p>前面详细地分析了gradient 的定义、计算机器含义，以及函数值变化与gradient 的关系。</p>
+<p>现在的问题是：<strong>如果我们需要 minimize 函数$f(\mathbf{x})$, 如何做？</strong></p>
+<p><strong>Gradient descent</strong>：不断让自变量沿着梯度的反方向update ，那么同时函数值自然不断地减小，最终收敛于一个局部最小值；或者最后停在我们认为满意的地方（达到一定迭代次数）。（当然也可能是全局最小）。</p>
+<font color="blue"><strong>Gradient Descent Process of Minimization:</strong> </font>
+
+<ol>
+<li><p>选择一个起始点 $\mathbf x_0$, and compue the gradient of $f(\mathbf x)$ at $\mathbf x_0$: $\nabla_{\mathbf x}f(\mathbf x)|_{\mathbf  x_0}$.</p>
+</li>
+<li><p>For $i=0,.., n$ do:</p>
+<ul>
+<li>$\mathbf x_{i+1}:= \mathbf x_i -\alpha \nabla_{\mathbf x}f(\mathbf x)|_{\mathbf x_i}$</li>
+</ul>
+<p>return $\mathbf x_{n+1}$.</p>
+</li>
+<li><p>Then, $f_{min}=f(\mathbf x_{n+1})$.  </p>
+</li>
+</ol>
+<p>这里有一个练习，用来巩固对梯度下降算法的理解，<a href="https://hub.coursera-notebooks.org/user/ajbcqdfqzhzvvstjfsyaas/notebooks/Gradient%20descent%20in%20a%20sandpit.ipynb" target="_blank" rel="noopener">link</a>.</p>
+<h1 id="Lagrange-Multipliers"><a href="#Lagrange-Multipliers" class="headerlink" title="Lagrange Multipliers"></a>Lagrange Multipliers</h1>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创分享，您的支持是我继续创作的动力!</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="popoblue WeChat Pay"/>
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="popoblue Alipay"/>
+        <p>Alipay</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:</strong>
+    popoblue
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link:</strong>
+    <a href="http://yoursite.com/archive/2018-07-14/Introduction-to-optimization/" title="五.优化基础">http://yoursite.com/archive/2018-07-14/Introduction-to-optimization/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice: </strong>
+    All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> unless stating additionally.
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Optimization/" rel="tag"># Optimization</a>
+          
+            <a href="/tags/Gradient-Descent/" rel="tag"># Gradient Descent</a>
+          
+            <a href="/tags/Newton-Method/" rel="tag"># Newton Method</a>
+          
+            <a href="/tags/Parameters-Space/" rel="tag"># Parameters Space</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/archive/2018-07-12/Taylor-series-and-linearisation/" rel="next" title="四.泰勒级数和线性化">
+                <i class="fa fa-chevron-left"></i> 四.泰勒级数和线性化
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">popoblue</p>
+              <p class="site-description motion-element" itemprop="description">知行合一，一个功夫！</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">91</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/yazhouhao" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:me@yazhouhao.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://twitter.com/yazhouhao" target="_blank" title="Twitter">
+                    
+                      <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://www.facebook.com/yazhouhao" target="_blank" title="FB Page">
+                    
+                      <i class="fa fa-fw fa-facebook"></i>FB Page</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Fitting-as-Optimization-Problem"><span class="nav-number">1.</span> <span class="nav-text">Fitting as Optimization Problem</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Linear-Approximation-Newton-Method"><span class="nav-number">1.1.</span> <span class="nav-text">Linear Approximation / Newton Method</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Abnormality-of-Newton-Method"><span class="nav-number">1.2.</span> <span class="nav-text">Abnormality of Newton Method</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#梯度下降算法"><span class="nav-number">1.3.</span> <span class="nav-text">*梯度下降算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Gradient"><span class="nav-number">1.3.1.</span> <span class="nav-text">Gradient</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Directional-derivative"><span class="nav-number">1.3.2.</span> <span class="nav-text">Directional derivative</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Directions-of-Greatest-Increase-and-Decrease"><span class="nav-number">1.3.3.</span> <span class="nav-text">Directions of Greatest Increase and Decrease</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#偏导、梯度和方向导数"><span class="nav-number">1.3.4.</span> <span class="nav-text">偏导、梯度和方向导数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#梯度下降的过程"><span class="nav-number">1.3.5.</span> <span class="nav-text">梯度下降的过程</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Lagrange-Multipliers"><span class="nav-number">2.</span> <span class="nav-text">Lagrange Multipliers</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">popoblue</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count"></span>
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('5');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'manual') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.3"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("fgig2ECgFUUIzHQxQ6UEGBsw-gzGzoHsz", "qwf4KMNBL2n522kimTswJY9w");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Linkedin,Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+  </script>
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
