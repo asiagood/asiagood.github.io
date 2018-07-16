@@ -137,9 +137,18 @@
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://yoursite.com/archive/2018-07-14/Introduction-to-optimization/newtonmethod.gif">
 <meta property="og:image" content="http://yoursite.com/archive/2018-07-14/Introduction-to-optimization/newton_geometry.gif">
+<meta property="og:image" content="http://yoursite.com/archive/2018-07-14/Introduction-to-optimization/newton_oscillate.png">
 <meta property="og:image" content="http://yoursite.com/archive/2018-07-14/Introduction-to-optimization/gradient.png">
 <meta property="og:image" content="http://yoursite.com/archive/2018-07-14/Introduction-to-optimization/gradient2.png">
-<meta property="og:updated_time" content="2018-07-16T00:00:03.844Z">
+<meta property="og:image" content="http://yoursite.com/archive/2018-07-14/Introduction-to-optimization/gradient5.jpeg">
+<meta property="og:image" content="http://yoursite.com/archive/2018-07-14/Introduction-to-optimization/gradient3.jpg">
+<meta property="og:image" content="http://yoursite.com/archive/2018-07-14/Introduction-to-optimization/gradient4.jpg">
+<meta property="og:image" content="http://yoursite.com/archive/2018-07-14/Introduction-to-optimization/contour1.png">
+<meta property="og:image" content="http://yoursite.com/archive/2018-07-14/Introduction-to-optimization/contour11.png">
+<meta property="og:image" content="http://yoursite.com/archive/2018-07-14/Introduction-to-optimization/contour2.png">
+<meta property="og:image" content="http://yoursite.com/archive/2018-07-14/Introduction-to-optimization/contour22.png">
+<meta property="og:image" content="http://yoursite.com/archive/2018-07-14/Introduction-to-optimization/constrained_optimization.png">
+<meta property="og:updated_time" content="2018-07-16T13:21:08.004Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="五.优化基础">
 <meta name="twitter:description" content="简介  If we want to find the minimum and maximum points of a function then we can use multivariate calculus to do this, say to optimise the parameters (the space) of a function to fit some data. First w">
@@ -560,7 +569,8 @@
 <h2 id="Abnormality-of-Newton-Method"><a href="#Abnormality-of-Newton-Method" class="headerlink" title="Abnormality of Newton Method"></a>Abnormality of Newton Method</h2><p>一. 拐点附近</p>
 <p>我们知道$\Delta x \approx -\frac{f(x)}{f^\prime(x)}$ , 在拐点附近$f^\prime(x)$ 会很小， step 会变得很大，会导致收敛变得比较慢；甚至会导致无法收敛，i.e. <strong>diverge</strong></p>
 <p>二. 震荡</p>
-<p>有些 starting point 会导致Newton Methond 既不收敛同时也不发散，而是<strong>震荡</strong>。此时，迭代过程是一种会陷入一种死循环。</p>
+<p>有些 starting point 会导致Newton Methond 既不收敛同时也不发散，而是<strong>震荡</strong>。此时，迭代过程是一种会陷入一种死循环。如下图，</p>
+<p><img src="newton_oscillate.png" alt=""></p>
 <h2 id="梯度下降算法"><a href="#梯度下降算法" class="headerlink" title="*梯度下降算法"></a>*梯度下降算法</h2><p> $\color{red}{\text{WoW! This is the most promising algorithm in this course.}}$ </p>
 <p>Gradient descent 核心思想与Newton Method 有点类似：迭代地移动自变量$\mathbf{x} \rightarrow \mathbf{x + \Delta x}$, 使函数值逐渐变小。区别在于：</p>
 <ul>
@@ -570,7 +580,7 @@
 <p><img src="gradient.png" alt=""></p>
 <h3 id="Gradient"><a href="#Gradient" class="headerlink" title="Gradient"></a>Gradient</h3><p>以上图中函数 $f(x,y)=x^2y$ 为例, 函数的梯度定义为如下形式：<br>$$<br>\text{Grad}f=\frac{\partial f}{\partial\mathbf{x}}= \nabla_{\mathbf{x}}f = \begin{bmatrix}\frac{ \partial f}{\partial x} \\ \frac{\partial f}{\partial y} \end{bmatrix} = \frac{\partial f}{\partial x}\begin{bmatrix} 1\\0 \end{bmatrix} + \frac{\partial f}{\partial y}\begin{bmatrix}0\\1 \end{bmatrix} =\frac{\partial f}{\partial x}\vec i + \frac{\partial f}{\partial y}\vec j<br>$$</p>
 <ul>
-<li><p>n 元实值函数的梯度 is a vector with n components. Each component of gradient is a partial derivative of function $f​$ with respect to a corresponding variable. In this example, say $x,y​$.</p>
+<li><p>n 元实值函数的梯度 is a vector with n components. Each component of gradient is a partial derivative of function $f$ with respect to a corresponding variable. In this example, say $x,y$.</p>
 </li>
 <li><p><strong>Each component of a gradient vector(i.e. Grad) 表示函数沿着那个分量方向的变化速度。</strong></p>
 <blockquote>
@@ -649,8 +659,58 @@
 <li><p>Then, $f_{min}=f(\mathbf x_{n+1})$.  </p>
 </li>
 </ol>
+<h3 id="遗留的问题"><a href="#遗留的问题" class="headerlink" title="遗留的问题"></a>遗留的问题</h3><ul>
+<li>初识点如何选取？<br><img src="gradient5.jpeg" alt=""></li>
+<li>如何选取 learning rate $\alpha$.<ul>
+<li>过小，收敛太慢</li>
+<li>过大，有无法收敛的风险</li>
+</ul>
+</li>
+<li>更加细致的观察 gradient，Does it really works? 观察如下两幅图，对助于对GD更细节地理解。<br><img src="gradient3.jpg" alt=""><br><img src="gradient4.jpg" alt=""></li>
+</ul>
 <p>这里有一个练习，用来巩固对梯度下降算法的理解，<a href="https://hub.coursera-notebooks.org/user/ajbcqdfqzhzvvstjfsyaas/notebooks/Gradient%20descent%20in%20a%20sandpit.ipynb" target="_blank" rel="noopener">link</a>.</p>
-<h1 id="Lagrange-Multipliers"><a href="#Lagrange-Multipliers" class="headerlink" title="Lagrange Multipliers"></a>Lagrange Multipliers</h1>
+<h1 id="Lagrange-Multipliers"><a href="#Lagrange-Multipliers" class="headerlink" title="Lagrange Multipliers"></a>Lagrange Multipliers</h1><p>之前讲的优化问题没有对自变量做任何约束，因此自变量的取值范围是：整个定义域。但现实中，很多情况下的优化问题是对自变量有约束的条件下，因此需要有方法将约束考虑在内。朗格朗日乘数法就是解决在自变量约束条件下的优化问题。</p>
+<p>优化问题只从公式来看不具备几何的直观性，难以从感官上理解优化的过程。Gradient 和 Contour，无论多元函数的优化，亦或是其可视化来讲，都是非常重要的。下面给出两个函数的梯度和等高线，我们从几何上直观地感受一下。</p>
+<p>一. $f(x,y)=xe^{-(x^2+y^2)}$</p>
+<p><img src="contour1.png" alt=""></p>
+<p><img src="contour11.png" alt=""></p>
+<p>二.$f(x,y)=x^2y$</p>
+<p><img src="contour2.png" alt=""></p>
+<p><img src="contour22.png" alt=""></p>
+<h3 id="Constrained-Optimization-simple"><a href="#Constrained-Optimization-simple" class="headerlink" title="Constrained Optimization (simple)"></a>Constrained Optimization (simple)</h3><p>$f(x,y)=x^2y$,  s.t. $x^2+y^2=r^2$ where $r&gt;0$ and is constant.</p>
+<p> <strong>Optimization</strong>:  Find $(\hat x,\hat y)$ which make $f(\hat x,\hat y)=f_{min}$or $f_{max}$.</p>
+<p><strong>分析：</strong></p>
+<p> $x^2+y^2=r$ 在x-o-y平面内是一个以原点为圆心，半径为$r$ 的圆。我们记：$g(x,y)=x^2+y^2$, 那个半径为 $r$ 的圆就是 <strong>a specific contour of the contours of function</strong> $g(x,y)$.</p>
+<font color="blue"><strong>受限优化含义就是</strong><br>函数$f(x,y)$ 上所有的点中，有一部分投影到x-o-y 平面时会落在 $x^2+y^2=r$ 这个圆上。<strong>在这部分点中</strong>（这就是contrained 的意思），寻找$(\hat x,\hat y)$ 使得函数取得最大或最小值。<br><br>用专业的话说，即：When projection onto x-o-y plane of contours of function $f(x,y)$ tangent to the contour of $g(x,y)$ at $(\hat x,\hat y)$,  would maximize or minimize the function $f(x,y)$.  Where $f(\hat x,\hat y)=f_{max}$ or $f_{min}$.</font>
+
+<p>如下图所示，</p>
+<p><img src="constrained_optimization.png" alt=""></p>
+<p>根据上面知识，我们已知：</p>
+<ul>
+<li>两个 contour 相切</li>
+<li>gradient 与contour 垂直</li>
+</ul>
+<p><strong>那么我们就能得出结论：</strong></p>
+<p><strong>gradient of $f(x,y)$ parallel to gradient of $g(x,y)$, not equal, at least proportional!</strong> i.e.:<br>$$<br>\color{blue}{\nabla_{\mathbf x}f(\mathbf x) = \lambda \nabla_{\mathbf x}g(\mathbf x)} \\<br>\text{where } \mathbf x =\begin{bmatrix}x\\y \end{bmatrix} \text{,and }\lambda \in \mathbb R \text{ which is called lagrange multiplier.}<br>$$<br>根据上述结论，我们将</p>
+<ol>
+<li>$f(x,y)=x^2y$</li>
+<li>$g(x,y)=x^2+y^2$</li>
+<li>$g(x,y)=r^2$</li>
+</ol>
+<p>这些已知条件带入，可得：<br>$$<br>\begin{align}<br>\begin{bmatrix} 2xy \\ x^2 \end{bmatrix}&amp;=\lambda \begin{bmatrix}2x\\ 2y \end{bmatrix} \\<br>x^2 + y^2 &amp;= r^2<br>\end{align}<br>$$<br>上述公式有三个未知数$x,y,\lambda$, 有三个方程。解方程即得：<br>$$<br>\begin{cases}<br>\hat x = \pm \frac{2}{\sqrt 3}r \\<br>\hat y = \pm \frac{1}{\sqrt 3}r \\<br>\lambda = \pm \frac{1}{\sqrt 3}r<br>\end{cases}\\<br>\color{purple}{\text{ we don’t care }\lambda \text{ here, } }\\<br>\color{purple}{\text{becasue we just want to find the proper points or point } (\hat x,\hat y) \text{ to optimize out function }f(x,y).}<br>$$<br>因此，我们得到四个点分别为，其中两个会让函数 $f(x,y)$ 取最大值；另外两个点处 $f(x,y)$ 取最小值。</p>
+<h3 id="反思"><a href="#反思" class="headerlink" title="反思"></a>反思</h3><p>本节课后半部分我们主要分析如何用 Lagrange Multipliers 解决 Constrained optimization 的问题。</p>
+<p><strong>那么， Lagrange Multipliers的核心思想是什么呢？</strong></p>
+<p>我个人有两种理解方式，</p>
+<ol>
+<li><p>我么找到函数$f(x,y)$ 的梯度: $\nabla_{\mathbf x}f(\mathbf x)$, 也找到constrained function $g(x,y)$ 的梯度 $\nabla_{\mathbf x}g(\mathbf x)$, 根据 两个函数的contour 相切点，是$f(x,y)$最大or最小值点, 因此让：<br>$$<br>\nabla_{\mathbf x}f(\mathbf x) = \lambda \nabla_{\mathbf x}g(x,y)<br>$$<br>从而求得: $\mathbf {\hat x}$.</p>
+</li>
+<li><p>Lagrange 通过 $\lambda$ 将constrained equation 与 original objective function $f(x,y)$ <strong>结合</strong>起来形成一个<strong>新的 objective function</strong>: $\mathcal L (\mathbf x,\lambda)$. 把它当作 unconstrained function 去优化它。</p>
+</li>
+</ol>
+<hr>
+<p>关于Constrained optimization 有几个很好的视频资源：</p>
+<p><a href="https://www.khanacademy.org/math/multivariable-calculus/applications-of-multivariable-derivatives/lagrange-multipliers-and-constrained-optimization/v/constrained-optimization-introduction" target="_blank" rel="noopener">link1</a>, <a href="https://www.khanacademy.org/math/multivariable-calculus/applications-of-multivariable-derivatives/lagrange-multipliers-and-constrained-optimization/v/lagrange-multipliers-using-tangency-to-solve-constrained-optimization" target="_blank" rel="noopener">link2</a>.</p>
+
       
     </div>
     
@@ -916,7 +976,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Fitting-as-Optimization-Problem"><span class="nav-number">1.</span> <span class="nav-text">Fitting as Optimization Problem</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Linear-Approximation-Newton-Method"><span class="nav-number">1.1.</span> <span class="nav-text">Linear Approximation / Newton Method</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Abnormality-of-Newton-Method"><span class="nav-number">1.2.</span> <span class="nav-text">Abnormality of Newton Method</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#梯度下降算法"><span class="nav-number">1.3.</span> <span class="nav-text">*梯度下降算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Gradient"><span class="nav-number">1.3.1.</span> <span class="nav-text">Gradient</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Directional-derivative"><span class="nav-number">1.3.2.</span> <span class="nav-text">Directional derivative</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Directions-of-Greatest-Increase-and-Decrease"><span class="nav-number">1.3.3.</span> <span class="nav-text">Directions of Greatest Increase and Decrease</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#偏导、梯度和方向导数"><span class="nav-number">1.3.4.</span> <span class="nav-text">偏导、梯度和方向导数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#梯度下降的过程"><span class="nav-number">1.3.5.</span> <span class="nav-text">梯度下降的过程</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Lagrange-Multipliers"><span class="nav-number">2.</span> <span class="nav-text">Lagrange Multipliers</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Fitting-as-Optimization-Problem"><span class="nav-number">1.</span> <span class="nav-text">Fitting as Optimization Problem</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Linear-Approximation-Newton-Method"><span class="nav-number">1.1.</span> <span class="nav-text">Linear Approximation / Newton Method</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Abnormality-of-Newton-Method"><span class="nav-number">1.2.</span> <span class="nav-text">Abnormality of Newton Method</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#梯度下降算法"><span class="nav-number">1.3.</span> <span class="nav-text">*梯度下降算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Gradient"><span class="nav-number">1.3.1.</span> <span class="nav-text">Gradient</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Directional-derivative"><span class="nav-number">1.3.2.</span> <span class="nav-text">Directional derivative</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Directions-of-Greatest-Increase-and-Decrease"><span class="nav-number">1.3.3.</span> <span class="nav-text">Directions of Greatest Increase and Decrease</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#偏导、梯度和方向导数"><span class="nav-number">1.3.4.</span> <span class="nav-text">偏导、梯度和方向导数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#梯度下降的过程"><span class="nav-number">1.3.5.</span> <span class="nav-text">梯度下降的过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#遗留的问题"><span class="nav-number">1.3.6.</span> <span class="nav-text">遗留的问题</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Lagrange-Multipliers"><span class="nav-number">2.</span> <span class="nav-text">Lagrange Multipliers</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Constrained-Optimization-simple"><span class="nav-number">2.0.1.</span> <span class="nav-text">Constrained Optimization (simple)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#反思"><span class="nav-number">2.0.2.</span> <span class="nav-text">反思</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
