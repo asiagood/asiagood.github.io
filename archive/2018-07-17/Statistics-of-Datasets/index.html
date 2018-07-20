@@ -1,0 +1,1801 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en,zh-Hans,ja,Latn,default">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda,Arial,STXingkai,"华文行楷",STKaiti,“华文楷体”,STFangsong,Lato:300,300italic,400,400italic,700,700italic|Roboto Slab,STKaiti,"华文楷体":300,300italic,400,400italic,700,700italic|Arial,STXingkai,华文行楷,STKaiti,华文楷体,STFangsong,华文仿宋:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Statistics,Mean,Variance,Linear Transformation," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="简介  Principal Component Analysis (PCA) is one of the most important dimensionality reduction algorithms in machine learning. In this course, we lay the mathematical foundations to derive and understan">
+<meta name="keywords" content="Statistics,Mean,Variance,Linear Transformation">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一.数据集的统计特性">
+<meta property="og:url" content="http://yoursite.com/archive/2018-07-17/Statistics-of-Datasets/index.html">
+<meta property="og:site_name" content="逝川">
+<meta property="og:description" content="简介  Principal Component Analysis (PCA) is one of the most important dimensionality reduction algorithms in machine learning. In this course, we lay the mathematical foundations to derive and understan">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://yoursite.com/archive/2018-07-17/Statistics-of-Datasets/imagedata.png">
+<meta property="og:image" content="http://yoursite.com/archive/2018-07-17/Statistics-of-Datasets/image_vector.png">
+<meta property="og:image" content="http://yoursite.com/archive/2018-07-17/Statistics-of-Datasets/1d_variance.png">
+<meta property="og:image" content="http://yoursite.com/archive/2018-07-17/Statistics-of-Datasets/covariance1.png">
+<meta property="og:image" content="http://yoursite.com/archive/2018-07-17/Statistics-of-Datasets/covariance2.png">
+<meta property="og:updated_time" content="2018-07-20T20:42:25.518Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="一.数据集的统计特性">
+<meta name="twitter:description" content="简介  Principal Component Analysis (PCA) is one of the most important dimensionality reduction algorithms in machine learning. In this course, we lay the mathematical foundations to derive and understan">
+<meta name="twitter:image" content="http://yoursite.com/archive/2018-07-17/Statistics-of-Datasets/imagedata.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/archive/2018-07-17/Statistics-of-Datasets/"/>
+
+
+
+
+
+  <title>一.数据集的统计特性 | 逝川</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">逝川</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">此间且为等闲事，花开花谢不知年</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-主页">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            主页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-关于">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/archive/2018-07-17/Statistics-of-Datasets/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="popoblue">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="逝川">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">一.数据集的统计特性</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-17T10:25:24+08:00">
+                2018-07-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/课程笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">课程笔记</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/课程笔记/Mathematics-for-Machine-Learning/" itemprop="url" rel="index">
+                    <span itemprop="name">Mathematics for Machine Learning</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/课程笔记/Mathematics-for-Machine-Learning/PCA/" itemprop="url" rel="index">
+                    <span itemprop="name">PCA</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/archive/2018-07-17/Statistics-of-Datasets/" class="leancloud_visitors" data-flag-title="一.数据集的统计特性">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>简介</p>
+<blockquote>
+<p>Principal Component Analysis (PCA) is one of the most important dimensionality reduction algorithms in machine learning. In this course, we lay the mathematical foundations to derive and understand PCA from a geometric point of view. In this module, we learn how to summarize datasets (e.g., images) using basic statistics, such as the mean and the variance. We also look at properties of the mean and the variance when we shift or scale the original data set. We will provide mathematical intuition as well as the skills to derive the results. We will also implement our results in code (jupyter notebooks), which will allow us to practice our mathematical understand to compute averages of image data sets.</p>
+</blockquote>
+<p>学习目标</p>
+<blockquote>
+<ol>
+<li>Compute basic <strong>statistics of data sets</strong></li>
+<li>Interpret the effects of linear transformations on means and (co)variances</li>
+<li>Compute <strong>means/variances</strong> of linearly transformed data sets</li>
+<li>Write code that <strong>represents images as vectors</strong></li>
+<li>Write code that computes basic statistics of datasets</li>
+</ol>
+</blockquote>
+<h1 id="Dataset"><a href="#Dataset" class="headerlink" title="Dataset"></a>Dataset</h1><h2 id="数据集简介"><a href="#数据集简介" class="headerlink" title="数据集简介"></a>数据集简介</h2><p>数据集这个概念分为好几个角度和层次，不能一概而论。</p>
+<p>从数据处理的流程先后划分，</p>
+<ol>
+<li>原始数据</li>
+<li>清洗之后的数据</li>
+<li>特征转化之后的数据- <strong>特征向量</strong></li>
+</ol>
+<p>从数据的 modality 划分，</p>
+<ol>
+<li>text</li>
+<li>image</li>
+<li>speech</li>
+<li>video（hybrid）</li>
+</ol>
+<p><u>Example1: Text Data</u></p>
+<p><strong>Raw Data</strong></p>
+<p>“This is a nice course in edX, I love it so much. Here is the link [URL], no thanks! Haha!” - a natural sentence.</p>
+<p><strong>Pre-processed Data</strong></p>
+<p>“a nice course edX, I love it so much. Here link, no thanks! Haha!” </p>
+<p>预处理可能包含，</p>
+<ul>
+<li>去除stop word</li>
+<li>去除URLs</li>
+<li>大小写转换</li>
+<li>…</li>
+</ul>
+<p><u>Example 2: Image data</u></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Raw data</th>
+<th style="text-align:center">Transformed data</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><img src="imagedata.png" alt=""></td>
+<td style="text-align:center"><img src="image_vector.png" alt=""></td>
+</tr>
+</tbody>
+</table>
+<p>图片完成了转化，从一个 $3\times 3$ 的matrix 转成 $\in \mathbb R^9$  的向量。（<strong>NN的输入必须是向量</strong>）</p>
+<font color="blue"><strong>无论是什么modality的数据，最终都将转化为如下形式之后送给分类器(e.g. NNs)</strong></font>
+
+<p> <strong>送给分类器作为输入-特征向量</strong>- 这部分最为核心</p>
+<table>
+<thead>
+<tr>
+<th>$X_1$ (feature 1)</th>
+<th>$X_2$ (feature 2)</th>
+<th>$\cdots$</th>
+<th>$X_n$ (feature n)</th>
+<th>Label</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$x_{11}$</td>
+<td>$x_{12}$</td>
+<td>$\cdots$</td>
+<td>$x_{1n}$</td>
+<td>$y_1$</td>
+</tr>
+<tr>
+<td>$x_{21}$</td>
+<td>$x_{22}$</td>
+<td>$\cdots$</td>
+<td>$x_{2n}$</td>
+<td>$y_2$</td>
+</tr>
+<tr>
+<td>$\vdots$</td>
+<td>$\vdots$</td>
+<td>$\cdots$</td>
+<td>$\vdots$</td>
+<td>$\vdots$</td>
+</tr>
+<tr>
+<td>$x_{m1}$</td>
+<td>$x_{m2}$</td>
+<td>$\cdots$</td>
+<td>$x_{mn}$</td>
+<td>$y_m$</td>
+</tr>
+</tbody>
+</table>
+<p>上述表格中各个量含义如下：</p>
+<ul>
+<li>上面的表可以叫做：data table; data frame; data matrix etc. 其<u>代表</u>数据集。（未必是数据集的原始形态）</li>
+<li><p>n 代表 feature 的个数。</p>
+</li>
+<li><p>$X_i$: feature，我们把它建模为一个<strong>随机变量</strong>。</p>
+</li>
+<li><p>Data matrix 中的一行我们称为一个example，是一个 vector $\in \mathbb R^n$，其中第 $j$ 行记为：$\mathbf x_j$.</p>
+<blockquote>
+<p>注意，通常我们把它表示为列向量，虽然其组织的形式上是“行”。实际中，根据context来决定，其本质是等价的。</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="树立一个观念"><a href="#树立一个观念" class="headerlink" title="树立一个观念"></a>树立一个观念</h2><p>不同领域对数据集中各个要素的称呼不同，这里做一个简单总结。</p>
+<table>
+<thead>
+<tr>
+<th>数据集中的要素</th>
+<th>统计学</th>
+<th>机器学习</th>
+<th>数据库</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>行</td>
+<td>instance</td>
+<td>example</td>
+<td>Record</td>
+</tr>
+<tr>
+<td>列</td>
+<td>attribute</td>
+<td>feature</td>
+<td>attribute</td>
+</tr>
+<tr>
+<td>整体</td>
+<td>Sample</td>
+<td>data sets</td>
+<td>Table</td>
+</tr>
+</tbody>
+</table>
+<p>各种叫法会带来一些困惑，但是我们应该树立一个观念，；</p>
+<font color="blue"><strong>数据集中的一条数据, 在数学上是高维空间中的一个point；整个数据集就是分布在空间中的很多points</strong></font>
+
+<p><u>Example</u>：</p>
+<p>数据集中的每个example 都有$n$ 个特征，那么个example 就是一个 vector $\in \mathbb R^n$.</p>
+<h2 id="概率视角"><a href="#概率视角" class="headerlink" title="概率视角"></a>概率视角</h2><p>我们把数据的<strong>每个特征看作一个随机变量</strong>，则其特征集合${X_1,X_2,…,X_n }$ 就构成了一个随机向量，记为：$\mathbf{X}$</p>
+<blockquote>
+<p>or $\mathbf X = {X_1,X_2,…,X_n}^T$, column vector.</p>
+</blockquote>
+<p>那么，包含$m$ 个examples 的数据集可以看作是随机向量 $\mathbf X$ 的 m 个具体取值，也同时构成了一个$\in \mathbb R^{m\times n}$ matrix，也记为：$\mathbf X$.</p>
+<p>符号$\mathbf X$ 有时候表示随机向量$\lbrace X_1,X_2,…,X_n\rbrace$，有时候用以表示 data matrix。具体情况取决于具体的context。</p>
+<p><strong>*一般来讲，</strong></p>
+<ul>
+<li>当出现2个indexes的时候表示 data matrix, e.g. $\mathbf X_{ij}$；表示data matrix 中第$i$ 行，第$j$ 列的 entry，当然从概率视角出发，它也同时表示 “随机变量 $X_j$” 的第 $i$ 个具体取值。</li>
+<li>当出现一个index 的时候表示随机向量， e.g. $\mathbf X_j$ 即为 $X_j$, 即表示第 $j$ 个</li>
+</ul>
+<h1 id="Mean-Value"><a href="#Mean-Value" class="headerlink" title="Mean Value"></a>Mean Value</h1><p><strong>区别两个概念</strong></p>
+<ul>
+<li>mean 均值，既可出现在统计的context 下，也可出现在 probability 的context下。</li>
+<li>expectation 期望，只能与 随机变量/向量 一起使用。也就是说，只有出现随机变量这个概念的时候，expectation 才可以使用。</li>
+</ul>
+<p>$\mathcal D = {\mathbf x_1,\mathbf x_2,…,\mathbf x_m}$ 是我们的数据集，其中 $\mathbf x_i$ 是一个example，或者叫做 data point，是随机向量$\mathbf X$ 的一组具体取值。</p>
+<p>根据上小节的知识，我们用随机向量/变量 $\mathbf X$ 代替 $\mathcal D$. </p>
+<p>Mean value of $\mathcal D$  is defined as:<br>$$<br>\mathbb E[\mathbf X] = \frac{1}{m}\sum_{i=1}^m \mathbf x_i<br>$$<br>mean value 不一定是数据集中的一个具体的点，它只是表示数据集中所有 examples的一个平均值；从 data space 的角度看，mean 就是 分布在空间中的那些点（来自数据集）的质心。</p>
+<h1 id="Variances-and-covariances"><a href="#Variances-and-covariances" class="headerlink" title="Variances and covariances"></a>Variances and covariances</h1><p><img src="1d_variance.png" alt=""></p>
+<p><strong>Variance</strong> 衡量数据的分散程度，从<u>平均意义</u>上衡量数据集中的每个点与均值的差异的大小。</p>
+<p>上图中所示的两组points, 拥有相同的均值，但红色point 分散一些；蓝色point集中一些。</p>
+<h2 id="1-D-data"><a href="#1-D-data" class="headerlink" title="1-D data"></a>1-D data</h2><p>所谓1-D 数据 是指 “该数据只涉及一个特征 ”，也即：只有一个表示特征的随机变量记为，$X$</p>
+<p>$X = {x_1,x_2,…,x_m}$, where $x_i \in \mathbb R$ 是随机变量$X$的 $m$ 个具体取值。</p>
+<p>variance of $X$ is defined as follows:<br>$$<br>\begin{align}<br>var[X] &amp;=  \mathbb E[(X - \mathbb E[X])^2] = \mathbb E[X^2] - (\mathbb E[X])^2 \\<br>&amp;=\frac{1}{m}\sum_{i=1}^m (x_i -\mu)^2 \\<br>&amp; \mu = \mathbb E[X]<br>\end{align}<br>$$<br><u>Example</u> 3：</p>
+<p>有数据集 $\mathcal D = {1,3,6,10}$, i.e. 随机变量 $X$ 取值为：${1,3,6,10}$</p>
+<p>$\mathbb E[X] = \frac{1}{4}(1+3+6+10) = 5$</p>
+<p>$var[\mathcal D] = \frac{1}{4}[(1-5)^2 + (3-5)^2 + (6-5)^2 + (10-5)^2] =$</p>
+<p><strong>结论：</strong></p>
+<ul>
+<li><strong>Variance measures the average squared distance of every data point from the mean, which imply the spread of the data points.</strong></li>
+<li><strong>The less variance is, the more stable.</strong></li>
+</ul>
+<h2 id="n-D-data"><a href="#n-D-data" class="headerlink" title="n-D data"></a>n-D data</h2><p>Ok, 下面我们对多维数据做一个详细的描述。</p>
+<p>假设我们现在的数据集中的每个 data point 都是多维向量: n 维.</p>
+<blockquote>
+<p>不像之前在 Example 3 中的数据集，其中的data point 都是1-D，e.g. point1 =1,point2 = 3,point3 = 6,point 4 = 10.</p>
+</blockquote>
+<p>那么，参考之前小节-《概率视角》的知识，并且与data matrix 的形式保持一致，我们可以将数据集写成如下形式：</p>
+<p>$$<br>\begin{align}<br>&amp;\mathbf X = \lbrace X_1,X_2,…,X_n\rbrace \\<br>&amp;X_j = \begin{bmatrix}<br>x_{1j} \\<br>x_{2j} \\<br>\vdots \\<br>x_{mj}<br>\end{bmatrix}\\<br>&amp;x_{kj},k\in{1,…,m} : \text{the specific values of random variable } X_j (\text{the j-th feature}).<br>\end{align}<br>$$</p>
+<p>那么数据集亦可表示为：</p>
+<p>$$<br>\begin{align}<br>\mathcal D&amp;= {\mathbf x_1, \mathbf x_2,…,\mathbf x_m},\\<br>\mathbf x_i &amp;= \begin{bmatrix}<br>x_{i1}\\<br>x_{i2}\\<br>\vdots\\<br>x_{in}<br>\end{bmatrix}<br>\in \mathbb R^n,<br>\text{ which is a specific value for random vector } \mathbf X.<br>\end{align}<br>$$</p>
+<p><strong>由于 data point 是$n$ 维 vector space 中的一个点 - a vector with $n$ components, 因此我们说数据集是$n$ 维数据集。</strong></p>
+<p>现实中的数据大多是多维的，因此我们总是使用多个特征来描述一个object, 比如人的特征：身高，体重，血型…</p>
+<p>然而，当我们的数据point 是在n 维空间的时候，仅仅使用均值和方差来刻画数据集的特性就不足够了。体现在：即使两个多维数据集的均值和方差都相同，这两个数据集本身也可能会有极大的差异。如下图，</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center"><img src="covariance1.png" alt=""></th>
+<th style="text-align:center"><img src="covariance2.png" alt=""></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><strong>Positive</strong> correlated</td>
+<td style="text-align:center"><strong>Negative</strong> correlated</td>
+</tr>
+</tbody>
+</table>
+<p>上面两幅图的 mean and variance 都相同，但我们可以明显地看出这两个数据集是有很大差异的。</p>
+<p>具体来说：图一表明，随机变量(feature) $X$ and $Y$ 是正相关的，即：当 $x$ 变大， $y$ 也会变大； 图二表明，随机变量(feature)  $X$ and $Y$ 是负相关的，即：当 $x$ 变大， $y$ 会变小。</p>
+<p>这个时候我们需要新的度量标准来帮助我们刻画多维数据集的特性, 这个标准是：<strong>Covariance</strong></p>
+<h2 id="Covariances"><a href="#Covariances" class="headerlink" title="**Covariances"></a>**Covariances</h2><p>随机变量 $X$ and $Y$ 的 <strong>covariance</strong> 定义为：<br>$$<br>\begin{align}<br>cov[X, Y] &amp;= \mathbb E[(X - \mathbb E[X])(Y - \mathbb E[Y])] \\<br>&amp;= \mathbb E[XY] -  \mathbb E[X] \mathbb E [Y] \\<br>&amp;= \mathbb E[XY] - \mu_X \mu_Y<br>\end{align}<br>$$<br>随机变量$X​$ and $Y​$ 的 <strong>covariance matrix</strong> 记为：$\Sigma_{X,Y}​$， 定义为：<br>$$<br>\begin{align}<br>\Sigma_{X,Y}&amp; = \begin{bmatrix}<br>var[X,X] &amp; cov[X,Y] \\<br>cov[Y,X] &amp; var[Y,Y]<br>\end{bmatrix}\\<br>&amp;=\begin{bmatrix}<br>\sigma_{XX} &amp; \sigma_{XY}\\<br>\sigma_{YX} &amp; \sigma_{YY}<br>\end{bmatrix}<br>\in \mathbb R^{2\times 2}<br>\end{align}<br>$$</p>
+<h3 id="几个重要结论"><a href="#几个重要结论" class="headerlink" title="几个重要结论"></a>几个重要结论</h3><ul>
+<li><p><strong>covariance matrix</strong> of two random  variables is a $2 \times 2$ matrix, denoted as $\Sigma_{X,Y}$.</p>
+</li>
+<li><p>$\Sigma_{X,Y}$ <strong>is symmetric and positive semi-definite. This conclusions could be generalized to  co cariance matrix of random vector.</strong> </p>
+</li>
+</ul>
+<ul>
+<li>$cov[X,Y]$ 的正负表示两个随机变量的相关性，<ul>
+<li>如果 &gt; 0, 表明 $X$ 和 $Y$ 正相关（positively coorelated），即：$X$ 取值增大的时候，$Y$ 的取值也会变大。</li>
+<li>如果&lt; 0, 则表明 $X$ 和 $Y$ 负相关（negatively coorelated），即：$X$ 取值增大的时候，$Y$ 的取值会减小。</li>
+</ul>
+</li>
+</ul>
+<font color="blue"><strong>Ok, 现在我们将概念推广到 $n$ 个随机变量，即推广到 $n$ 维数据集</strong>。</font>
+
+<p>数据集记为: $\mathcal D ={\mathbf x_1,\mathbf x_2,…,\mathbf x_m}$, $\mathbf x_i$ 是随机向量 $\mathbf X$ 的第 $i$ 个具体取值，是个vecotr$\in \mathbb R^n$.</p>
+<p>Random vector $\mathbf X^T = {X_1,X_2,..,X_n }$.</p>
+<p>$\mathcal D$ 和 $\mathbf X$ 概念上是等价的，区别在于我们从不同的角度描述数据。多维数据（随机向量）的convariance也叫做 variance，是一个意思。</p>
+<p>其 <strong>mean value</strong> 定义为：<br>$$<br>\mu_{\mathbf X} = \mathbb E[\mathbf X]=<br>\begin{bmatrix}<br>\mathbb E[X_1]\\<br>\mathbb E[X_2]\\<br>\vdots \\<br>\mathbb E[X_n]<br>\end{bmatrix}<br>=<br>\begin{bmatrix}<br>\mu_1\\<br>\mu_2\\<br>\vdots \\<br>\mu_n<br>\end{bmatrix}<br>\in \mathbb R^n.<br>$$<br>现在考虑 <strong>covariance</strong> 的定义。</p>
+<ol>
+<li><strong>随机向量是随机变量的自然地扩展</strong>，我们先从这个思路出发，其定义如下：</li>
+</ol>
+<p>$$<br>\begin{align}<br> &amp;cov[\mathcal D] =var[\mathcal D]= cov[\mathbf X ] =var[\mathbf X] =\Sigma_\mathbf X \\\<br> &amp;=\mathbb E[(\mathbf X -\mu_{\mathbf X})(\mathbf X - \mu_{\mathbf X})^T] \\<br> &amp;=\mathbb E [<br> \begin{bmatrix}<br> X_1 - \mu_{X_1}\\<br> X_2 -\mu_{X_2}\\<br> \vdots \\<br> X_n - \mu_{X_n}<br> \end{bmatrix}<br> \begin{bmatrix}<br>  X_1 - \mu_{X_1} &amp;  X_2 - \mu_{X_2} &amp; \cdots &amp; X_n - \mu_{X_n}<br> \end{bmatrix}<br>]\\<br>&amp;= \mathbb E[<br>\begin {bmatrix}<br>(X_1-\mu_{X_1})^2 &amp; (X_1-\mu_{X_1})(X_2-\mu_{X_2}) &amp; \cdots &amp; (X_1-\mu_{X_1})(X_n-\mu_{X_n})\\<br>(X_2-\mu_{X_2})(X_1-\mu_{X_1}) &amp; (X_2-\mu_{X_2})^2 &amp; \cdots &amp;(X_2-\mu_{X_2})(X_n-\mu_{X_n})\\<br>\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\<br>(X_n-\mu_{X_n})(X_1-\mu_{X_1}) &amp; (X_n-\mu_{X_n})(X_2-\mu_{X_2}) &amp; \cdots &amp;(X_n-\mu_{X_n})^2<br>\end{bmatrix}<br>]\\<br>&amp;= \color{blue}{\begin{bmatrix}<br>\mathbb E(X_1-\mu_{X_1})^2 &amp; \mathbb E(X_1-\mu_{X_1})(X_2-\mu_{X_2}) &amp; \cdots &amp; \mathbb E(X_1-\mu_{X_1})(X_n-\mu_{X_n}) \\<br>\mathbb E(X_2-\mu_{X_2})(X_1-\mu_{X_1}) &amp; \mathbb E(X_2-\mu_{X_2})^2 &amp; \cdots &amp; \mathbb E(X_2-\mu_{X_2})^2 \\<br>\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\<br>\mathbb E(X_n-\mu_{X_n})(X_1-\mu_{X_1}) &amp; \mathbb E(X_n-\mu_{X_n})(X_2-\mu_{X_2}) &amp; \cdots &amp; \mathbb E(X_n-\mu_{X_n})^2<br>\end{bmatrix}}\\<br>&amp;=\color{blue}{\begin{bmatrix}<br>var[X_1] &amp; cov[X_1,X_2] &amp;\cdots &amp;cov[X_1,X_n] \\<br>cov[X_2,X_1] &amp; var[X_2] &amp;\cdots &amp;cov[X_2,X_n] \\<br>\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\<br>cov[X_n,X_1] &amp; cov[X_n,X_2] &amp;\cdots &amp; var[X_n]<br>\end{bmatrix}} \\<br>&amp;=\color{blue}{\begin{bmatrix}<br>\sigma_{11} &amp; \sigma_{12} &amp; \cdots &amp; \sigma_{1n}\\<br>\sigma_{11} &amp; \sigma_{22} &amp; \cdots &amp; \sigma_{2n}\\<br>\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\<br>\sigma_{n1} &amp; \sigma_{n2} &amp; \cdots &amp; \sigma_{nn}<br>\end{bmatrix}}<br> \end{align}<br>$$</p>
+<ol>
+<li>我们直接考虑variance or covariance 的含义：计算两个随机变量之间某种关联的程度。那么随机向量其本质也就是若干个随机变量的集合而已，那么当我们需要计算随机向量的variance 的时候，我们自然想到本质就是计算：该随机向量所包含的随机变量之间的covariance。很容易知道，这就像 graph 的 adjacency matrix一样，是个$n \times n$ 的矩阵。我们记为：$var[\mathbf X]$ or $cov[\mathbf X]$, ; 或者从数据集的角度为：$var[\mathcal D]$ or $cov[\mathcal D]$. 以后我们统一写为：$\Sigma_{\mathbf X}$, 简记为 $\Sigma$ , 其中：</li>
+</ol>
+<p>$$<br>\Sigma_{ij} = cov(X_i, X_j)<br>$$</p>
+<ol>
+<li>上面都是从概念上讲，现在我们给出一个便于计算的随机向量的variance/covariance 的表达式。这个表达式直接来<u>自定义1</u> （公式第二行），如下：</li>
+</ol>
+<p>$$<br>\begin{align}<br>\Sigma &amp;= \mathbb E[(\mathbf X - \mathbf \mu)(\mathbf X - \mathbf \mu)^T] \\<br>&amp;=\frac{1}{m}\sum_{i=1}^m (\mathbf x_i -\mu)(\mathbf x_i - \mu)^T<br>\end{align}<br>$$</p>
+<p>很明显，3中定义式是$m$ 个matrix 相加。可以很容易证明（<strong>展开硬算</strong>），3式确实与1式等价。</p>
+<p><strong>注意对比这个公式与 1中公式的异同</strong>：</p>
+<ul>
+<li>来源于定义1</li>
+<li>直接按照期望定义计算</li>
+<li>$\mathbf x_i$ 是随机向量 $\mathbf X$ 的一组具体取值，是个 vector $\in \mathbb R^n$. 表现在 data matrix 中就是第$i$ 行。其具体形式为：</li>
+</ul>
+<p>$$<br>\mathbf x_i = \begin{bmatrix}<br>X^1_i \\<br>X^2_i \\<br>\cdots \\<br>X^n_i<br>\end{bmatrix}<br>=<br>\begin{bmatrix}<br>\mathbf X_{i1} \\<br>\mathbf X_{i2} \\<br>\vdots \\<br>\mathbf X_{in}<br>\end{bmatrix}<br>$$</p>
+<ul>
+<li>$\mathbf \mu$ 是 随机向量$\mathbf X$ 的均值，即:$\mu_{\mathbf X}$，其定义为:</li>
+</ul>
+<p>$$<br>\mathbf \mu = \begin{bmatrix}<br>\mu_{X_1}\\<br>\mu_{X_2}\\<br>\vdots \\<br>\mu_{X_n}<br>\end{bmatrix}\in \mathbb R^n<br>$$</p>
+<p>而其中<br>$$<br>\mu _{X_j} = \frac{1}{m}  \sum_{i=1}^m \mathbf X_{ij}<br>$$<br><strong>Note！:</strong>  按照之前的分析，$\mathbf x_{ij}$ 和 $\mathbf X_{ij}$ 指的是data matrix 中同一个entry。希望读者不要给符号给混淆了。</p>
+<ol>
+<li>另一个<strong>covariance matrix 计算式</strong>：<br>$$<br>\begin{align}<br>\Sigma_{\mathbf X} &amp;= E[(\mathbf X - \mathbb E[\mathbf X])(\mathbf X - \mathbb E[\mathbf X])^T]\\<br>&amp;= E[(\mathbf X - \mathbb E[\mathbf X])(\mathbf X^T- \mathbb E[\mathbf X]^T)]\\<br>&amp;= E[\mathbf X \mathbf X^T-  \mathbf X \mathbb E[\mathbf X]^T - \mathbb E[\mathbf X]\mathbf X^T +  \mathbb E[\mathbf X ] \mathbb E[\mathbf X]^T ]\\<br>&amp;= \mathbb E[\mathbf X \mathbf X^T] - \mathbb E[\mathbf X]  \mathbb E[\mathbf X^T]<br>\end{align}<br>$$</li>
+</ol>
+<h1 id="Linear-Affine-transformation-of-datasets"><a href="#Linear-Affine-transformation-of-datasets" class="headerlink" title="Linear/Affine transformation of datasets"></a>Linear/Affine transformation of datasets</h1><p>我们经常会对数据做一些线性变换，比如：shit, scale,rotation, etc. 这是数据处理中非常常见的操作。</p>
+<p>那么在我们对数据做了线性变换之后，数据的某些统计特征会不会发生变化呢？比如 mean value and variance.</p>
+<h2 id="Effect-on-the-Mean"><a href="#Effect-on-the-Mean" class="headerlink" title="Effect on the Mean"></a>Effect on the Mean</h2><p><strong>提前说明</strong></p>
+<ul>
+<li>$\mathcal D + b$ = “给数据集中每个data point (<u>which is a vector</u>) 都加 $\mathbf b$ ” = “data matrix 中的每个entry 都加 $b$.”</li>
+</ul>
+<p>即：<br>$$<br>\begin{align}<br>&amp;\mathcal D +b \text{ means } \mathcal D+\Beta = \lbrace \mathbf x_1 + \mathbf b , \mathbf x_2 + \mathbf b,\cdots,\mathbf x_m +\mathbf b \rbrace\\<br>&amp;\text{where, } \Beta_{ij} = b ,\\<br>&amp;\text{where, }\mathbf b = \begin{bmatrix}<br>b\\b\\ \vdots \\ b<br>\end{bmatrix}<br>\end{align}<br>$$</p>
+<ul>
+<li>$a\mathcal D$ = “给数据集中每个data point 都乘以2 ” = “给 data matrix 中的每个entry 都乘以 $a$.”</li>
+</ul>
+<p>即：<br>$$<br>\begin{align}<br>a \mathcal D &amp;= \mathbf A \mathcal D \\<br>\text{where } \mathbf A &amp;= \begin{bmatrix}<br>a &amp;0&amp;\cdots&amp;0 \\<br>0&amp;a&amp;\cdots&amp;0 \\<br>\vdots&amp;\vdots&amp;\ddots&amp;\vdots\\<br>0 &amp; 0 &amp; \cdots&amp;a<br>\end{bmatrix}=diag(a).<br>\end{align}<br>$$<br>很多时候为了简化起见，我们很多时候直接写成：$\mathcal D +b$ 和 $a\mathcal D$ 这种形式。</p>
+<p><strong>Example 1: shit all the data points in the dataset, i.e. shift the dataset.</strong>, same meaning.</p>
+<p>datasets $\mathcal D =\lbrace -1,2,3 \rbrace$. $\mathcal D^\prime = \lbrace 1,4,5\rbrace = \mathcal D + 2$ </p>
+<p>数据集是1-D 数据，因此可以看做一个随机变量的取值，此随机变量记为：$X$</p>
+<p>$\mathbb E[\mathcal D]=\frac{-1+2+3}{3}=4/3$.</p>
+<p>$\mathbb E[\mathcal D^\prime]=\frac{1+4+5}{3}=\frac{(-1+2)+(2+2)+(3+2)}{3} = \frac{-1+2+3}{3} +\frac{2+2+2}{3} = \mathbb E[\mathcal D] + 2$</p>
+<blockquote>
+<p>上述结论就像我们在概率论课程中学习到的一样，对随机变量$X$，我们有这个结论：$\mathbb E [X + c] = \mathbb E[X] +c$.</p>
+<p>之所以一致，是因为就像上面讲的一样：1-D 数据集本身就可以看做一个随机变量$X$.</p>
+</blockquote>
+<p><strong>Example 2: scale all the data points in the dataset, i.e. stretch the dataset</strong>, same meaning.</p>
+<p>$\mathcal D^{\prime\prime} = \lbrace -2,4,6 \rbrace = 2\mathcal D$.</p>
+<p>$\mathbb E[\mathcal D^{\prime\prime}]= \frac{(-1)\times2 + 2\times 2 + 3\times 2}{3}=\frac{(-1+2+3)\times2}{3}=\frac{-1+2+3}{3}\times2 =2 \mathbb E[\mathcal D]$.</p>
+<p><strong>总结</strong><br>$$<br>\color{blue}{\mathbb E[\alpha\mathcal D +\beta] = \alpha\mathbb E[\mathcal D] + \beta}<br>$$<br>其中, $\alpha,\beta​$ 都是常数(constant number.)</p>
+<h2 id="Effect-on-Variance"><a href="#Effect-on-Variance" class="headerlink" title="Effect on Variance"></a>Effect on Variance</h2><p>Example 3 (<strong>1-D dataset</strong>): <strong>shit the dataset.</strong></p>
+<p>$\mathcal D = \lbrace -1,2,3 \rbrace$, $\mathcal D^\prime = \lbrace 1,4,5\rbrace = \mathcal D + 2$</p>
+<p>现在我们计算 $\mathcal D^\prime$ 的variance：<br>$$<br>\begin{align}<br>&amp;var[\mathcal D^\prime] = \mathbb E[(\mathcal D^\prime - \mu_{\mathcal D^\prime})^2]\\<br>\text{we have known that: } &amp;\mathcal D^\prime = \mathcal D +2 , \mu_{\mathcal D^\prime}= \mu_{\mathcal D} +2 \\<br>\text{So: } &amp;\mathcal D^\prime - \mu_{\mathcal D^\prime} = \mathcal D - \mu_{\mathcal D}\\<br>\Rightarrow &amp;var[\mathcal D^\prime] =\mathbb E[(\mathcal D - \mu_{\mathcal D})^2]= var[\mathcal D]<br>\end{align}<br>$$<br>Example 4 (<strong>1-D dataset</strong>): <strong>scale the dataset.</strong></p>
+<p>$\mathcal D^{\prime\prime} = 2\mathcal D$.<br>$$<br>\begin{align}<br>var[\mathcal D^{\prime\prime}] &amp;= \mathbb E[(\mathcal D^{\prime\prime} - \mu_{\mathcal D^{\prime\prime}})^2]\\<br>&amp;=  \mathbb E[(2\mathcal D - 2\mu_{\mathcal D})^2]\\<br>&amp;=  \mathbb E[2^2(\mathcal D - \mu_{\mathcal D})^2]\\<br>&amp;=  \mathbb 2^2E[(\mathcal D - \mu_{\mathcal D})^2]\\<br>&amp;= 2^2var[\mathcal D]<br>\end{align}<br>$$<br><strong>总结：</strong><br>$$<br>\color{blue}{var[\alpha\mathcal D+\beta]= \alpha^2 var[\mathcal D]}.<br>$$</p>
+<h2 id="Effect-on-Covariance"><a href="#Effect-on-Covariance" class="headerlink" title="Effect on Covariance"></a>Effect on Covariance</h2><p>Covariance 只是针对多维数据，i.e. 随机向量。</p>
+<p>$\mathcal D = \lbrace \mathbf x_1,…,\mathbf x_m  \rbrace$, where $\mathbf x_i \in \mathbb R^n$. (回忆 data matrix中的结构，$\mathbf x_i$ 对应第 $i$ 行)</p>
+<p>$\mathcal D$ 对应随机向量 $\mathbf X$.</p>
+<blockquote>
+<p>$\mathcal D$ 既代表dataset，又代表随机向量，具体什么含义取决于context。</p>
+</blockquote>
+<p>结论：<br>$$<br>\begin{align}<br>\color{blue}{\mathbb E[\mathbf A\mathcal D + \mathbf b] = \mathbf A \mathbb E[\mathcal D]+\mathbf b} \\<br>\color{blue}{var[\mathbf A\mathcal D + \mathbf b] =\mathbf A var[\mathcal D]\mathbf A^T}<br>\end{align}<br>$$<br><strong>我们现在证明上述结论：</strong></p>
+<p><u>一些前提结论</u><br>$$<br>\begin{align}<br>\mathbb E[\mathcal D] = \mathbf \mu = \frac{1}{m}\sum_{i=1}^m \mathbf x_i  \in \mathbb R^n<br>\end{align}<br>$$<br><strong>Proof 1</strong><br>$$<br>\begin{align}<br>\color{blue}{\mathbb E[\mathbf A \mathcal D + \mathbf b] } &amp;= \frac{1}{m}\sum_{i=1}^m ( \mathbf A \mathbf x_i +\mathbf b)\\<br>&amp;=\frac{1}{m}\sum_{i=1}^m ( \mathbf A \mathbf x_i ) +\mathbf b \\<br>&amp;=\mathbf A \frac{1}{m}\sum_{i=1}^m \mathbf x_i  + \mathbf b\\<br>&amp;=\color{blue}{\mathbf A \mathbb E[\mathcal D] +\mathbf b }\\<br>&amp;=\color{blue}{\mathbf A  \mathbf \mu + \mathbf b }<br>\end{align}<br>$$<br><strong>Proof 1-1</strong><br>$$<br>\begin{align}<br>\mathbb E[\mathcal D^T]&amp; = \frac{1}{m}\sum_{i=1}^m \mathbf x_i^T\\<br>&amp;=[( \frac{1}{m}\sum_{i=1}^m \mathbf x_i^T)^T]^T\\<br>&amp;= (\frac{1}{m}\sum_{i=1}^m \mathbf x_i)^T\\<br>&amp;= \mathbb E[\mathcal D]^T<br>\end{align}<br>$$<br><strong>Proof 1-2</strong><br>$$<br>\begin{align}<br>\mathbb E[\mathcal D \mathbf A ] &amp;= \frac{1}{m}\sum_{i=1}^m \mathbf x_i\mathbf A \\<br>&amp;= (\frac{1}{m}\sum_{i=1}^m \mathbf x_i)\mathbf A\\<br>&amp;= \mathbb E[\mathcal D]\mathbf A<br>\end{align}<br>$$<br><strong>Proof 2</strong><br>$$<br>\begin{align}<br>\color{blue}{var[\mathbf A\mathcal D +\mathbf b]} &amp;= \mathbb E[(\mathbf A\mathcal D +\mathbf b-\mathbb E[\mathbf A\mathcal D +\mathbf b])(\mathbf A\mathcal D +\mathbf b - \mathbb E[\mathbf A\mathcal D +\mathbf b])]\\<br>&amp;= \mathbb E[(\mathbf A\mathcal D - \mathbf A\mu)((\mathbf A\mathcal D - \mathbf A\mu)^T]\\<br>&amp;= \mathbb E[\mathbf A(\mathcal D - \mu)(\mathcal D -\mu)^T\mathbf A^T]\\<br>&amp;=\mathbf A \mathbb E[(\mathcal D - \mu)(\mathcal D - \mu)^T] \mathbf A\\<br>&amp;=\color{blue}{\mathbf A var[\mathcal D]\mathbf A^T}</p>
+<p>\end{align}<br>$$</p>
+<h3 id="半正定"><a href="#半正定" class="headerlink" title="半正定"></a>半正定</h3><p>Covariance of a random vector is always <strong>postitive semi-definite</strong>.  </p>
+<p><strong>Proof</strong>: Let $\mathbf X \in \mathbb R^n$  is a random vector, for any vector $a \in  \mathbb R^{1\times n}$,<br>$$<br>\begin{align}<br>\mathbf a Var[\mathbf X] \mathbf a^T &amp;= Var[\mathbf a \mathbf X] \text{(by the multiplication of constant matrix property.)}\\<br>&amp;\ge 0 \text{(follow the fact that variance is always positive.)}<br>\end{align}<br>$$</p>
+<h3 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h3><p>一个在线练习用以熟悉本节课所讲的概念，<a href="https://hub.coursera-notebooks.org/user/ulxcpxlsfseegsaeqorjxk/notebooks/week1.ipynb" target="_blank" rel="noopener">link</a>.</p>
+<h2 id="Covariance-between-two-linear-transformation"><a href="#Covariance-between-two-linear-transformation" class="headerlink" title="Covariance between two linear transformation"></a>Covariance between two linear transformation</h2><p>$a,b$ 是两个常向量 $\in \mathbb R^{1\times n}$, $\mathbf X \in \mathbb R^n $ 是一个随机向量。Then, the covariance between the two linear transformations $a\mathbf X$ and $b \mathbf X$  can be expressed as a function of the covariance matrix:<br>$$<br>\color{blue}{cov[\mathbf a\mathbf X, \mathbf b\mathbf X] = \mathbf a Var[\mathbf X]\mathbf b^T}<br>$$<br><strong>Proof：</strong><br>$$<br>\begin{align}<br>cov[\mathbf a\mathbf X, \mathbf b\mathbf X] &amp;= \color{blue}{\mathbb E[ (\mathbf a \mathbf X - \mathbb E[\mathbf a \mathbf X]) (\mathbf b \mathbf X - \mathbb E[\mathbf b \mathbf X]) ] }   \text{(by definition of covariance.)} \\<br>&amp;= \mathbb E[\mathbf a(\mathbf X - \mathbb E[\mathbf X]) \mathbf b(\mathbf X - \mathbb E[\mathbf X]) ]\\<br>&amp;= \mathbb E[\mathbf a(\mathbf X - \mathbb E[\mathbf X]) (\mathbf b(\mathbf X - \mathbb E[\mathbf X]))^T ]    \text{(transpose of a scalar is equal to itself.)}\\<br>&amp;= \mathbb E[\mathbf a(\mathbf X - \mathbb E[\mathbf X]) (\mathbf X - \mathbb E[\mathbf X])^T\mathbf b^T ]\\<br>&amp;=\mathbf a \mathbb E[(\mathbf X - \mathbb E[\mathbf X]) (\mathbf X - \mathbb E[\mathbf X])^T]\mathbf b^T     \text{(by the linearity of expection.)}\\<br>&amp;= \color{blue}{ \mathbf a Var[\mathbf X]\mathbf b^T}<br>\end{align}<br>$$</p>
+<h2 id="一句话总结"><a href="#一句话总结" class="headerlink" title="一句话总结"></a>一句话总结</h2><ul>
+<li><p><strong>Shit</strong> the dataset: 改变mean value, 不改变 variance</p>
+</li>
+<li><p><strong>Scale</strong> the dataset:  两者都改变。</p>
+</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创分享，您的支持是我继续创作的动力!</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="popoblue WeChat Pay"/>
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="popoblue Alipay"/>
+        <p>Alipay</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:</strong>
+    popoblue
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link:</strong>
+    <a href="http://yoursite.com/archive/2018-07-17/Statistics-of-Datasets/" title="一.数据集的统计特性">http://yoursite.com/archive/2018-07-17/Statistics-of-Datasets/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice: </strong>
+    All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> unless stating additionally.
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Statistics/" rel="tag"># Statistics</a>
+          
+            <a href="/tags/Mean/" rel="tag"># Mean</a>
+          
+            <a href="/tags/Variance/" rel="tag"># Variance</a>
+          
+            <a href="/tags/Linear-Transformation/" rel="tag"># Linear Transformation</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/archive/2018-07-17/Regression/" rel="next" title="六.回归">
+                <i class="fa fa-chevron-left"></i> 六.回归
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/archive/2018-07-21/Inner-Product/" rel="prev" title="Inner Product">
+                Inner Product <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">popoblue</p>
+              <p class="site-description motion-element" itemprop="description">知行合一，一个功夫！</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">38</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">99</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/yazhouhao" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:me@yazhouhao.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://twitter.com/yazhouhao" target="_blank" title="Twitter">
+                    
+                      <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://www.facebook.com/yazhouhao" target="_blank" title="FB Page">
+                    
+                      <i class="fa fa-fw fa-facebook"></i>FB Page</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Dataset"><span class="nav-number">1.</span> <span class="nav-text">Dataset</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据集简介"><span class="nav-number">1.1.</span> <span class="nav-text">数据集简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#树立一个观念"><span class="nav-number">1.2.</span> <span class="nav-text">树立一个观念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#概率视角"><span class="nav-number">1.3.</span> <span class="nav-text">概率视角</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Mean-Value"><span class="nav-number">2.</span> <span class="nav-text">Mean Value</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Variances-and-covariances"><span class="nav-number">3.</span> <span class="nav-text">Variances and covariances</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-D-data"><span class="nav-number">3.1.</span> <span class="nav-text">1-D data</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#n-D-data"><span class="nav-number">3.2.</span> <span class="nav-text">n-D data</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Covariances"><span class="nav-number">3.3.</span> <span class="nav-text">**Covariances</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#几个重要结论"><span class="nav-number">3.3.1.</span> <span class="nav-text">几个重要结论</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Linear-Affine-transformation-of-datasets"><span class="nav-number">4.</span> <span class="nav-text">Linear/Affine transformation of datasets</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Effect-on-the-Mean"><span class="nav-number">4.1.</span> <span class="nav-text">Effect on the Mean</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Effect-on-Variance"><span class="nav-number">4.2.</span> <span class="nav-text">Effect on Variance</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Effect-on-Covariance"><span class="nav-number">4.3.</span> <span class="nav-text">Effect on Covariance</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#半正定"><span class="nav-number">4.3.1.</span> <span class="nav-text">半正定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#练习"><span class="nav-number">4.3.2.</span> <span class="nav-text">练习</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Covariance-between-two-linear-transformation"><span class="nav-number">4.4.</span> <span class="nav-text">Covariance between two linear transformation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一句话总结"><span class="nav-number">4.5.</span> <span class="nav-text">一句话总结</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">popoblue</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count"></span>
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('5');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'manual') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.3"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("fgig2ECgFUUIzHQxQ6UEGBsw-gzGzoHsz", "qwf4KMNBL2n522kimTswJY9w");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Linkedin,Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+  </script>
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
