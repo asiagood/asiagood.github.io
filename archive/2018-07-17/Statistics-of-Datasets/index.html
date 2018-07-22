@@ -140,7 +140,7 @@
 <meta property="og:image" content="http://yoursite.com/archive/2018-07-17/Statistics-of-Datasets/1d_variance.png">
 <meta property="og:image" content="http://yoursite.com/archive/2018-07-17/Statistics-of-Datasets/covariance1.png">
 <meta property="og:image" content="http://yoursite.com/archive/2018-07-17/Statistics-of-Datasets/covariance2.png">
-<meta property="og:updated_time" content="2018-07-20T20:42:25.518Z">
+<meta property="og:updated_time" content="2018-07-22T19:51:33.940Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="一.数据集的统计特性">
 <meta name="twitter:description" content="简介  Principal Component Analysis (PCA) is one of the most important dimensionality reduction algorithms in machine learning. In this course, we lay the mathematical foundations to derive and understan">
@@ -775,8 +775,7 @@
 <p>$\mathcal D$ 既代表dataset，又代表随机向量，具体什么含义取决于context。</p>
 </blockquote>
 <p>结论：<br>$$<br>\begin{align}<br>\color{blue}{\mathbb E[\mathbf A\mathcal D + \mathbf b] = \mathbf A \mathbb E[\mathcal D]+\mathbf b} \\<br>\color{blue}{var[\mathbf A\mathcal D + \mathbf b] =\mathbf A var[\mathcal D]\mathbf A^T}<br>\end{align}<br>$$<br><strong>我们现在证明上述结论：</strong></p>
-<p><u>一些前提结论</u><br>$$<br>\begin{align}<br>\mathbb E[\mathcal D] = \mathbf \mu = \frac{1}{m}\sum_{i=1}^m \mathbf x_i  \in \mathbb R^n<br>\end{align}<br>$$<br><strong>Proof 1</strong><br>$$<br>\begin{align}<br>\color{blue}{\mathbb E[\mathbf A \mathcal D + \mathbf b] } &amp;= \frac{1}{m}\sum_{i=1}^m ( \mathbf A \mathbf x_i +\mathbf b)\\<br>&amp;=\frac{1}{m}\sum_{i=1}^m ( \mathbf A \mathbf x_i ) +\mathbf b \\<br>&amp;=\mathbf A \frac{1}{m}\sum_{i=1}^m \mathbf x_i  + \mathbf b\\<br>&amp;=\color{blue}{\mathbf A \mathbb E[\mathcal D] +\mathbf b }\\<br>&amp;=\color{blue}{\mathbf A  \mathbf \mu + \mathbf b }<br>\end{align}<br>$$<br><strong>Proof 1-1</strong><br>$$<br>\begin{align}<br>\mathbb E[\mathcal D^T]&amp; = \frac{1}{m}\sum_{i=1}^m \mathbf x_i^T\\<br>&amp;=[( \frac{1}{m}\sum_{i=1}^m \mathbf x_i^T)^T]^T\\<br>&amp;= (\frac{1}{m}\sum_{i=1}^m \mathbf x_i)^T\\<br>&amp;= \mathbb E[\mathcal D]^T<br>\end{align}<br>$$<br><strong>Proof 1-2</strong><br>$$<br>\begin{align}<br>\mathbb E[\mathcal D \mathbf A ] &amp;= \frac{1}{m}\sum_{i=1}^m \mathbf x_i\mathbf A \\<br>&amp;= (\frac{1}{m}\sum_{i=1}^m \mathbf x_i)\mathbf A\\<br>&amp;= \mathbb E[\mathcal D]\mathbf A<br>\end{align}<br>$$<br><strong>Proof 2</strong><br>$$<br>\begin{align}<br>\color{blue}{var[\mathbf A\mathcal D +\mathbf b]} &amp;= \mathbb E[(\mathbf A\mathcal D +\mathbf b-\mathbb E[\mathbf A\mathcal D +\mathbf b])(\mathbf A\mathcal D +\mathbf b - \mathbb E[\mathbf A\mathcal D +\mathbf b])]\\<br>&amp;= \mathbb E[(\mathbf A\mathcal D - \mathbf A\mu)((\mathbf A\mathcal D - \mathbf A\mu)^T]\\<br>&amp;= \mathbb E[\mathbf A(\mathcal D - \mu)(\mathcal D -\mu)^T\mathbf A^T]\\<br>&amp;=\mathbf A \mathbb E[(\mathcal D - \mu)(\mathcal D - \mu)^T] \mathbf A\\<br>&amp;=\color{blue}{\mathbf A var[\mathcal D]\mathbf A^T}</p>
-<p>\end{align}<br>$$</p>
+<p><u>一些前提结论</u><br>$$<br>\begin{align}<br>\mathbb E[\mathcal D] = \mathbf \mu = \frac{1}{m}\sum_{i=1}^m \mathbf x_i  \in \mathbb R^n<br>\end{align}<br>$$<br><strong>Proof 1</strong><br>$$<br>\begin{align}<br>\color{blue}{\mathbb E[\mathbf A \mathcal D + \mathbf b] } &amp;= \frac{1}{m}\sum_{i=1}^m ( \mathbf A \mathbf x_i +\mathbf b)\\<br>&amp;=\frac{1}{m}\sum_{i=1}^m ( \mathbf A \mathbf x_i ) +\mathbf b \\<br>&amp;=\mathbf A \frac{1}{m}\sum_{i=1}^m \mathbf x_i  + \mathbf b\\<br>&amp;=\color{blue}{\mathbf A \mathbb E[\mathcal D] +\mathbf b }\\<br>&amp;=\color{blue}{\mathbf A  \mathbf \mu + \mathbf b }<br>\end{align}<br>$$<br><strong>Proof 1-1</strong><br>$$<br>\begin{align}<br>\mathbb E[\mathcal D^T]&amp; = \frac{1}{m}\sum_{i=1}^m \mathbf x_i^T\\<br>&amp;=[( \frac{1}{m}\sum_{i=1}^m \mathbf x_i^T)^T]^T\\<br>&amp;= (\frac{1}{m}\sum_{i=1}^m \mathbf x_i)^T\\<br>&amp;= \mathbb E[\mathcal D]^T<br>\end{align}<br>$$<br><strong>Proof 1-2</strong><br>$$<br>\begin{align}<br>\mathbb E[\mathcal D \mathbf A ] &amp;= \frac{1}{m}\sum_{i=1}^m \mathbf x_i\mathbf A \\<br>&amp;= (\frac{1}{m}\sum_{i=1}^m \mathbf x_i)\mathbf A\\<br>&amp;= \mathbb E[\mathcal D]\mathbf A<br>\end{align}<br>$$<br><strong>Proof 2</strong><br>$$<br>\begin{align}<br>\color{blue}{var[\mathbf A\mathcal D +\mathbf b]} &amp;= \mathbb E[(\mathbf A\mathcal D +\mathbf b-\mathbb E[\mathbf A\mathcal D +\mathbf b])(\mathbf A\mathcal D +\mathbf b - \mathbb E[\mathbf A\mathcal D +\mathbf b])]\\<br>&amp;= \mathbb E[(\mathbf A\mathcal D - \mathbf A\mu)((\mathbf A\mathcal D - \mathbf A\mu)^T]\\<br>&amp;= \mathbb E[\mathbf A(\mathcal D - \mu)(\mathcal D -\mu)^T\mathbf A^T]\\<br>&amp;=\mathbf A \mathbb E[(\mathcal D - \mu)(\mathcal D - \mu)^T] \mathbf A\\<br>&amp;=\color{blue}{\mathbf A var[\mathcal D]\mathbf A^T}<br>\end{align}<br>$$</p>
 <h3 id="半正定"><a href="#半正定" class="headerlink" title="半正定"></a>半正定</h3><p>Covariance of a random vector is always <strong>postitive semi-definite</strong>.  </p>
 <p><strong>Proof</strong>: Let $\mathbf X \in \mathbb R^n$  is a random vector, for any vector $a \in  \mathbb R^{1\times n}$,<br>$$<br>\begin{align}<br>\mathbf a Var[\mathbf X] \mathbf a^T &amp;= Var[\mathbf a \mathbf X] \text{(by the multiplication of constant matrix property.)}\\<br>&amp;\ge 0 \text{(follow the fact that variance is always positive.)}<br>\end{align}<br>$$</p>
 <h3 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h3><p>一个在线练习用以熟悉本节课所讲的概念，<a href="https://hub.coursera-notebooks.org/user/ulxcpxlsfseegsaeqorjxk/notebooks/week1.ipynb" target="_blank" rel="noopener">link</a>.</p>
@@ -895,8 +894,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/archive/2018-07-21/Inner-Product/" rel="prev" title="Inner Product">
-                Inner Product <i class="fa fa-chevron-right"></i>
+              <a href="/archive/2018-07-21/Inner-Product/" rel="prev" title="二.内积（重要基础概念）">
+                二.内积（重要基础概念） <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -996,7 +995,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">99</span>
+                  <span class="site-state-item-count">101</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
