@@ -1,0 +1,1601 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en,zh-Hans,ja,Latn,default">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda,Arial,STXingkai,"华文行楷",STKaiti,“华文楷体”,STFangsong,Lato:300,300italic,400,400italic,700,700italic|Roboto Slab,STKaiti,"华文楷体":300,300italic,400,400italic,700,700italic|Arial,STXingkai,华文行楷,STKaiti,华文楷体,STFangsong,华文仿宋:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Orthogonal Projection,Orthogonality,Dimensonality Reduction,Projection Matrix," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="简介  In this module, we will look at orthogonal projections of vectors, which live in a high-dimensional vector space, onto lower-dimensional subspaces. This will play an important role in the next mod">
+<meta name="keywords" content="Orthogonal Projection,Orthogonality,Dimensonality Reduction,Projection Matrix">
+<meta property="og:type" content="article">
+<meta property="og:title" content="三. 正交投影">
+<meta property="og:url" content="http://yoursite.com/archive/2018-07-23/Orthogonal-Projections/index.html">
+<meta property="og:site_name" content="逝川">
+<meta property="og:description" content="简介  In this module, we will look at orthogonal projections of vectors, which live in a high-dimensional vector space, onto lower-dimensional subspaces. This will play an important role in the next mod">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://yoursite.com/archive/2018-07-23/Orthogonal-Projections/projection_onto_line2.gif">
+<meta property="og:image" content="http://yoursite.com/archive/2018-07-23/Orthogonal-Projections/projection_onto_subspace.png">
+<meta property="og:updated_time" content="2018-07-26T14:09:48.105Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="三. 正交投影">
+<meta name="twitter:description" content="简介  In this module, we will look at orthogonal projections of vectors, which live in a high-dimensional vector space, onto lower-dimensional subspaces. This will play an important role in the next mod">
+<meta name="twitter:image" content="http://yoursite.com/archive/2018-07-23/Orthogonal-Projections/projection_onto_line2.gif">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/archive/2018-07-23/Orthogonal-Projections/"/>
+
+
+
+
+
+  <title>三. 正交投影 | 逝川</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">逝川</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">此间且为等闲事，花开花谢不知年</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-主页">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            主页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-关于">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/archive/2018-07-23/Orthogonal-Projections/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="popoblue">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="逝川">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">三. 正交投影</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-23T08:48:48+08:00">
+                2018-07-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/课程笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">课程笔记</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/课程笔记/Mathematics-for-Machine-Learning/" itemprop="url" rel="index">
+                    <span itemprop="name">Mathematics for Machine Learning</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/课程笔记/Mathematics-for-Machine-Learning/PCA/" itemprop="url" rel="index">
+                    <span itemprop="name">PCA</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/archive/2018-07-23/Orthogonal-Projections/" class="leancloud_visitors" data-flag-title="三. 正交投影">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>简介</p>
+<blockquote>
+<p>In this module, we will look at orthogonal projections of vectors, which live in a <strong>high-dimensional</strong> vector space, <strong>onto lower-dimensional</strong> subspaces. This will play an important role in the next module when we derive PCA. We will start off with a geometric motivation of what an orthogonal projection is and work our way through the corresponding derivation. <strong>We will end up with a single equation that allows us to project any vector onto a lower-dimensional subspace</strong>. However, we will also understand how this equation came about. As in the other modules, we will have both pen-and-paper practice and a small programming example with a jupyter notebook.</p>
+</blockquote>
+<p>学习目标</p>
+<blockquote>
+<ul>
+<li>基于不同的 Inner Product 计算正交投影</li>
+<li>深刻理解<strong>正交投影是分解！</strong></li>
+<li>Relate <strong>projections</strong> to the <strong>reconstruction error</strong> and compute it</li>
+<li>写代码将 image data 投影到 a 2-dimensional 子空间（高维$\rightarrow $ 低维）</li>
+</ul>
+</blockquote>
+<p>High dimension data 经常难以分析、可视化，并且有时数据的关键信息只隐含在其中几个维度中，其他大多数维度并没有蕴含有价值的信息。我们压缩数据的时候，会损失一些信息，理想的状况是：<strong>我们保留了那些含有关键信息的维度，而把大量无关的维度去除掉，从而在信息损失度较小的情况下压缩数据</strong>，以便用来分析、可视化。</p>
+<p>一个核心的 <strong>dimensionality reduction</strong> 的方法是 <strong>PCA</strong>， 其中起关键作用的操作就是：<strong>向量的正交投影</strong>， i.e. <strong>Orthogonal Projection</strong>. </p>
+<blockquote>
+<ol>
+<li>正交投影（<strong>orthogonal projection</strong>） 也是矩阵正交化的基础，也即：Gram-Schimt过程的基础。</li>
+<li>我们平时所讲的“投影”，不加说明的情况下通常就是指正交投影。</li>
+</ol>
+</blockquote>
+<h1 id="Projection-onto-1-D-subspaces"><a href="#Projection-onto-1-D-subspaces" class="headerlink" title="Projection onto 1-D subspaces"></a>Projection onto 1-D subspaces</h1><table>
+<thead>
+<tr>
+<th style="text-align:center"><img src="projection_onto_line2.gif" alt=""></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><strong>Figure 1:</strong> 2-D vector projection onto 1-D subspace</td>
+</tr>
+</tbody>
+</table>
+<p>先对上图中一些基本概念做一说明：</p>
+<p>$ \mathbf x \text{ is a vector that } \in \mathbb R ^2$</p>
+<p>$ \mathbf U \text{ is a 1-D subspace in } \mathbb R^2$</p>
+<p>$\mathbf b \text{ is the basis vector of subpace } \mathbf U \text{ and that we want to project x onto.}$   </p>
+<blockquote>
+<p>So, every vector in U can be represented as linear combination of $\boldsymbol b$ , i.e. $\beta \boldsymbol b$</p>
+</blockquote>
+<p>$\mathbf u \text{ is any vector in U, i.e. } \mathbf u = \beta \mathbf b $</p>
+<p>$\color{purple}{\text{The pruple line }} \text{is the difference vector of } \mathbf x \text{ and the vectors on } \mathbf U $</p>
+<p>$\color{purple}{\text{difference vector is : }} diff=\mathbf x - \text{Proj}_{\mathbf u}\mathbf x$.</p>
+<p>从图中我们发现：</p>
+<p>向量 $\mathbf x​$ 在 $\mathbf U​$上的正交投影是$\mathbf U​$ 中所有向量中与 $\mathbf x​$ 距离最近的向量。</p>
+<blockquote>
+<p>此时，$\mathbf x$ 与 其在 $\mathbf U$ 上的正交投影之差- $diff$ 与 $\mathbf U$ 垂直，$diff$ 的长度最小。</p>
+</blockquote>
+<p>我们将 $\mathbf x$ 在 $\mathbf U$ 上的 <strong>orthogonal projection</strong> 记为: $\pi_{\mathbf U}(\mathbf x)$.</p>
+<p>关于$\pi_{\mathbf U}(\mathbf x)$ 有如下2个等式成立:</p>
+<ol>
+<li><p>$\pi_{\mathbf U}(\mathbf x) \in \mathbf U \Rightarrow \exist \lambda \in \mathbb R:\pi_{\mathbf U} (\mathbf x) = \lambda \mathbf b (\text{ as }\pi_{\mathbf U}\mathbf x \in \mathbf U)$</p>
+<blockquote>
+<p>$\lambda$ is <strong>coordinate</strong> of orthogonal projection of $\mathbf x$ onto $\mathbf U$ with respect to basis vector $\mathbf b$.</p>
+</blockquote>
+</li>
+<li><p>$\langle \mathbf b, \color{purple}{\mathbf x - \pi_{\mathbf U}\mathbf x \rangle} = 0 (\text{ orthogonality})$</p>
+</li>
+</ol>
+<p>我们可以借此，<strong>不过度依赖几何概念、完全从线性代数的视角，只用Inner product的概念</strong>就可以求出向量 $\mathbf x$ 在 $\mathbf U$ 中的正交投影$\pi_{\mathbf U}(\mathbf x)$， 如下：<br>$$<br>\begin{align}<br>1,2<br>&amp;\Rightarrow  \langle \mathbf b, \mathbf x\rangle - \langle \mathbf b, \pi_{\mathbf U}(\mathbf x )\rangle  = 0 \\<br>&amp; \Leftrightarrow \langle \mathbf b, \mathbf x\rangle - \langle \mathbf b, \lambda \mathbf b \rangle = 0\\<br>&amp; \Leftrightarrow \langle \mathbf b, \mathbf x\rangle - \lambda \Vert \mathbf b \Vert ^2 = 0\\<br>&amp; \Leftrightarrow \lambda = \frac{ \langle \mathbf b, \mathbf x\rangle}{\Vert \mathbf b\Vert^2}\\<br>&amp;\Rightarrow \pi_{\mathbf U}(\mathbf x) = \lambda\mathbf b =  \frac{ \langle \mathbf b, \mathbf x\rangle}{\Vert \mathbf b\Vert^2} \mathbf b<br>\end{align}<br>$$</p>
+<p>如果我们<strong>选择 dot product 作为我们的 Inner product</strong>, 则有：</p>
+<p>$$<br>\pi_{\mathbf U}(\mathbf x) =\frac{\mathbf x^T \mathbf b}{\Vert \mathbf b\Vert^2} \mathbf b  =\frac{ \mathbf b^T \mathbf x}{\Vert \mathbf b\Vert^2}\mathbf b = \color{blue}{\frac{ \mathbf b\mathbf b^T }{\Vert \mathbf b\Vert^2}} \mathbf x = \color{blue}{\underbrace{\frac{ \mathbf b\mathbf b^T }{\mathbf b^T \mathbf b}}_{\mathbf P}}\mathbf x<br>$$<br>The blue part in above last equation is so called $\color{blue}{\text{Projection Matrix}}$, which could projection any vector in $\mathbf R^2$ onto 1-D subspace $\mathbf U$, and <strong>Projection Matrix is symmetric</strong>.</p>
+<p><strong>总结一下：</strong></p>
+<ol>
+<li><p>Orthogonal Projection of $\mathbf x$ is also a vector in $\mathbb R^2$, and meanwhile, it is also a vector in 1-D subspace $\mathbf U$. But we never need two coordinates to represent it, we just need only one coordinate $\lambda$. $\lambda$ is the coordinate of orthogonal projection of $\mathbf x$ onto $\mathbf U$ with respect to b which is the basis vector of $\mathbf U$.</p>
+</li>
+<li><p>The <strong>difference</strong> of vector $\mathbf x \in \mathbb R^2$ and its orthogonal projection is orthogonal to subspace $\mathbf U$- this is where the name “orthogonal projection” came from.</p>
+</li>
+<li><p>The orthogonal projection is the specific vector in $\mathbf U$ that is <strong>closest to</strong>  $\mathbf x$  in $\mathbb R^2$. Namely, the difference of $\mathbf x$ and its orthogonal projection is the smallest among the distances of the vectors(points) in $\mathbf U$ and $\mathbf x$. Formally, $\pi_{\mathbf U}(\mathbf x)$ is closest to $\mathbf x$.</p>
+</li>
+<li><p>From the perspective of difference/distances between $\mathbf x$ and any vectors in $\mathbf U$, that is, the specific difference $\mathbf x -\pi_{\mathbf U}(\mathbf x)$ is the <strong>smallest</strong> among all differences $\mathbf x - \text{Proj}_{\mathbf U}\mathbf x$.</p>
+<blockquote>
+<p>Difference has some other names such as <strong>reconstruction error, residual, error,</strong> etc. In machine learning context, it is called <strong>loss</strong> or <strong>cost</strong> function; in optimization context, it is called <strong>objective</strong> function.</p>
+</blockquote>
+</li>
+</ol>
+<h1 id="Projection-onto-higher-dimensional-subspaces"><a href="#Projection-onto-higher-dimensional-subspaces" class="headerlink" title="Projection onto higher dimensional subspaces"></a>Projection onto higher dimensional subspaces</h1><table>
+<thead>
+<tr>
+<th><img src="projection_onto_subspace.png" alt=""></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Figure 2:</strong> Projection onto a two-dimensional subspace $\mathbf U$ with basis $\mathbf {b_1,b_2}$. The projection $ \pi_{\mathbf U}(\mathbf x)$ of  $\mathbf x \in \mathbb R^3$ onto $\mathbf U$ can be expressed as a linear combination of $\mathbf {b_1,b_2}$ and the displacement vector $\mathbf x - \pi_{\mathbf U}(\mathbf x)$ is orthogonal to both $\mathbf b_1$ and $\mathbf b_2$.</td>
+</tr>
+</tbody>
+</table>
+<p>In the following, we will look at orthogonal projections of vectors $\mathbf x \in \mathbb R^n$ onto higher-dimensional subspaces $\mathbf U \subseteq \mathbb R^n$ with $dim(\mathbf U)=m \ge 1$. An illustration is given in Figure 2.</p>
+<p>我们假设 $(\mathbf {b_1,b_2,…,b_m})$ 是 $\mathbf U$ 的一组基。 Projections $\pi_{\mathbf U}(\mathbf x)$ onto $\mathbf U$ are elements of $\mathbf U$，因此， 他们可以被表示成 $(\mathbf {b_!,b_2,…,b_m})$ 的线性组合，使得 $\pi_{\mathbf U}(\mathbf x) = \sum_{i=1}^m \lambda_i \mathbf b_i$.</p>
+<p>As in the 1-D case, we follow a three-step precedure to find the <em>projection</em> $\mathbf p=\pi_{\mathbf U}(\mathbf x)$ and the <em>projection matrix</em> $\mathbf P_\pi$:</p>
+<ol>
+<li><p>Find the <em>coordinates</em> $\lambda_1,\lambda_2,…,\lambda_m$ of the projection (with respect to the basis of $\mathbf U$), such that the linear combination<br>$$<br>\begin{align}<br>&amp;\pi_{\mathbf U}(\mathbf x) = \mathbf p = \sum_{i=1}^m\lambda_i \mathbf b_i =\mathbf {B\lambda},\\<br>&amp;\mathbf B = [\mathbf{b_1,b_2,…,b_m}] \in \mathbb R^{n \times m} ,\quad \mathbf \lambda = [\lambda_1,\lambda_2,…,\lambda_m]^T \in \mathbb R^m<br>\end{align}<br>$$<br>is closest to $\mathbf x \in \mathbb R^n$. As in the 1-D case, “closest” means “minimum distance”, which implies that the vector connecting $\mathbf p \in \mathbf U$ and $\mathbf x \in \mathbb R^n$ is orthogonal to all basis vectors of $\mathbf U$. Therefore, we obtain $m$ simultaneous conditions (assuming the dot product as the inner product)<br>$$<br>\begin{align}<br>\langle \mathbf {b_1, x - p}\rangle = \mathbf b_1^T(\mathbf {x-p}) =0\\<br>\langle \mathbf {b_2, x - p}\rangle =\mathbf b_2^T (\mathbf {x-p}) = 0\\<br>\vdots \\<br>\langle \mathbf {b_m, x - p}\rangle = \mathbf b_m^T (\mathbf{x-p}) =0<br>\end{align}<br>$$<br>which, with $\mathbf{p = B\lambda}$,  can be written as<br>$$<br>\begin{align}<br>\mathbf b_1^T (\mathbf{x - B\lambda}) = 0\\<br>\vdots\\<br>\mathbf b_m^T (\mathbf{x - B\lambda}) = 0<br>\end{align}<br>$$<br>such that we obtain a homogeneous lienar equation system<br>$$<br>\begin{align}<br>\begin{bmatrix}<br>\mathbf b_1^T\\<br>\vdots \\<br>\mathbf b_m^T<br>\end{bmatrix}<br>\begin{bmatrix}<br>\<br>\mathbf {x -B\lambda}<br>\\<br>\end{bmatrix}= \mathbf 0<br>&amp;\Leftrightarrow \mathbf B^T (\mathbf {x - B\lambda}) = \mathbf 0 \\<br>&amp;\Leftrightarrow  \mathbf B^T \mathbf {B\lambda} = \mathbf B^T \mathbf x<br>\end{align}<br>$$<br>The last equation is called <em>normal equation</em>. Since $\mathbf {b_1,b_2,…,b_m}$ are a basis of $\mathbf U$ and( $n \ge m$ ), therefore, linearly dependent, $\mathbf B^T \mathbf B \in \mathbb R^{m \times m}$ is regular and invertable. This allows us to solve for the optimal <em>coefficients/coordinates</em><br>$$<br>\mathbf{\lambda} = (\mathbf B^T\mathbf B)^{-1}\mathbf B^T \mathbf x<br>$$<br>The matrix $(\mathbf B^T\mathbf B)^{-1}\mathbf B^T$ is also called the <em>pseudo-inverse</em> of $\mathbf B$, which can be computed for non-square matrices $\mathbf B$. It only requires that $\mathbf B^T\mathbf B$ is positive definite, which is the case if $\mathbf B$ is full-rank.[^1]</p>
+<blockquote>
+<p>In fact,  the matrix $\mathbf B^T\mathbf B \in \mathbb R^{m \times m}$ is called <em>Gram Matrix</em>, no matter what $\mathbf B$ is (not necessarily symmetric or even square) is always positive semi-definite; if $n\ge m$ (and we assume for convenience that $\mathbf B$ is full rank.) , then $\mathbf B^T \mathbf B$ is positive definite. </p>
+</blockquote>
+</li>
+<li><p>Find the orthogonal projection $\pi_{\mathbf U}(\mathbf x) =\mathbf p \in \mathbf U$. We already established that $\mathbf p = \mathbf {B\lambda}$. Therefore, we obtain<br>$$<br>\mathbf p = \mathbf B(\mathbf B^T \mathbf B)^{-1}\mathbf B^T \mathbf x<br>$$</p>
+</li>
+<li><p>Find the projection matrix $\mathbf P_{\pi}$. From above equation, we can immediately see that the projection matrix that solves $\mathbf P_{\pi}\mathbf x = \mathbf p$ must be<br>$$<br>\mathbf P_{\pi} = \mathbf B(\mathbf B^T\mathbf B)^{-1}\mathbf B^T<br>$$</p>
+</li>
+</ol>
+<p><em>Remark 1</em>:  Comparing the solutions fro projecting onto a one-dimensional subspace and the general case, we see that the general case includes the 1-D cases as a special case: If $dim(\mathbf U)=1$ then $\mathbf B^T \mathbf B \in \mathbb R$ is a scalar and we can rewrite the projection matrix $\mathbf P_{\pi} = \mathbf B(\mathbf B^T \mathbf B)^{-1}\mathbf B^T$ as $\mathbf P_{\pi} = \frac{\mathbf B\mathbf B^T}{\mathbf B^T \mathbf B}$, which is exactly the projection matrix for the one-dimensional cases.</p>
+<p><em>Remark 2</em>: The orthogonal projection $\pi_{\mathbf U}(\mathbf x)$ <strong>are still vectors in</strong> $\mathbb R^n$ <strong>although they lie in an $m$-dimensional subspace</strong> $\mathbf U \subseteq \mathbb R^n$. <strong>However, to represent a projected vector we only need the $m$ coordinates $\lambda_1,\lambda_2,…,\lambda_m$ with respect to the basis vectors</strong> $\mathbf b_1,\mathbf b_2,…,\mathbf b_m$ of $\mathbf U$.</p>
+<p><em>Remark</em> 3: In vector spaces with general inner products, we have to pay attention when computing angels and distances, which are defined by means of the inner product.</p>
+<p>$\quad$ Projections allow us to look at situations where we have a linear system $\mathbf {Ax = b}$ without a solution. Recall that this means  that $\mathbf b$ does not lie in the span of $\mathbf A$, i.e., the vector $\mathbf b$ does not lie in the subspace spanned by the columns of $\mathbf A$(i.e. column space of $\mathbf A$). Given that the linear equation cannot be solved exactly, we can find an <em>approximate solution</em>. The idea is to find the vector in the subspace spanned by the columns of $\mathbf A$ that is closest to $\mathbf b$, i.e., we compute the orthogonal projection of $\mathbf b$ onto the subspace spanned by columns of $\mathbf A$. This problem arises often in practice, and the solution is called the <em>least square solution</em> (assuming the dot product as the inner product) of an overdetermined system.</p>
+<h1 id="投影矩阵的性质"><a href="#投影矩阵的性质" class="headerlink" title="投影矩阵的性质"></a>投影矩阵的性质</h1><p>$\mathbf P_{\mathbf \pi} = \mathbf P_{\mathbf \pi} ^T$</p>
+<p>$\mathbf P_{\mathbf \pi}^2 = \mathbf P_{\mathbf \pi}$</p>
+<h1 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h1><ol>
+<li>这里有一个 Projection of vectors in n-dimensional space onto m-dimensional subspace 的全部推导过程，<a href="https://d3c33hcgiwev3.cloudfront.net/NfYmDxtEEeiDkQoaxapXkA_362ff9c01b4411e8af00d38a13203424_projections.pdf?Expires=1532563200&amp;Signature=PTg4OOo7NhOUavEbs57eeWnMHHwjO5LJbr5gzueTm7g6Gdj5-IzYQv-2iX6X~erVKjqR~rbNX1X9eTrbI6K4dxCwPv2ZRtZ0PEmWhBlqSQxb5QBrmg0DZJQM-LU~~mWTxcXP1TN2gFRXLQTuQwdH1hz0n8OTAKDt~eA3iU1gMEc_&amp;Key-Pair-Id=APKAJLTNE6QMUY6HBC5A" target="_blank" rel="noopener">link</a> .</li>
+<li>编程练习将数据从高维投影到低维；并从正交投影的角度理解linear regress. <a href="https://hub.coursera-notebooks.org/user/ulxcpxlsfseegsaeqorjxk/notebooks/week3.ipynb" target="_blank" rel="noopener">link</a>.</li>
+</ol>
+<p>[^1]: In practical applications( e.g., linear regression), we often add a “jitter term” $\epsilon \mathbf I$ to $\mathbf B^T\mathbf B$ to guarantee increase numerical stability and positive definiteness. This “ridge” can be rigorously derived using Bayesian inference,  </p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创分享，您的支持是我继续创作的动力!</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="popoblue WeChat Pay"/>
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="popoblue Alipay"/>
+        <p>Alipay</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:</strong>
+    popoblue
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link:</strong>
+    <a href="http://yoursite.com/archive/2018-07-23/Orthogonal-Projections/" title="三. 正交投影">http://yoursite.com/archive/2018-07-23/Orthogonal-Projections/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice: </strong>
+    All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> unless stating additionally.
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Orthogonal-Projection/" rel="tag"># Orthogonal Projection</a>
+          
+            <a href="/tags/Orthogonality/" rel="tag"># Orthogonality</a>
+          
+            <a href="/tags/Dimensonality-Reduction/" rel="tag"># Dimensonality Reduction</a>
+          
+            <a href="/tags/Projection-Matrix/" rel="tag"># Projection Matrix</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/archive/2018-07-21/Inner-Product/" rel="next" title="二.内积（重要基础概念）">
+                <i class="fa fa-chevron-left"></i> 二.内积（重要基础概念）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">popoblue</p>
+              <p class="site-description motion-element" itemprop="description">知行合一，一个功夫！</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">39</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">105</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/yazhouhao" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:me@yazhouhao.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://twitter.com/yazhouhao" target="_blank" title="Twitter">
+                    
+                      <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://www.facebook.com/yazhouhao" target="_blank" title="FB Page">
+                    
+                      <i class="fa fa-fw fa-facebook"></i>FB Page</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Projection-onto-1-D-subspaces"><span class="nav-number">1.</span> <span class="nav-text">Projection onto 1-D subspaces</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Projection-onto-higher-dimensional-subspaces"><span class="nav-number">2.</span> <span class="nav-text">Projection onto higher dimensional subspaces</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#投影矩阵的性质"><span class="nav-number">3.</span> <span class="nav-text">投影矩阵的性质</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#练习"><span class="nav-number">4.</span> <span class="nav-text">练习</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">popoblue</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count"></span>
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('5');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'manual') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.3"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("fgig2ECgFUUIzHQxQ6UEGBsw-gzGzoHsz", "qwf4KMNBL2n522kimTswJY9w");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Linkedin,Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+  </script>
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

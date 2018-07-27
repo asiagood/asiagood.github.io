@@ -135,7 +135,7 @@
 <meta property="og:site_name" content="逝川">
 <meta property="og:description" content="简介  Data can be interpreted as vectors. Vectors allow us to talk about geometric concepts, such as lengths, distances and angles to characterise similarity between vectors. This will become important">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-07-22T21:40:58.092Z">
+<meta property="og:updated_time" content="2018-07-24T05:07:42.772Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="二.内积（重要基础概念）">
 <meta name="twitter:description" content="简介  Data can be interpreted as vectors. Vectors allow us to talk about geometric concepts, such as lengths, distances and angles to characterise similarity between vectors. This will become important">
@@ -528,7 +528,10 @@
 <blockquote>
 <p>A vector space with a additional structure–inner product is referred to the inner product space.</p>
 </blockquote>
-<p><strong>从这一刻开始，我们首先定义 Inner Product， 然后任何的几何概念、几何操作 都用 Inner Product 来描述，包括我们熟悉的 dot product-也仅仅是一种合法的 Inner Product 而已。</strong> </p>
+<p><strong>从这一刻开始，我们首先定义 Inner Product， 然后任何的几何概念、几何操作 都用 Inner Product 来描述。我们熟悉的 dot product-也仅仅是一种 valid Inner Product 而已。</strong> </p>
+<blockquote>
+<p>此后，几何概念（e.g. 长度、距离、夹角等待）均由内积来定义和描述。此刻开始的linear algebra，现有内积，后有几何。</p>
+</blockquote>
 <p><strong>Definition</strong></p>
 <p>Formally, an inner product space is a vector space $V$ over the field $\mathbb R$ together with an <strong>inner product which is a map</strong> </p>
 <p>$\color{blue}{\langle \cdot,\cdot \rangle: V\times V \rightarrow \mathbb R}$. </p>
@@ -556,7 +559,7 @@
 </li>
 </ul>
 <p><u>Example 1:</u></p>
-<p>$\color{blue}{\langle \mathbf x,\mathbf y \rangle=\mathbf x^T \mathbf y}$  Which  is dot produtc, it’s a vaild inner product according to the three axioms.</p>
+<p>$\color{blue}{\langle \mathbf x,\mathbf y \rangle=\mathbf x^T \mathbf y}$  Which  is dot product, it’s a vaild inner product according to the three axioms.</p>
 <p><u>Example 2:</u></p>
 <p>$\color{blue}{\langle \mathbf x, \mathbf y\rangle = \mathbf x^T\mathbf A \mathbf y}$, where $\mathbf A$ is a <em>symmetric positive</em> matrix，i.e. $\mathbf A\in \mathbb S^{\dagger}$. 我们现在用三条公理验证一下：</p>
 <ul>
@@ -606,7 +609,7 @@
 <p>The definition of orthogonality depend on  Inner product:</p>
 <p>$ \langle \mathbf x, \mathbf y \rangle = 0 \Leftrightarrow $ $\mathbf x$ and $\mathbf y$ is orthogonal $\Leftrightarrow \theta =\frac{\pi}{2}rad =90^\circ.$</p>
 <blockquote>
-<p>Again, 我们再一次强调，之前我们的结论是：现有两向量垂直，再有 dot product 为0; 现在流程反过来：先有Inner product 为 0， 再有两向量垂直。这可以体现出，哪个concept 是主导概念，哪个概念是附属概念。这里， <strong>Inner Product 显然是主导概念。</strong></p>
+<p>Again, 我们再一次强调，之前我们的结论是：先有两向量垂直，再有 dot product 为0; 现在流程反过来：先有Inner product 为 0， 再有两向量垂直。这可以体现出，哪个concept 是主导概念，哪个是附属概念。这里， <strong>Inner Product 显然是主导概念。</strong></p>
 </blockquote>
 <p><u>Example 5</u>:</p>
 <p>$\mathbf x = \begin{bmatrix}1\\1 \end{bmatrix}, \mathbf y=\begin{bmatrix} -1\\1 \end{bmatrix}.$</p>
@@ -785,6 +788,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/archive/2018-07-23/Orthogonal-Projections/" rel="prev" title="三. 正交投影">
+                三. 正交投影 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -860,7 +867,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">38</span>
+                  <span class="site-state-item-count">39</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -882,7 +889,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">101</span>
+                  <span class="site-state-item-count">105</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
