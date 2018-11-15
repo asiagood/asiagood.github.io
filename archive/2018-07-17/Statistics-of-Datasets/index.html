@@ -140,7 +140,7 @@
 <meta property="og:image" content="http://yoursite.com/archive/2018-07-17/Statistics-of-Datasets/1d_variance.png">
 <meta property="og:image" content="http://yoursite.com/archive/2018-07-17/Statistics-of-Datasets/covariance1.png">
 <meta property="og:image" content="http://yoursite.com/archive/2018-07-17/Statistics-of-Datasets/covariance2.png">
-<meta property="og:updated_time" content="2018-07-22T19:51:33.940Z">
+<meta property="og:updated_time" content="2018-07-29T14:36:41.011Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="一.数据集的统计特性">
 <meta name="twitter:description" content="简介  Principal Component Analysis (PCA) is one of the most important dimensionality reduction algorithms in machine learning. In this course, we lay the mathematical foundations to derive and understan">
@@ -630,9 +630,9 @@
 
 <p><u>Example</u>：</p>
 <p>数据集中的每个example 都有$n$ 个特征，那么个example 就是一个 vector $\in \mathbb R^n$.</p>
-<h2 id="概率视角"><a href="#概率视角" class="headerlink" title="概率视角"></a>概率视角</h2><p>我们把数据的<strong>每个特征看作一个随机变量</strong>，则其特征集合${X_1,X_2,…,X_n }$ 就构成了一个随机向量，记为：$\mathbf{X}$</p>
+<h2 id="概率视角"><a href="#概率视角" class="headerlink" title="概率视角"></a>概率视角</h2><p>我们把数据的<strong>每个特征看作一个随机变量</strong>，则其特征集合$\lbrace X_1,X_2,…,X_n \rbrace$ 就构成了一个随机向量，记为：$\mathbf{X}$</p>
 <blockquote>
-<p>or $\mathbf X = {X_1,X_2,…,X_n}^T$, column vector.</p>
+<p>or $\mathbf X = \lbrace X_1,X_2,…,X_n\rbrace^T$, column vector.</p>
 </blockquote>
 <p>那么，包含$m$ 个examples 的数据集可以看作是随机向量 $\mathbf X$ 的 m 个具体取值，也同时构成了一个$\in \mathbb R^{m\times n}$ matrix，也记为：$\mathbf X$.</p>
 <p>符号$\mathbf X$ 有时候表示随机向量$\lbrace X_1,X_2,…,X_n\rbrace$，有时候用以表示 data matrix。具体情况取决于具体的context。</p>
@@ -646,7 +646,7 @@
 <li>mean 均值，既可出现在统计的context 下，也可出现在 probability 的context下。</li>
 <li>expectation 期望，只能与 随机变量/向量 一起使用。也就是说，只有出现随机变量这个概念的时候，expectation 才可以使用。</li>
 </ul>
-<p>$\mathcal D = {\mathbf x_1,\mathbf x_2,…,\mathbf x_m}$ 是我们的数据集，其中 $\mathbf x_i$ 是一个example，或者叫做 data point，是随机向量$\mathbf X$ 的一组具体取值。</p>
+<p>$\mathcal D = \lbrace \mathbf x_1,\mathbf x_2,…,\mathbf x_m\rbrace$ 是我们的数据集，其中 $\mathbf x_i$ 是一个example，或者叫做 data point，是随机向量$\mathbf X$ 的一组具体取值。</p>
 <p>根据上小节的知识，我们用随机向量/变量 $\mathbf X$ 代替 $\mathcal D$. </p>
 <p>Mean value of $\mathcal D$  is defined as:<br>$$<br>\mathbb E[\mathbf X] = \frac{1}{m}\sum_{i=1}^m \mathbf x_i<br>$$<br>mean value 不一定是数据集中的一个具体的点，它只是表示数据集中所有 examples的一个平均值；从 data space 的角度看，mean 就是 分布在空间中的那些点（来自数据集）的质心。</p>
 <h1 id="Variances-and-covariances"><a href="#Variances-and-covariances" class="headerlink" title="Variances and covariances"></a>Variances and covariances</h1><p><img src="1d_variance.png" alt=""></p>
@@ -708,10 +708,10 @@
 </ul>
 <font color="blue"><strong>Ok, 现在我们将概念推广到 $n$ 个随机变量，即推广到 $n$ 维数据集</strong>。</font>
 
-<p>数据集记为: $\mathcal D ={\mathbf x_1,\mathbf x_2,…,\mathbf x_m}$, $\mathbf x_i$ 是随机向量 $\mathbf X$ 的第 $i$ 个具体取值，是个vecotr$\in \mathbb R^n$.</p>
-<p>Random vector $\mathbf X^T = {X_1,X_2,..,X_n }$.</p>
+<p>数据集记为: $\mathcal D =\lbrace\mathbf x_1,\mathbf x_2,…,\mathbf x_m\rbrace$, $\mathbf x_i$ 是随机向量 $\mathbf X$ 的第 $i$ 个具体取值，是个vecotr$\in \mathbb R^n$.</p>
+<p>Random vector $\mathbf X^T = \lbrace X_1,X_2,..,X_n \rbrace$.</p>
 <p>$\mathcal D$ 和 $\mathbf X$ 概念上是等价的，区别在于我们从不同的角度描述数据。多维数据（随机向量）的convariance也叫做 variance，是一个意思。</p>
-<p>其 <strong>mean value</strong> 定义为：<br>$$<br>\mu_{\mathbf X} = \mathbb E[\mathbf X]=<br>\begin{bmatrix}<br>\mathbb E[X_1]\\<br>\mathbb E[X_2]\\<br>\vdots \\<br>\mathbb E[X_n]<br>\end{bmatrix}<br>=<br>\begin{bmatrix}<br>\mu_1\\<br>\mu_2\\<br>\vdots \\<br>\mu_n<br>\end{bmatrix}<br>\in \mathbb R^n.<br>$$<br>现在考虑 <strong>covariance</strong> 的定义。</p>
+<p>其 <strong>mean value</strong> 定义为：<br>$$<br>\mu_{\mathbf X} = \mathbb E[\mathbf X]=<br>\begin{bmatrix}<br>\mathbb E[X_1]\\<br>\mathbb E[X_2]\\<br>\vdots \\<br>\mathbb E[X_n]<br>\end{bmatrix}<br>=<br>\begin{bmatrix}<br>\mu_1\\<br>\mu_2\\<br>\vdots \\<br>\mu_n<br>\end{bmatrix}<br>\in \mathbb R^n.<br>$$<br>现在考虑 <strong>covariance matrix</strong> 的定义。</p>
 <ol>
 <li><strong>随机向量是随机变量的自然地扩展</strong>，我们先从这个思路出发，其定义如下：</li>
 </ol>
@@ -973,7 +973,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">39</span>
+                  <span class="site-state-item-count">40</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -995,7 +995,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">105</span>
+                  <span class="site-state-item-count">111</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

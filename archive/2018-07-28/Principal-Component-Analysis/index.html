@@ -1,0 +1,1623 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en,zh-Hans,ja,Latn,default">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda,Arial,STXingkai,"华文行楷",STKaiti,“华文楷体”,STFangsong,Lato:300,300italic,400,400italic,700,700italic|Roboto Slab,STKaiti,"华文楷体":300,300italic,400,400italic,700,700italic|Arial,STXingkai,华文行楷,STKaiti,华文楷体,STFangsong,华文仿宋:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Dimensonality Reduction,PCA,Compressing,Changing of Basis,Geometric,Covariance Matrix,Random Vector," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="简介   We can think of dimensionality reduction as a way of compressing data with some loss, similar to jpg or mp3. Principal Component Analysis (PCA) is one of the most fundamental dimensionality reduc">
+<meta name="keywords" content="Dimensonality Reduction,PCA,Compressing,Changing of Basis,Geometric,Covariance Matrix,Random Vector">
+<meta property="og:type" content="article">
+<meta property="og:title" content="四. PCA">
+<meta property="og:url" content="http://yoursite.com/archive/2018-07-28/Principal-Component-Analysis/index.html">
+<meta property="og:site_name" content="逝川">
+<meta property="og:description" content="简介   We can think of dimensionality reduction as a way of compressing data with some loss, similar to jpg or mp3. Principal Component Analysis (PCA) is one of the most fundamental dimensionality reduc">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2018-10-12T12:47:20.740Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="四. PCA">
+<meta name="twitter:description" content="简介   We can think of dimensionality reduction as a way of compressing data with some loss, similar to jpg or mp3. Principal Component Analysis (PCA) is one of the most fundamental dimensionality reduc">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/archive/2018-07-28/Principal-Component-Analysis/"/>
+
+
+
+
+
+  <title>四. PCA | 逝川</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">逝川</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">此间且为等闲事，花开花谢不知年</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-主页">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            主页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-关于">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/archive/2018-07-28/Principal-Component-Analysis/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="popoblue">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="逝川">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">四. PCA</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-28T05:47:17+08:00">
+                2018-07-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/课程笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">课程笔记</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/课程笔记/Mathematics-for-Machine-Learning/" itemprop="url" rel="index">
+                    <span itemprop="name">Mathematics for Machine Learning</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/课程笔记/Mathematics-for-Machine-Learning/PCA/" itemprop="url" rel="index">
+                    <span itemprop="name">PCA</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/archive/2018-07-28/Principal-Component-Analysis/" class="leancloud_visitors" data-flag-title="四. PCA">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>简介</p>
+<blockquote>
+<ol>
+<li><p>We can think of dimensionality reduction as a way of <strong>compressing data with some loss</strong>, similar to jpg or mp3. Principal Component Analysis (PCA) is one of the most fundamental dimensionality reduction techniques that are used in machine learning. In this module, we use the results from the first three modules of this course and <strong>derive PCA from a geometric point of view</strong>. Within this course, this module is the most challenging one, and we will go through an explicit derivation of PCA plus some coding exercises that will make us a proficient user of PCA.</p>
+</li>
+<li><p><strong>PCA 和 Orthogonal Projection, Orthogonal complements，Orthogonal decompostiion, SVD,  Eigen vector and Eigen value, Covariance Matrix, Variance, Optimization(maximization or minimization), lower-rank approximation,encoder-decoder </strong> 等诸多概念都有着很密切的关系！ 可以从不同的角度、进行多方位的阐释。</p>
+</li>
+</ol>
+</blockquote>
+<p>学习目标</p>
+<blockquote>
+<ol>
+<li>总结 PCA<ul>
+<li>线性代数角度</li>
+<li>统计角度</li>
+<li>优化角度</li>
+</ul>
+</li>
+<li>用代码实现PCA</li>
+<li>探讨当PCA用在 Hight-dimensional 数据时的性质</li>
+</ol>
+</blockquote>
+<p>两个很有用的资料</p>
+<blockquote>
+<p>关于vector space的定义：<a href="https://www.coursera.org/learn/pca-machine-learning/supplement/bUE9d/vector-spaces" target="_blank" rel="noopener">link</a>.</p>
+<p>关于Orthogonal complement: <a href="https://en.wikipedia.org/wiki/Orthogonal_complement" target="_blank" rel="noopener">link</a> ; 关于Orthogonal decomposition（正交分解）<a href="https://en.wikipedia.org/wiki/Orthogonal_complement" target="_blank" rel="noopener">link</a>.</p>
+</blockquote>
+<h1 id="Orthogonal-complement-and-Orthogonal-decomposition（正交补和正交分解）"><a href="#Orthogonal-complement-and-Orthogonal-decomposition（正交补和正交分解）" class="headerlink" title="Orthogonal complement and Orthogonal decomposition（正交补和正交分解）"></a>Orthogonal complement and Orthogonal decomposition（正交补和正交分解）</h1><p><strong>关键概念为：</strong></p>
+<ul>
+<li>If we look at $n$-dimensional vector space $V$ and a $k$-dimensional subspace $W\subset V$, then the orthogonal complement $W^\perp$ is an $(n-k)$-dimensional subspace of $V$ and contains all vectors that are orthogonal to every vector in $W$.</li>
+<li>Every vector $\mathbf x \in V$ can be (<strong>uniquely</strong>) decomposed into $\mathbf x = \sum_{i=1}^k \lambda_i \mathbf w_i + \sum_{j=1}^{n-k}\psi_j \mathbf  w^\perp_j, \lambda_i, \psi_j \in \mathbb R,$where  $\mathbf w_1, \mathbf w_2,…, \mathbf w_k $ is a basis of $W$ and $\mathbf w_1,\mathbf w_2,…,\mathbf w_{n-k}$ is a basis of $W^\perp$.</li>
+</ul>
+<h1 id="PCA-推导"><a href="#PCA-推导" class="headerlink" title="PCA 推导"></a>PCA 推导</h1><p>A key idea behind the PCA, is to <strong>use orthogonal projections</strong> to find <strong>a lower representation</strong> of the data and <strong>retain as much information as possible</strong>. </p>
+<p>即：<strong>利用正交投影找到高维数据的低维表示，同时保证尽量不损失太多有用的信息。</strong></p>
+<p>我们的数据集为：</p>
+<p>$\mathbf X \in \mathbb R^{m\times n}= \lbrace \mathbf x_1,…,\mathbf x_m\rbrace$[^1]  where $\mathbf x_i \in \mathbb R^n \text{ for } i=1,…,$m. i.e.  <em>Design matrix</em> $\mathbf X$ contains $m$ examples and each with $n$ features.</p>
+<h2 id="PCA-的问题设置和目标"><a href="#PCA-的问题设置和目标" class="headerlink" title="PCA 的问题设置和目标"></a>PCA 的问题设置和目标</h2><p><strong>PCA的目的</strong>：是“高效地” 将 design matrix 中的向量 $\mathbf x \in \mathbb R^n$ 用低维向量 $\widetilde {\mathbf x} \in \mathbb R^c$ 表示, 其中 $c&lt;n$； 从而最终将 design matrix $\color{blue}{\mathbf X\in \mathbb R^{m\times n} \longrightarrow \mathbf X^\prime\in\mathbb R^{m\times c}}$.</p>
+<p><strong>回忆上节课的知识：</strong></p>
+<hr>
+<p>根据“正交补和正交分解” 小节的知识，<strong>For every element</strong> $\mathbf x \in \mathbb R^n$, 一定可以<em>唯一的</em>分解为如下形式：<br>$$<br>\begin{align}<br>&amp;\color{blue}{\mathbf x = \widetilde{\mathbf x} + \widetilde{\mathbf x}^\perp}, \text{where: }\\<br>&amp;\widetilde{\mathbf x}\in W:\text{orthogonal projection of }\mathbf x \text{ onto } W. \\<br>&amp;W: \text{ is a c-dimensional subspace of } \mathbb R^n.\\<br>&amp;\widetilde {\mathbf x}^\perp: \text{orthogonal projection of } \mathbf x \text{ onto } W^\perp.\\<br>&amp;W^\perp:\text{ is a (n-c)-dimensional subspace of } \mathbb R^n.\\<br>&amp;c: \text{ is a hyperparameter which denote dimensions you want to transform/compress.}<br>\end{align}<br>$$</p>
+<p>基于以上，我们假设和约定</p>
+<ul>
+<li>The basis vectors of $W$ is $\lbrace \mathbf b_1,…,\mathbf b_c \rbrace$ and the basis vectors of $W^\perp$ is $\lbrace \mathbf b^\perp_1,…, \mathbf b^\perp_{n-c} \rbrace$, where every $\mathbf b_i (i=1,…,c)$ and $\mathbf b^\perp_j ( j=1,…,n-c) \in \mathbb R^n$.    </li>
+<li>We denote the $\mathbf B = [ \mathbf b_1,…,\mathbf b_c ]\in\mathbb R^{n\times c}, \mathbf B^\perp = [\mathbf b^\perp_1,…,\mathbf b^\perp_{n-c}] \in \mathbb R^{n\times(n-c)}$.</li>
+</ul>
+<p>由此我们可以得到如下式子：<br>$$<br>\begin{align}<br>\mathbf x &amp;= \color{blue}{\widetilde{\mathbf x} }+ \color{purple}{\widetilde{\mathbf x}^\perp} \in \mathbb R^n\\<br>&amp; = \color{blue}{\sum_{i=1}^c \lambda_i \mathbf b_i}+ \color{purple}{\sum_{j=1}^{n-c}\psi_j \mathbf b^\perp_j}\\<br>&amp;=\color{blue}{\mathbf B\lambda}+ \color{purple}{\underbrace{\mathbf B^\perp\mathbf \psi}_{residual/diff} }<br>\end{align}<br>$$</p>
+<p>$\mathbf b_1,…, \mathbf b_c$ Span the <strong>principal subspace</strong> $W$. 尽管 $\widetilde{\mathbf x} \in \mathbb R^n$, 但它lives in c-dimensional subspace: $\mathbb R^c$, 因此只需要 c 个 coordinates：$\lambda_1,…,\lambda_c$ 就可以表示它。 </p>
+<p>根据上一课-“正交投影”的内容，我们知道：<br>$$<br>\widetilde{\mathbf x} = \underbrace{\mathbf B(\mathbf B^T\mathbf B)^{-1}\mathbf B^T}_{P} \mathbf x =\mathbf P\mathbf x  \\<br>$$</p>
+<p>同时：<br>$$<br>\widetilde{\mathbf x}=  \mathbf B \underbrace{(\mathbf B^T\mathbf B)^{-1}\mathbf B^T\mathbf x}_{\lambda} = \mathbf B \lambda\\<br>$$<br>矩阵 $\mathbf P$ 是 projection matrix，向量 $\mathbf \lambda \in \mathbb R^c$ 是 $\widetilde{\mathbf x}$ 的 “coordinates” or “codes”.</p>
+<hr>
+<p>我们将 $\widetilde{\mathbf x}^\perp =\text{difference/error}= \mathbf x - \widetilde{\mathbf x}$ 视为 <strong>“error/difference”, PCA 的obejctive就是使其尽可能小。</strong></p>
+<p>因此，PCA just want to use $\widetilde{\mathbf x}$ to approximate the original vector $\mathbf x$，i.e. $\mathbf x \approx \widetilde{\mathbf x}$. and meanwhile, retain the error as small as possible.</p>
+<p><em>Remark:</em> both of them is still $\in \mathbb R^n$.</p>
+<p>PCA 算法至此似乎告一段落了，因为我们最终得出了对向量 $\mathbf x \in \mathbb R^n$ 近似 $\widetilde{\mathbf x} \in \mathbb R^n$， 而 $\widetilde{\mathbf x}$  可以由其coordinate $\lambda$ 唯一表示（以 $\mathbf B$ 的列为basis vector），那么我们就可以用一个低维的 $\lambda$ 去代替原始的特征向量 $\mathbf x$, 图示如下：<br>$$<br>\begin{align}<br>&amp;\color{red}{\mathbf x} \approx \color{red}{\widetilde{\mathbf x}}\in\mathbb R^n \longleftrightarrow \color{blue}{\lambda}\in \mathbb R^c \text{, so}\\<br>&amp;\color{red}{\mathbf x}\in\mathbb R^n \longrightarrow  \color{blue}{\lambda} \in \mathbb R^c. \\<br>&amp; \text{dimension reduced!}<br>\end{align}<br>$$<br><em>Remark:</em> </p>
+<blockquote>
+<p> PCA 就是将向量 $\mathbf x \in \mathbb R^n$ 正交分解为 $\widetilde{\mathbf x} + \widetilde{\mathbf x}^\perp$, 然后“丢弃” $\widetilde{\mathbf x}^\perp$ 将其看做 “error”，并使其最小化从而得到满足需求的 $\widetilde{\mathbf x}$ 及其coordinates $\lambda$, 最终以 $\lambda$ 代替 original vector $\mathbf x$ 来参与后续的计算。</p>
+</blockquote>
+<p><strong>现在的困难是</strong>：$\mathbf B$ 和 $\lambda$ 到底如何确定呢（ $\lambda $ 也由 $\mathbf x$ 和 $\mathbf B$ 决定)？向量 $\mathbf x$ 所在的空间$\mathbb R^n$ 无穷多的子空间，选取不同的子空间就对应不同的矩阵 $\mathbf B$, 自然对应很多的 $\widetilde{\mathbf x}$! </p>
+<p>因此，我们必须回答以下问题才能最终完成整个PCA的计算过程：</p>
+<p><strong>如何选取合适的subspace $W$ (i.e. 如何选取basis vectors $\mathbf b_1,…,\mathbf b_c$),以得到具体的 coordinates $\lambda$ ($\lambda_1,…,\lambda_c$), 才能使得 “误差” 最小？这个所谓的“小” 如何来衡量呢？</strong></p>
+<font color="red">我们需要一个objective，我们optimize它可以为我们解答上述问题。</font>
+
+<h2 id="Objective-of-PCA"><a href="#Objective-of-PCA" class="headerlink" title="Objective of PCA"></a>Objective of PCA</h2><p>现在，我们暂时忘记之前的几个几何概念（如：正交投影，正交补， etc.）与PCA的联系，从PCA的目标函数出发去得到合适的<strong>参数</strong>：</p>
+<ul>
+<li>a lower dimensional subspace: basis vectors are $\mathbf b_1,…,\mathbf b_c$</li>
+<li>coordinates corresponding to each original vector (example in data set).</li>
+</ul>
+<blockquote>
+<p>事实上，minimize objective 之后得到的参数，恰恰符合之前纯粹几何角度看待PCA的情况：</p>
+<ol>
+<li>对一个向量的所有分解中，投影（正交分解）的结果与original vector 的“误差”最小（用2-norm衡量）。</li>
+<li>把 original vector $\mathbf x$ 投影到其上的那些 lower dimensional subspaces ，恰恰就是使得整个数据集的 variance最大的那些 subspace。</li>
+<li>也就是说，PCA可以同时从几何与优化的角度解释；而且优化的结果完全包含并符合几何解释。</li>
+</ol>
+<p>总之，如果纯粹从几何角度创造PCA的话，我们只能回答“分解必须是正交分解（使用正交投影）”，仅仅到这一步。 但无法解决 subspace 的选取问题，即：沿着些 subspace（方向）进行投影，才能保证所有 original vectors 在所有的可能子空间（无穷多）上的投影所得到的 projected vector 与 original vector 之间 difference/ error 的2-norm 之和最小！</p>
+</blockquote>
+<ol>
+<li><strong>回忆PCA的目标</strong>：“将高维向量 $\mathbf x \in \mathbb R^n$ , 投影到一个<strong>lower-dimensional</strong> subspace of $\mathbb R^n$ 得到 $\widetilde{\mathbf x}$ 的同时保留足够多的信息（损失足够少的信息）。”<ul>
+<li>记住，$\widetilde{\mathbf x}$ is still $\in \mathbb R^n$, but it lives in a c-dimensional subspace: $\mathbb R^c$.</li>
+<li>这里我们用2-norm 来衡量两个向量之间difference的大小。那么根据上小节的内容， “损失最小” 即：使得 $\Vert\mathbf x - \widetilde{\mathbf x}\Vert ^2$ 最小。 </li>
+</ul>
+</li>
+<li><strong>我们的数据集</strong> (design matrix) 为：$\mathbf X \in \mathbb R^{m\times m}=\lbrace \mathbf x_1,…,\mathbf x_n\rbrace$, where each $\mathbf x_k (k=1,…,m)\in \mathbb R^n$.</li>
+</ol>
+<p>综合1，2，<strong>PCA完整的 objective</strong> 有如下三种具体形式：</p>
+<ol>
+<li><p>Sum of 2-norm of difference:<br>$$<br>\mathcal L(\mathbf B,\lambda) = \frac{1}{m}\sum_{k=1}^m \Vert {\mathbf x}_k - \widetilde{\mathbf x}_k\Vert ^2 \\<br>$$</p>
+</li>
+<li><p>Orthogonal projection,  say $\mathbf {\widetilde{x}}$ could be represented as a linear combination of the basis vectors of which the projected onto subspaces.<br>$$<br>\mathcal L(\mathbf B,\lambda)=\frac{1}{m}\sum_{k=1}^m\Vert \mathbf x_k - \sum_{i=1}^c\lambda_{ik} \mathbf b_i  \Vert^2<br>$$</p>
+</li>
+<li><p>We can rewrite the form of linear combination as “Matrix-Form”:</p>
+</li>
+</ol>
+<p>$$<br>\mathcal L(\mathbf B,\lambda) = \frac{1}{m}\sum_{k=1}^m \Vert {\mathbf x}_k - \mathbf B\lambda_k \Vert ^2<br>$$</p>
+<p><strong>符号说明：</strong></p>
+<ul>
+<li>$\mathbf x_k$ : k-th vector in design matrix, i.e. k-th example in datasets.</li>
+<li>$\widetilde{\mathbf x}_k$ : the projection of $\mathbf x_k$ onto the c-dimensional subspace $\mathbb R^c$. </li>
+<li>$\mathbf b_i$ : the i-th basis vector of the subspace $\mathbb R^c$.</li>
+<li>$\lambda_{ik}$ : the coordinate that corresponding to the i-th basis vector $\mathbf b_i$ for $\mathbf x_k$.</li>
+</ul>
+<p><strong>We also make two general assumptions</strong>:</p>
+<ul>
+<li>Centering the data: $E[\mathbf X] = \mathbf 0$.<ul>
+<li>Means that: $\mathbf x_k := \mathbf x_k - \mathbf \mu$ ($\in \mathbb R^n$.)</li>
+</ul>
+</li>
+<li>The basis vectors $\mathbf b_1,..,\mathbf b_c$ are orthonormal. </li>
+</ul>
+<p><strong>Optimization for PCA:</strong></p>
+<p><em>Remark:</em></p>
+<blockquote>
+<p>和一般地优化问题-“设计objective，minimize/maximize 这个objective function，从而求出optimal parameters” 的流程相同；但从 geometry 角度出发推导、解释、实现PCA的时候，我们是这样思考的：</p>
+<ol>
+<li>首先，几何上我们知道有一个lower-dimensional subspace, 并且我们要将 original vector $\mathbf x$ <strong>正交投影</strong>到这个subspace 上，得到 $\widetilde{\mathbf x}$。</li>
+<li>基于1，根据正交补 and 正交分解的知识，我们知道：$\mathbf x - \widetilde{\mathbf x}$ 就是一个original vector 和 orthogonal projected vector 的距离(误差 or 残差)。</li>
+</ol>
+</blockquote>
+<p>$$<br>\begin{align}<br>&amp;\underbrace{\text{min}}<em>{\lambda} \mathcal L \Rightarrow x\\<br>&amp;\frac{\partial \mathcal L}{\partial \lbrace \lambda</em>{ik},\mathbf b_i\rbrace} = 0\\<br>&amp;where: i=1,…,c; k=1,…,m<br>\end{align}<br>$$</p>
+<p>利用多元函数链式法则, 我们得到：</p>
+<p>$$<br>\frac{\partial \mathcal L}{\partial \lbrace \lambda_{ik},\mathbf b_i\rbrace} =\frac{\partial \mathcal L}{\partial \widetilde{\mathbf x}_k}\frac{\partial \widetilde{\mathbf x}<em>k}{\partial \lbrace \lambda</em>{ik},\mathbf b_i\rbrace}<br>$$</p>
+<p>对于每个original vector而言，</p>
+<h1 id="PCA-算法"><a href="#PCA-算法" class="headerlink" title="PCA 算法"></a>PCA 算法</h1><h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ul>
+<li>关于<a href="http://mathworld.wolfram.com/OrthogonalDecomposition.html" target="_blank" rel="noopener">orthogonal decomposition</a></li>
+<li>关于<a href="https://en.wikipedia.org/wiki/Orthogonal_complement" target="_blank" rel="noopener">orthogonal complement</a></li>
+<li>关于PCA<ol>
+<li>Almost all things you need to know about PCA.</li>
+<li>Asad</li>
+</ol>
+</li>
+</ul>
+<p>[^1]: 这里可能使得读者在概念上产生一定的混淆，实际上这里 design matrix 采用了两种表示方式，第一种即矩阵表示，行的个数代表 # of examples, 列的个数代表 # of features/dimensions； 第二种是采用集合的表示方式，其中每个元素都是design matrix 中的一行值构成的列向量。这仅仅是符号上的选择，无关乎问题本质。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创分享，您的支持是我继续创作的动力!</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="popoblue WeChat Pay"/>
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="popoblue Alipay"/>
+        <p>Alipay</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:</strong>
+    popoblue
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link:</strong>
+    <a href="http://yoursite.com/archive/2018-07-28/Principal-Component-Analysis/" title="四. PCA">http://yoursite.com/archive/2018-07-28/Principal-Component-Analysis/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice: </strong>
+    All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> unless stating additionally.
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Dimensonality-Reduction/" rel="tag"># Dimensonality Reduction</a>
+          
+            <a href="/tags/PCA/" rel="tag"># PCA</a>
+          
+            <a href="/tags/Compressing/" rel="tag"># Compressing</a>
+          
+            <a href="/tags/Changing-of-Basis/" rel="tag"># Changing of Basis</a>
+          
+            <a href="/tags/Geometric/" rel="tag"># Geometric</a>
+          
+            <a href="/tags/Covariance-Matrix/" rel="tag"># Covariance Matrix</a>
+          
+            <a href="/tags/Random-Vector/" rel="tag"># Random Vector</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/archive/2018-07-23/Orthogonal-Projections/" rel="next" title="三. 正交投影">
+                <i class="fa fa-chevron-left"></i> 三. 正交投影
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">popoblue</p>
+              <p class="site-description motion-element" itemprop="description">知行合一，一个功夫！</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">111</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/yazhouhao" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:me@yazhouhao.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://twitter.com/yazhouhao" target="_blank" title="Twitter">
+                    
+                      <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://www.facebook.com/yazhouhao" target="_blank" title="FB Page">
+                    
+                      <i class="fa fa-fw fa-facebook"></i>FB Page</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Orthogonal-complement-and-Orthogonal-decomposition（正交补和正交分解）"><span class="nav-number">1.</span> <span class="nav-text">Orthogonal complement and Orthogonal decomposition（正交补和正交分解）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#PCA-推导"><span class="nav-number">2.</span> <span class="nav-text">PCA 推导</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#PCA-的问题设置和目标"><span class="nav-number">2.1.</span> <span class="nav-text">PCA 的问题设置和目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Objective-of-PCA"><span class="nav-number">2.2.</span> <span class="nav-text">Objective of PCA</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#PCA-算法"><span class="nav-number">3.</span> <span class="nav-text">PCA 算法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">4.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">popoblue</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count"></span>
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('5');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'manual') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.3"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("fgig2ECgFUUIzHQxQ6UEGBsw-gzGzoHsz", "qwf4KMNBL2n522kimTswJY9w");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Linkedin,Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+  </script>
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

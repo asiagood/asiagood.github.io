@@ -116,7 +116,7 @@
 
 
 
-  <meta name="keywords" content="Orthogonal Projection,Orthogonality,Dimensonality Reduction,Projection Matrix," />
+  <meta name="keywords" content="Orthogonal Projection,Projection Matrix,Orthogonality,Dimensonality Reduction," />
 
 
 
@@ -128,7 +128,7 @@
 
 
 <meta name="description" content="简介  In this module, we will look at orthogonal projections of vectors, which live in a high-dimensional vector space, onto lower-dimensional subspaces. This will play an important role in the next mod">
-<meta name="keywords" content="Orthogonal Projection,Orthogonality,Dimensonality Reduction,Projection Matrix">
+<meta name="keywords" content="Orthogonal Projection,Projection Matrix,Orthogonality,Dimensonality Reduction">
 <meta property="og:type" content="article">
 <meta property="og:title" content="三. 正交投影">
 <meta property="og:url" content="http://yoursite.com/archive/2018-07-23/Orthogonal-Projections/index.html">
@@ -137,7 +137,7 @@
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://yoursite.com/archive/2018-07-23/Orthogonal-Projections/projection_onto_line2.gif">
 <meta property="og:image" content="http://yoursite.com/archive/2018-07-23/Orthogonal-Projections/projection_onto_subspace.png">
-<meta property="og:updated_time" content="2018-07-26T14:09:48.105Z">
+<meta property="og:updated_time" content="2018-09-05T11:53:15.713Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="三. 正交投影">
 <meta name="twitter:description" content="简介  In this module, we will look at orthogonal projections of vectors, which live in a high-dimensional vector space, onto lower-dimensional subspaces. This will play an important role in the next mod">
@@ -520,16 +520,16 @@
 </blockquote>
 <p>$\mathbf u \text{ is any vector in U, i.e. } \mathbf u = \beta \mathbf b $</p>
 <p>$\color{purple}{\text{The pruple line }} \text{is the difference vector of } \mathbf x \text{ and the vectors on } \mathbf U $</p>
-<p>$\color{purple}{\text{difference vector is : }} diff=\mathbf x - \text{Proj}_{\mathbf u}\mathbf x$.</p>
+<p>$\color{purple}{\text{difference vector is : }} diff=\mathbf x - \mathbf u$.</p>
 <p>从图中我们发现：</p>
-<p>向量 $\mathbf x​$ 在 $\mathbf U​$上的正交投影是$\mathbf U​$ 中所有向量中与 $\mathbf x​$ 距离最近的向量。</p>
+<p>向量 $\mathbf x$ 在 $\mathbf U$上的正交投影是$\mathbf U$ 中所有向量中与 $\mathbf x$ 距离最近的向量。</p>
 <blockquote>
 <p>此时，$\mathbf x$ 与 其在 $\mathbf U$ 上的正交投影之差- $diff$ 与 $\mathbf U$ 垂直，$diff$ 的长度最小。</p>
 </blockquote>
 <p>我们将 $\mathbf x$ 在 $\mathbf U$ 上的 <strong>orthogonal projection</strong> 记为: $\pi_{\mathbf U}(\mathbf x)$.</p>
 <p>关于$\pi_{\mathbf U}(\mathbf x)$ 有如下2个等式成立:</p>
 <ol>
-<li><p>$\pi_{\mathbf U}(\mathbf x) \in \mathbf U \Rightarrow \exist \lambda \in \mathbb R:\pi_{\mathbf U} (\mathbf x) = \lambda \mathbf b (\text{ as }\pi_{\mathbf U}\mathbf x \in \mathbf U)$</p>
+<li><p>$\pi_{\mathbf U}(\mathbf x) \in \mathbf U \Rightarrow \exists \lambda \in \mathbb R:\pi_{\mathbf U} (\mathbf x) = \lambda \mathbf b (\text{ as }\pi_{\mathbf U}\mathbf x \in \mathbf U)$</p>
 <blockquote>
 <p>$\lambda$ is <strong>coordinate</strong> of orthogonal projection of $\mathbf x$ onto $\mathbf U$ with respect to basis vector $\mathbf b$.</p>
 </blockquote>
@@ -537,9 +537,9 @@
 <li><p>$\langle \mathbf b, \color{purple}{\mathbf x - \pi_{\mathbf U}\mathbf x \rangle} = 0 (\text{ orthogonality})$</p>
 </li>
 </ol>
-<p>我们可以借此，<strong>不过度依赖几何概念、完全从线性代数的视角，只用Inner product的概念</strong>就可以求出向量 $\mathbf x$ 在 $\mathbf U$ 中的正交投影$\pi_{\mathbf U}(\mathbf x)$， 如下：<br>$$<br>\begin{align}<br>1,2<br>&amp;\Rightarrow  \langle \mathbf b, \mathbf x\rangle - \langle \mathbf b, \pi_{\mathbf U}(\mathbf x )\rangle  = 0 \\<br>&amp; \Leftrightarrow \langle \mathbf b, \mathbf x\rangle - \langle \mathbf b, \lambda \mathbf b \rangle = 0\\<br>&amp; \Leftrightarrow \langle \mathbf b, \mathbf x\rangle - \lambda \Vert \mathbf b \Vert ^2 = 0\\<br>&amp; \Leftrightarrow \lambda = \frac{ \langle \mathbf b, \mathbf x\rangle}{\Vert \mathbf b\Vert^2}\\<br>&amp;\Rightarrow \pi_{\mathbf U}(\mathbf x) = \lambda\mathbf b =  \frac{ \langle \mathbf b, \mathbf x\rangle}{\Vert \mathbf b\Vert^2} \mathbf b<br>\end{align}<br>$$</p>
+<p>我们可以借此，<strong>不过度依赖几何概念、完全从线性代数的视角，只用Inner product的概念</strong>就可以求出向量 $\mathbf x$ 在 $\mathbf U$ 中的正交投影$\pi_{\mathbf U}(\mathbf x)$， 如下：<br>$$<br>\begin{align}<br>1,2<br>&amp;\Rightarrow  \langle \mathbf b, \mathbf x\rangle - \langle \mathbf b, \pi_{\mathbf U}(\mathbf x )\rangle  = 0 \\<br>&amp; \Leftrightarrow \langle \mathbf b, \mathbf x\rangle - \langle \mathbf b, \lambda \mathbf b \rangle = 0\\<br>&amp; \Leftrightarrow \langle \mathbf b, \mathbf x\rangle - \lambda \Vert \mathbf b \Vert ^2 = 0\\<br>&amp; \Leftrightarrow \lambda = \frac{ \langle \mathbf b, \mathbf x\rangle}{\Vert \mathbf b\Vert^2}\\<br>&amp;\Rightarrow \pi_{\mathbf U}(\mathbf x) = \lambda\mathbf b = \underbrace{ \frac{ \langle \mathbf b, \mathbf x\rangle}{\Vert \mathbf b\Vert^2}}_{\mathbf \lambda} \mathbf b<br>\end{align}<br>$$</p>
 <p>如果我们<strong>选择 dot product 作为我们的 Inner product</strong>, 则有：</p>
-<p>$$<br>\pi_{\mathbf U}(\mathbf x) =\frac{\mathbf x^T \mathbf b}{\Vert \mathbf b\Vert^2} \mathbf b  =\frac{ \mathbf b^T \mathbf x}{\Vert \mathbf b\Vert^2}\mathbf b = \color{blue}{\frac{ \mathbf b\mathbf b^T }{\Vert \mathbf b\Vert^2}} \mathbf x = \color{blue}{\underbrace{\frac{ \mathbf b\mathbf b^T }{\mathbf b^T \mathbf b}}_{\mathbf P}}\mathbf x<br>$$<br>The blue part in above last equation is so called $\color{blue}{\text{Projection Matrix}}$, which could projection any vector in $\mathbf R^2$ onto 1-D subspace $\mathbf U$, and <strong>Projection Matrix is symmetric</strong>.</p>
+<p>$$<br>\pi_{\mathbf U}(\mathbf x) =\frac{\mathbf x^T \mathbf b}{\Vert \mathbf b\Vert^2}\mathbf b  =\frac{ \mathbf b^T \mathbf x}{\Vert \mathbf b\Vert^2}\mathbf b = \color{blue}{\frac{ \mathbf b\mathbf b^T }{\Vert \mathbf b\Vert^2}} \mathbf x = \color{blue}{\underbrace{\frac{ \mathbf b\mathbf b^T }{\mathbf b^T \mathbf b}}_{\mathbf P}}\mathbf x<br>$$<br>The blue part in above last equation is so called $\color{blue}{\text{Projection Matrix}}$, which could projection any vector in $\mathbf R^2$ onto 1-D subspace $\mathbf U$, and <strong>Projection Matrix is symmetric</strong>.</p>
 <p><strong>总结一下：</strong></p>
 <ol>
 <li><p>Orthogonal Projection of $\mathbf x$ is also a vector in $\mathbb R^2$, and meanwhile, it is also a vector in 1-D subspace $\mathbf U$. But we never need two coordinates to represent it, we just need only one coordinate $\lambda$. $\lambda$ is the coordinate of orthogonal projection of $\mathbf x$ onto $\mathbf U$ with respect to b which is the basis vector of $\mathbf U$.</p>
@@ -548,7 +548,7 @@
 </li>
 <li><p>The orthogonal projection is the specific vector in $\mathbf U$ that is <strong>closest to</strong>  $\mathbf x$  in $\mathbb R^2$. Namely, the difference of $\mathbf x$ and its orthogonal projection is the smallest among the distances of the vectors(points) in $\mathbf U$ and $\mathbf x$. Formally, $\pi_{\mathbf U}(\mathbf x)$ is closest to $\mathbf x$.</p>
 </li>
-<li><p>From the perspective of difference/distances between $\mathbf x$ and any vectors in $\mathbf U$, that is, the specific difference $\mathbf x -\pi_{\mathbf U}(\mathbf x)$ is the <strong>smallest</strong> among all differences $\mathbf x - \text{Proj}_{\mathbf U}\mathbf x$.</p>
+<li><p>From the perspective of difference/distances between $\mathbf x$ and any vectors in $\mathbf U$, that is, the specific difference $\mathbf x -\pi_{\mathbf U}(\mathbf x)$ is the <strong>smallest</strong> among all differences $\mathbf x - \mathbf u $, where $\mathbf u \in \mathbf U$.</p>
 <blockquote>
 <p>Difference has some other names such as <strong>reconstruction error, residual, error,</strong> etc. In machine learning context, it is called <strong>loss</strong> or <strong>cost</strong> function; in optimization context, it is called <strong>objective</strong> function.</p>
 </blockquote>
@@ -570,27 +570,38 @@
 <p>我们假设 $(\mathbf {b_1,b_2,…,b_m})$ 是 $\mathbf U$ 的一组基。 Projections $\pi_{\mathbf U}(\mathbf x)$ onto $\mathbf U$ are elements of $\mathbf U$，因此， 他们可以被表示成 $(\mathbf {b_!,b_2,…,b_m})$ 的线性组合，使得 $\pi_{\mathbf U}(\mathbf x) = \sum_{i=1}^m \lambda_i \mathbf b_i$.</p>
 <p>As in the 1-D case, we follow a three-step precedure to find the <em>projection</em> $\mathbf p=\pi_{\mathbf U}(\mathbf x)$ and the <em>projection matrix</em> $\mathbf P_\pi$:</p>
 <ol>
-<li><p>Find the <em>coordinates</em> $\lambda_1,\lambda_2,…,\lambda_m$ of the projection (with respect to the basis of $\mathbf U$), such that the linear combination<br>$$<br>\begin{align}<br>&amp;\pi_{\mathbf U}(\mathbf x) = \mathbf p = \sum_{i=1}^m\lambda_i \mathbf b_i =\mathbf {B\lambda},\\<br>&amp;\mathbf B = [\mathbf{b_1,b_2,…,b_m}] \in \mathbb R^{n \times m} ,\quad \mathbf \lambda = [\lambda_1,\lambda_2,…,\lambda_m]^T \in \mathbb R^m<br>\end{align}<br>$$<br>is closest to $\mathbf x \in \mathbb R^n$. As in the 1-D case, “closest” means “minimum distance”, which implies that the vector connecting $\mathbf p \in \mathbf U$ and $\mathbf x \in \mathbb R^n$ is orthogonal to all basis vectors of $\mathbf U$. Therefore, we obtain $m$ simultaneous conditions (assuming the dot product as the inner product)<br>$$<br>\begin{align}<br>\langle \mathbf {b_1, x - p}\rangle = \mathbf b_1^T(\mathbf {x-p}) =0\\<br>\langle \mathbf {b_2, x - p}\rangle =\mathbf b_2^T (\mathbf {x-p}) = 0\\<br>\vdots \\<br>\langle \mathbf {b_m, x - p}\rangle = \mathbf b_m^T (\mathbf{x-p}) =0<br>\end{align}<br>$$<br>which, with $\mathbf{p = B\lambda}$,  can be written as<br>$$<br>\begin{align}<br>\mathbf b_1^T (\mathbf{x - B\lambda}) = 0\\<br>\vdots\\<br>\mathbf b_m^T (\mathbf{x - B\lambda}) = 0<br>\end{align}<br>$$<br>such that we obtain a homogeneous lienar equation system<br>$$<br>\begin{align}<br>\begin{bmatrix}<br>\mathbf b_1^T\\<br>\vdots \\<br>\mathbf b_m^T<br>\end{bmatrix}<br>\begin{bmatrix}<br>\<br>\mathbf {x -B\lambda}<br>\\<br>\end{bmatrix}= \mathbf 0<br>&amp;\Leftrightarrow \mathbf B^T (\mathbf {x - B\lambda}) = \mathbf 0 \\<br>&amp;\Leftrightarrow  \mathbf B^T \mathbf {B\lambda} = \mathbf B^T \mathbf x<br>\end{align}<br>$$<br>The last equation is called <em>normal equation</em>. Since $\mathbf {b_1,b_2,…,b_m}$ are a basis of $\mathbf U$ and( $n \ge m$ ), therefore, linearly dependent, $\mathbf B^T \mathbf B \in \mathbb R^{m \times m}$ is regular and invertable. This allows us to solve for the optimal <em>coefficients/coordinates</em><br>$$<br>\mathbf{\lambda} = (\mathbf B^T\mathbf B)^{-1}\mathbf B^T \mathbf x<br>$$<br>The matrix $(\mathbf B^T\mathbf B)^{-1}\mathbf B^T$ is also called the <em>pseudo-inverse</em> of $\mathbf B$, which can be computed for non-square matrices $\mathbf B$. It only requires that $\mathbf B^T\mathbf B$ is positive definite, which is the case if $\mathbf B$ is full-rank.[^1]</p>
+<li><p>Find the <em>coordinates</em> $\lambda_1,\lambda_2,…,\lambda_m$ of the projection (with respect to the basis of $\mathbf U$), such that the linear combination<br>$$<br>\begin{align}<br>&amp;\pi_{\mathbf U}(\mathbf x) = \mathbf p = \sum_{i=1}^m\lambda_i \mathbf b_i =\mathbf {B\lambda},\\<br>&amp;\mathbf B = [\mathbf{b_1,b_2,…,b_m}] \in \mathbb R^{n \times m} ,\quad \mathbf \lambda = [\lambda_1,\lambda_2,…,\lambda_m]^T \in \mathbb R^m<br>\end{align}<br>$$<br>is closest to $\mathbf x \in \mathbb R^n​$. As in the 1-D case, “closest” means “minimum distance”, which implies that the vector connecting $\mathbf p \in \mathbf U​$ and $\mathbf x \in \mathbb R^n​$ is orthogonal to all basis vectors of $\mathbf U​$. Therefore, we obtain $m​$ simultaneous conditions (assuming the dot product as the inner product)<br>$$<br>\begin{align}<br>\langle \mathbf {b_1, x - p}\rangle = \mathbf b_1^T(\mathbf {x-p}) =0\\<br>\langle \mathbf {b_2, x - p}\rangle =\mathbf b_2^T (\mathbf {x-p}) = 0\\<br>\vdots \\<br>\langle \mathbf {b_m, x - p}\rangle = \mathbf b_m^T (\mathbf{x-p}) =0<br>\end{align}<br>$$<br>which, with $\mathbf{p = B\lambda}​$,  can be written as<br>$$<br>\begin{align}<br>\mathbf b_1^T (\mathbf{x - B\lambda}) = 0\\<br>\vdots\\<br>\mathbf b_m^T (\mathbf{x - B\lambda}) = 0<br>\end{align}<br>$$<br>such that we obtain a homogeneous lienar equation system<br>$$<br>\begin{align}<br>\begin{bmatrix}<br>\mathbf b_1^T\\<br>\vdots \\<br>\mathbf b_m^T<br>\end{bmatrix}<br>\begin{bmatrix}<br>\<br>\mathbf {x -B\lambda}<br>\\<br>\end{bmatrix}= \mathbf 0<br>&amp;\Leftrightarrow \mathbf B^T (\mathbf {x - B\lambda}) = \mathbf 0 \\<br>&amp;\Leftrightarrow  \mathbf B^T \mathbf {B\lambda} = \mathbf B^T \mathbf x<br>\end{align}<br>$$<br>The last equation is called <em>normal equation</em>. Since $\mathbf {b_1,b_2,…,b_m}$ are a basis of $\mathbf U$ and( $n \ge m$ ), therefore, linearly dependent, $\mathbf B^T \mathbf B \in \mathbb R^{m \times m}$ is regular and invertable. This allows us to solve for the optimal <em>coefficients/coordinates</em><br>$$<br>\mathbf{\lambda} = (\mathbf B^T\mathbf B)^{-1}\mathbf B^T \mathbf x<br>$$<br>The matrix $(\mathbf B^T\mathbf B)^{-1}\mathbf B^T$ is also called the <em>pseudo-inverse</em> of $\mathbf B$, which can be computed for non-square matrices $\mathbf B$. It only requires that $\mathbf B^T\mathbf B$ is positive definite, which is the case if $\mathbf B$ is full-rank.[^1]</p>
 <blockquote>
 <p>In fact,  the matrix $\mathbf B^T\mathbf B \in \mathbb R^{m \times m}$ is called <em>Gram Matrix</em>, no matter what $\mathbf B$ is (not necessarily symmetric or even square) is always positive semi-definite; if $n\ge m$ (and we assume for convenience that $\mathbf B$ is full rank.) , then $\mathbf B^T \mathbf B$ is positive definite. </p>
 </blockquote>
 </li>
-<li><p>Find the orthogonal projection $\pi_{\mathbf U}(\mathbf x) =\mathbf p \in \mathbf U$. We already established that $\mathbf p = \mathbf {B\lambda}$. Therefore, we obtain<br>$$<br>\mathbf p = \mathbf B(\mathbf B^T \mathbf B)^{-1}\mathbf B^T \mathbf x<br>$$</p>
+<li><p>Find the orthogonal projection $\pi_{\mathbf U}(\mathbf x) =\mathbf p \in \mathbf U$. We already established that $\mathbf p = \mathbf {B\lambda}$. Therefore, we obtain</p>
+<p>$$<br>\mathbf p = \color{blue}{\mathbf B(\mathbf B^T \mathbf B)^{-1}\mathbf B^T} \mathbf x<br>$$</p>
 </li>
-<li><p>Find the projection matrix $\mathbf P_{\pi}$. From above equation, we can immediately see that the projection matrix that solves $\mathbf P_{\pi}\mathbf x = \mathbf p$ must be<br>$$<br>\mathbf P_{\pi} = \mathbf B(\mathbf B^T\mathbf B)^{-1}\mathbf B^T<br>$$</p>
+<li><p>Find the projection matrix $\mathbf P_{\pi}$. From above equation, we can immediately see that the projection matrix that solves $\mathbf P_{\pi}\mathbf x = \mathbf p$ must be<br>$$<br>\color{blue}{\mathbf P_{\pi} = \mathbf B(\mathbf B^T\mathbf B)^{-1}\mathbf B^T}<br>$$</p>
 </li>
 </ol>
+<p>此时我们注意到：</p>
+<ol>
+<li>$\mathbf p = \mathbf B \color{blue}{\lambda}$</li>
+<li>$\mathbf p = \color{blue}{\mathbf P_{\pi}}\mathbf x$</li>
+</ol>
+<p>其中，$\lambda$ 是 $\mathbf p$ 在 column space of $\mathbf B$ 中的坐标；而 $\mathbf P_{\pi}$ 是将 $\mathbf x$ 投影到 $\mathbf B$ 上的 Projection matrix。</p>
 <p><em>Remark 1</em>:  Comparing the solutions fro projecting onto a one-dimensional subspace and the general case, we see that the general case includes the 1-D cases as a special case: If $dim(\mathbf U)=1$ then $\mathbf B^T \mathbf B \in \mathbb R$ is a scalar and we can rewrite the projection matrix $\mathbf P_{\pi} = \mathbf B(\mathbf B^T \mathbf B)^{-1}\mathbf B^T$ as $\mathbf P_{\pi} = \frac{\mathbf B\mathbf B^T}{\mathbf B^T \mathbf B}$, which is exactly the projection matrix for the one-dimensional cases.</p>
-<p><em>Remark 2</em>: The orthogonal projection $\pi_{\mathbf U}(\mathbf x)$ <strong>are still vectors in</strong> $\mathbb R^n$ <strong>although they lie in an $m$-dimensional subspace</strong> $\mathbf U \subseteq \mathbb R^n$. <strong>However, to represent a projected vector we only need the $m$ coordinates $\lambda_1,\lambda_2,…,\lambda_m$ with respect to the basis vectors</strong> $\mathbf b_1,\mathbf b_2,…,\mathbf b_m$ of $\mathbf U$.</p>
+<p><em>Remark 2</em>: The orthogonal projection $\pi_{\mathbf U}(\mathbf x)$ <strong>are still vectors in</strong> $\mathbb R^n$ <strong>although they lie in an $m$-dimensional subspace</strong> $\mathbf U \subseteq \mathbb R^n$. <strong>However, to represent a projected vector we only need the $m \color{blue}{\text{ coordinates}}$ $\color{blue}{\lambda_1,\lambda_2,…,\lambda_m}$ with respect to the basis vectors</strong> $\mathbf b_1,\mathbf b_2,…,\mathbf b_m$ of $\mathbf U$.</p>
 <p><em>Remark</em> 3: In vector spaces with general inner products, we have to pay attention when computing angels and distances, which are defined by means of the inner product.</p>
 <p>$\quad$ Projections allow us to look at situations where we have a linear system $\mathbf {Ax = b}$ without a solution. Recall that this means  that $\mathbf b$ does not lie in the span of $\mathbf A$, i.e., the vector $\mathbf b$ does not lie in the subspace spanned by the columns of $\mathbf A$(i.e. column space of $\mathbf A$). Given that the linear equation cannot be solved exactly, we can find an <em>approximate solution</em>. The idea is to find the vector in the subspace spanned by the columns of $\mathbf A$ that is closest to $\mathbf b$, i.e., we compute the orthogonal projection of $\mathbf b$ onto the subspace spanned by columns of $\mathbf A$. This problem arises often in practice, and the solution is called the <em>least square solution</em> (assuming the dot product as the inner product) of an overdetermined system.</p>
 <h1 id="投影矩阵的性质"><a href="#投影矩阵的性质" class="headerlink" title="投影矩阵的性质"></a>投影矩阵的性质</h1><p>$\mathbf P_{\mathbf \pi} = \mathbf P_{\mathbf \pi} ^T$</p>
 <p>$\mathbf P_{\mathbf \pi}^2 = \mathbf P_{\mathbf \pi}$</p>
 <h1 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h1><ol>
 <li>这里有一个 Projection of vectors in n-dimensional space onto m-dimensional subspace 的全部推导过程，<a href="https://d3c33hcgiwev3.cloudfront.net/NfYmDxtEEeiDkQoaxapXkA_362ff9c01b4411e8af00d38a13203424_projections.pdf?Expires=1532563200&amp;Signature=PTg4OOo7NhOUavEbs57eeWnMHHwjO5LJbr5gzueTm7g6Gdj5-IzYQv-2iX6X~erVKjqR~rbNX1X9eTrbI6K4dxCwPv2ZRtZ0PEmWhBlqSQxb5QBrmg0DZJQM-LU~~mWTxcXP1TN2gFRXLQTuQwdH1hz0n8OTAKDt~eA3iU1gMEc_&amp;Key-Pair-Id=APKAJLTNE6QMUY6HBC5A" target="_blank" rel="noopener">link</a> .</li>
-<li>编程练习将数据从高维投影到低维；并从正交投影的角度理解linear regress. <a href="https://hub.coursera-notebooks.org/user/ulxcpxlsfseegsaeqorjxk/notebooks/week3.ipynb" target="_blank" rel="noopener">link</a>.</li>
+<li>综合练习： <a href="https://hub.coursera-notebooks.org/user/ulxcpxlsfseegsaeqorjxk/notebooks/week3.ipynb" target="_blank" rel="noopener">link</a>.<ul>
+<li>编程练习将数据从高维投影到低维</li>
+<li>从正交投影的角度理解linear regression.</li>
+</ul>
+</li>
 </ol>
-<p>[^1]: In practical applications( e.g., linear regression), we often add a “jitter term” $\epsilon \mathbf I$ to $\mathbf B^T\mathbf B$ to guarantee increase numerical stability and positive definiteness. This “ridge” can be rigorously derived using Bayesian inference,  </p>
+<p>[^1]: In practical applications( e.g., linear regression), we often add a “jitter term” $\epsilon \mathbf I$ to $\mathbf B^T\mathbf B​$ to guarantee increase numerical stability and positive definiteness. This “ridge” can be rigorously derived using Bayesian inference,  </p>
 
       
     </div>
@@ -657,11 +668,11 @@
           
             <a href="/tags/Orthogonal-Projection/" rel="tag"># Orthogonal Projection</a>
           
+            <a href="/tags/Projection-Matrix/" rel="tag"># Projection Matrix</a>
+          
             <a href="/tags/Orthogonality/" rel="tag"># Orthogonality</a>
           
             <a href="/tags/Dimensonality-Reduction/" rel="tag"># Dimensonality Reduction</a>
-          
-            <a href="/tags/Projection-Matrix/" rel="tag"># Projection Matrix</a>
           
         </div>
       
@@ -698,6 +709,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/archive/2018-07-28/Principal-Component-Analysis/" rel="prev" title="四. PCA">
+                四. PCA <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -774,7 +789,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">39</span>
+                  <span class="site-state-item-count">40</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -796,7 +811,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">105</span>
+                  <span class="site-state-item-count">111</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
