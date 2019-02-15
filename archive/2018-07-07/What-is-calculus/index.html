@@ -422,8 +422,7 @@
                   <i class="fa fa-comment-o"></i>
                 </span>
                 <a href="/archive/2018-07-07/What-is-calculus/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="archive/2018-07-07/What-is-calculus/" itemprop="commentCount"></span>
+                  <span class="post-comments-count valine-comment-count" data-xid="/archive/2018-07-07/What-is-calculus/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -647,14 +646,7 @@
 
   
     <div class="comments" id="comments">
-      <div id="disqus_thread">
-        <noscript>
-          Please enable JavaScript to view the
-          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
-        </noscript>
-      </div>
     </div>
-
   
 
 
@@ -978,26 +970,6 @@
 
   
 
-    
-      <script id="dsq-count-scr" src="https://yazhouhao.disqus.com/count.js" async></script>
-    
-
-    
-      <script type="text/javascript">
-        var disqus_config = function () {
-          this.page.url = 'https://asiagood.github.io/archive/2018-07-07/What-is-calculus/';
-          this.page.identifier = 'archive/2018-07-07/What-is-calculus/';
-          this.page.title = '一. 什么是微积分';
-        };
-        var d = document, s = d.createElement('script');
-        s.src = 'https://yazhouhao.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', '' + +new Date());
-        (d.head || d.body).appendChild(s);
-      </script>
-    
-
-  
-
 
 
 
@@ -1013,12 +985,38 @@
 
 
 
+  
 
 
 
 
 
 
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'fgig2ECgFUUIzHQxQ6UEGBsw-gzGzoHsz',
+        appKey: 'qwf4KMNBL2n522kimTswJY9w',
+        placeholder: 'Just go go',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
 
 
 
