@@ -299,9 +299,9 @@
         <category>NLP</category>
       </categories>
       <tags>
-        <tag>N-Grams</tag>
         <tag>Markov Models</tag>
         <tag>Markov Assumption</tag>
+        <tag>N-Grams</tag>
       </tags>
   </entry>
   <entry>
@@ -312,8 +312,8 @@
         <category>NLP</category>
       </categories>
       <tags>
-        <tag>Language Model</tag>
         <tag>N-Grams</tag>
+        <tag>Language Model</tag>
       </tags>
   </entry>
   <entry>
@@ -464,8 +464,8 @@
         <category>编程</category>
       </categories>
       <tags>
-        <tag>python</tag>
         <tag>pandas</tag>
+        <tag>python</tag>
       </tags>
   </entry>
   <entry>
