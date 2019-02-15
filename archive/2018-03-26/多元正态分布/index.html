@@ -396,6 +396,17 @@
 
           
             
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/archive/2018-03-26/多元正态分布/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="archive/2018-03-26/多元正态分布/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
           
 
           
@@ -617,6 +628,16 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
 
   
 
@@ -941,6 +962,26 @@
 
   
 
+    
+      <script id="dsq-count-scr" src="https://popoblue.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/archive/2018-03-26/多元正态分布/';
+          this.page.identifier = 'archive/2018-03-26/多元正态分布/';
+          this.page.title = '多元正态分布';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://popoblue.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
 
 
 
@@ -953,10 +994,6 @@
   
 
 
-
-
-
-  
 
 
 
@@ -976,7 +1013,7 @@
     var isfetched = false;
     var isXml = true;
     // Search DB path;
-    var search_path = "";
+    var search_path = "search.xml";
     if (search_path.length === 0) {
       search_path = "search.xml";
     } else if (/json$/i.test(search_path)) {
@@ -1178,7 +1215,7 @@
 
                   // select top N slices in content
 
-                  var upperBound = parseInt('5');
+                  var upperBound = parseInt('10');
                   if (upperBound >= 0) {
                     slicesOfContent = slicesOfContent.slice(0, upperBound);
                   }
@@ -1245,7 +1282,7 @@
             }
           }
 
-          if ('auto' === 'manual') {
+          if ('auto' === 'auto') {
             input.addEventListener('input', inputEventFunction);
           } else {
             $('.search-icon').click(inputEventFunction);

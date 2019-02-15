@@ -116,7 +116,7 @@
 
 
 
-  <meta name="keywords" content="Markov Models,Markov Assumption,N-Grams," />
+  <meta name="keywords" content="N-Grams,Markov Models,Markov Assumption," />
 
 
 
@@ -128,7 +128,7 @@
 
 
 <meta name="description" content="Markov Models在上一篇文章中对语言模型进行了感性认知和形式化地定义，并给出一个最简单的LMs,虽然它不强大。 现在基于我们之前的形式化定义，系统性地分析：如何estimate 一个句子的联合概率？ 考虑一个随机变量序列，$X_1,X_2,…,X_n$ . 每个随机变量的取值都可能是 $\color{blue}{\mathbb{V}}$ 中的任意一个值。现在我们假设：序列的长度 n 是一">
-<meta name="keywords" content="Markov Models,Markov Assumption,N-Grams">
+<meta name="keywords" content="N-Grams,Markov Models,Markov Assumption">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Language Model-(二)">
 <meta property="og:url" content="http://yoursite.com/archive/2018-06-15/Language-Model-二/index.html">
@@ -394,6 +394,17 @@
 
           
             
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/archive/2018-06-15/Language-Model-二/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="archive/2018-06-15/Language-Model-二/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
           
 
           
@@ -650,11 +661,11 @@
       
         <div class="post-tags">
           
+            <a href="/tags/N-Grams/" rel="tag"># N-Grams</a>
+          
             <a href="/tags/Markov-Models/" rel="tag"># Markov Models</a>
           
             <a href="/tags/Markov-Assumption/" rel="tag"># Markov Assumption</a>
-          
-            <a href="/tags/N-Grams/" rel="tag"># N-Grams</a>
           
         </div>
       
@@ -722,6 +733,16 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
 
   
 
@@ -1046,6 +1067,26 @@
 
   
 
+    
+      <script id="dsq-count-scr" src="https://popoblue.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/archive/2018-06-15/Language-Model-二/';
+          this.page.identifier = 'archive/2018-06-15/Language-Model-二/';
+          this.page.title = 'Language Model-(二)';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://popoblue.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
 
 
 
@@ -1058,10 +1099,6 @@
   
 
 
-
-
-
-  
 
 
 
@@ -1081,7 +1118,7 @@
     var isfetched = false;
     var isXml = true;
     // Search DB path;
-    var search_path = "";
+    var search_path = "search.xml";
     if (search_path.length === 0) {
       search_path = "search.xml";
     } else if (/json$/i.test(search_path)) {
@@ -1283,7 +1320,7 @@
 
                   // select top N slices in content
 
-                  var upperBound = parseInt('5');
+                  var upperBound = parseInt('10');
                   if (upperBound >= 0) {
                     slicesOfContent = slicesOfContent.slice(0, upperBound);
                   }
@@ -1350,7 +1387,7 @@
             }
           }
 
-          if ('auto' === 'manual') {
+          if ('auto' === 'auto') {
             input.addEventListener('input', inputEventFunction);
           } else {
             $('.search-icon').click(inputEventFunction);

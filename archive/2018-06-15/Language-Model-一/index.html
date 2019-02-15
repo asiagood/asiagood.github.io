@@ -116,7 +116,7 @@
 
 
 
-  <meta name="keywords" content="N-Grams,Language Model," />
+  <meta name="keywords" content="Language Model,N-Grams," />
 
 
 
@@ -128,7 +128,7 @@
 
 
 <meta name="description" content="感性认识-什么是Language Model 感性定义：能够对一个词序（word sequences）赋予一个合理的概率的模型，我们称之为语言模型-Language Model[^1]。   例子： “我明天请你去吃…..”   上述这个句子是一个所谓的 word sequences, 最后一个词是吃， 如果现在问你一个问题，你认为吃后面最可能出现的词是什么？从以下几个选项：饭、烤肉、足球、计算机">
-<meta name="keywords" content="N-Grams,Language Model">
+<meta name="keywords" content="Language Model,N-Grams">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Language Model-(一)">
 <meta property="og:url" content="http://yoursite.com/archive/2018-06-15/Language-Model-一/index.html">
@@ -394,6 +394,17 @@
 
           
             
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/archive/2018-06-15/Language-Model-一/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="archive/2018-06-15/Language-Model-一/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
           
 
           
@@ -580,9 +591,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/N-Grams/" rel="tag"># N-Grams</a>
-          
             <a href="/tags/Language-Model/" rel="tag"># Language Model</a>
+          
+            <a href="/tags/N-Grams/" rel="tag"># N-Grams</a>
           
         </div>
       
@@ -650,6 +661,16 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
 
   
 
@@ -974,6 +995,26 @@
 
   
 
+    
+      <script id="dsq-count-scr" src="https://popoblue.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/archive/2018-06-15/Language-Model-一/';
+          this.page.identifier = 'archive/2018-06-15/Language-Model-一/';
+          this.page.title = 'Language Model-(一)';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://popoblue.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
 
 
 
@@ -986,10 +1027,6 @@
   
 
 
-
-
-
-  
 
 
 
@@ -1009,7 +1046,7 @@
     var isfetched = false;
     var isXml = true;
     // Search DB path;
-    var search_path = "";
+    var search_path = "search.xml";
     if (search_path.length === 0) {
       search_path = "search.xml";
     } else if (/json$/i.test(search_path)) {
@@ -1211,7 +1248,7 @@
 
                   // select top N slices in content
 
-                  var upperBound = parseInt('5');
+                  var upperBound = parseInt('10');
                   if (upperBound >= 0) {
                     slicesOfContent = slicesOfContent.slice(0, upperBound);
                   }
@@ -1278,7 +1315,7 @@
             }
           }
 
-          if ('auto' === 'manual') {
+          if ('auto' === 'auto') {
             input.addEventListener('input', inputEventFunction);
           } else {
             $('.search-icon').click(inputEventFunction);
