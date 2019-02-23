@@ -127,16 +127,16 @@
 
 
 
-<meta name="description" content="这篇文章是阅读清华大学刘洋老师有关学术写作与论文发表的slide(download)的笔记，其中也结合了我个人的观点和看法，并且将领域从机器翻译换到了情感分类，以下为正文。 论文发表流程 确定方向： 情感分类 确定问题：利用情感词典加强文本的情感表示 确定思路：将辞典作为“监督信息” 来监督注意力生成过程 确定方法：用辞典形成的门监督attention权重。 实验验证：数据集、基线系统、评测指标">
+<meta name="description" content="这篇文章是阅读清华大学刘洋老师在2014年第十届全国机器翻译研讨会上所做的有关学术写作与论文发表的报告(download)的笔记，并且将领域从机器翻译换到了情感分类，以下为正文。 此外，这篇文章处在持续完善过程中 ing…  论文发表流程 确定方向： 情感分类 确定问题：利用情感词典加强文本的情感表示 确定思路：将辞典作为“监督信息” 来监督注意力生成过程 确定方法：用辞典形成的门监督attent">
 <meta name="keywords" content="Writing,写作,论文发表">
 <meta property="og:type" content="article">
 <meta property="og:title" content="学术论文写作方法与技巧">
 <meta property="og:url" content="https://asiagood.github.io/archive/2019-02-22/Methods-and-skills-on-writing-research-papers/index.html">
 <meta property="og:site_name" content="逝川">
-<meta property="og:description" content="这篇文章是阅读清华大学刘洋老师有关学术写作与论文发表的slide(download)的笔记，其中也结合了我个人的观点和看法，并且将领域从机器翻译换到了情感分类，以下为正文。 论文发表流程 确定方向： 情感分类 确定问题：利用情感词典加强文本的情感表示 确定思路：将辞典作为“监督信息” 来监督注意力生成过程 确定方法：用辞典形成的门监督attention权重。 实验验证：数据集、基线系统、评测指标">
+<meta property="og:description" content="这篇文章是阅读清华大学刘洋老师在2014年第十届全国机器翻译研讨会上所做的有关学术写作与论文发表的报告(download)的笔记，并且将领域从机器翻译换到了情感分类，以下为正文。 此外，这篇文章处在持续完善过程中 ing…  论文发表流程 确定方向： 情感分类 确定问题：利用情感词典加强文本的情感表示 确定思路：将辞典作为“监督信息” 来监督注意力生成过程 确定方法：用辞典形成的门监督attent">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://asiagood.github.io/archive/2019-02-22/Methods-and-skills-on-writing-research-papers/writing_paper.png">
-<meta property="og:image" content="https://asiagood.github.io/archive/2019-02-22/Methods-and-skills-on-writing-research-papers/evdience.png">
+<meta property="og:image" content="https://asiagood.github.io/archive/2019-02-22/Methods-and-skills-on-writing-research-papers/evidence.png">
 <meta property="og:image" content="https://asiagood.github.io/archive/2019-02-22/Methods-and-skills-on-writing-research-papers/read_and_write.png">
 <meta property="og:image" content="https://asiagood.github.io/archive/2019-02-22/Methods-and-skills-on-writing-research-papers/key_to_information.png">
 <meta property="og:image" content="https://asiagood.github.io/archive/2019-02-22/Methods-and-skills-on-writing-research-papers/example1.png">
@@ -172,10 +172,10 @@
 <meta property="og:image" content="https://asiagood.github.io/archive/2019-02-22/Methods-and-skills-on-writing-research-papers/google.png">
 <meta property="og:image" content="https://asiagood.github.io/archive/2019-02-22/Methods-and-skills-on-writing-research-papers/metapost.png">
 <meta property="og:image" content="https://asiagood.github.io/archive/2019-02-22/Methods-and-skills-on-writing-research-papers/book.png">
-<meta property="og:updated_time" content="2019-02-22T21:01:12.709Z">
+<meta property="og:updated_time" content="2019-02-23T12:02:12.029Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="学术论文写作方法与技巧">
-<meta name="twitter:description" content="这篇文章是阅读清华大学刘洋老师有关学术写作与论文发表的slide(download)的笔记，其中也结合了我个人的观点和看法，并且将领域从机器翻译换到了情感分类，以下为正文。 论文发表流程 确定方向： 情感分类 确定问题：利用情感词典加强文本的情感表示 确定思路：将辞典作为“监督信息” 来监督注意力生成过程 确定方法：用辞典形成的门监督attention权重。 实验验证：数据集、基线系统、评测指标">
+<meta name="twitter:description" content="这篇文章是阅读清华大学刘洋老师在2014年第十届全国机器翻译研讨会上所做的有关学术写作与论文发表的报告(download)的笔记，并且将领域从机器翻译换到了情感分类，以下为正文。 此外，这篇文章处在持续完善过程中 ing…  论文发表流程 确定方向： 情感分类 确定问题：利用情感词典加强文本的情感表示 确定思路：将辞典作为“监督信息” 来监督注意力生成过程 确定方法：用辞典形成的门监督attent">
 <meta name="twitter:image" content="https://asiagood.github.io/archive/2019-02-22/Methods-and-skills-on-writing-research-papers/writing_paper.png">
 
 
@@ -501,7 +501,9 @@
       
 
       
-        <p>这篇文章是阅读<a href="http://nlp.csai.tsinghua.edu.cn/~ly/index_cn.html" target="_blank" rel="noopener">清华大学刘洋老师</a>有关学术写作与论文发表的slide(<a href="http://nlp.csai.tsinghua.edu.cn/~ly/talks/cwmt14_tut.pdf" target="_blank" rel="noopener">download</a>)的笔记，其中也结合了我个人的观点和看法，并且将领域从机器翻译换到了情感分类，以下为正文。</p>
+        <p>这篇文章是阅读<a href="http://nlp.csai.tsinghua.edu.cn/~ly/index_cn.html" target="_blank" rel="noopener">清华大学刘洋老师</a>在2014年第十届全国机器翻译研讨会上所做的有关学术写作与论文发表的报告(<a href="http://nlp.csai.tsinghua.edu.cn/~ly/talks/cwmt14_tut.pdf" target="_blank" rel="noopener">download</a>)的笔记，并且将领域从机器翻译换到了情感分类，以下为正文。</p>
+<font color="green">此外，这篇文章处在持续完善过程中 ing…</font>
+
 <h1 id="论文发表流程"><a href="#论文发表流程" class="headerlink" title="论文发表流程"></a>论文发表流程</h1><ul>
 <li>确定方向： 情感分类</li>
 <li>确定问题：利用情感词典加强文本的情感表示</li>
@@ -589,7 +591,7 @@
 </blockquote>
 <p>总结起来就是：<strong>第一印象定<font color="red">录</font><font color="blue">拒</font>，<font color="red">5分钟</font>内说服审稿人！</strong></p>
 <p>来自微博上的佐证，</p>
-<p><img src="evdience.png" alt="审稿人行为佐证"></p>
+<p><img src="evidence.png" alt="审稿人行为佐证"></p>
 <h2 id="观念必须转变"><a href="#观念必须转变" class="headerlink" title="观念必须转变"></a>观念必须转变</h2><font color="blue">以作者为核心整理工作 </font> $\Longrightarrow$ <font color="red"> 以读者为核心阐述工作</font> 
 
 <ul>
