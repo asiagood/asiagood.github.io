@@ -1,6 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[值得记在心底的事]]></title>
+    <url>%2Farchive%2F2019-03-13%2FThing-worth-remembering%2F</url>
+    <content type="text"><![CDATA[个人价值 任何你想达到的成就，都必须通过自己去争取。 成功的要诀有三条： 努力工作 坚持不懈 高度自律 任何值得学习的事情，你都可以通过学习学会它，无一例外。 家庭生活 父母是最亲密的人生守护者，超越你的伴侣和子女；伴侣是最亲密的战友和朋友，超越其他任何人；子女是你未来的希望。 照顾年迈的父母、给伴侣最深的安全感、培养教育子女，是任何一个成年人最大的责任，没有之一。 财务管理 善于管理自己的财产，不要乱花！ 投资 制定计划 分配比例 长久操作而不是短期投机 想办法赚更多的钱。只要是合法的赚钱，就是值得尊敬的。]]></content>
+      <categories>
+        <category>生活</category>
+      </categories>
+      <tags>
+        <tag>重要的事</tag>
+        <tag>信念</tag>
+        <tag>道理</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[面试攻略]]></title>
+    <url>%2Farchive%2F2019-03-11%2F%E9%9D%A2%E8%AF%95%E6%94%BB%E7%95%A5%2F</url>
+    <content type="text"><![CDATA[在校时的准备 必须刷题~多刷，反复刷，保持手感和记忆。 面试前的准备 尽早开始，千万不要等到自己感觉完美的时候再开始！ 简历一定要多投：海投！ 面试技巧 电面 和HR能否流利交流 要和对方沟通（眼神，手势等肢体语言），而不要自顾自地输出！ 投简历的网站 Linkedin 脉脉 Indeed]]></content>
+      <categories>
+        <category>工作</category>
+      </categories>
+      <tags>
+        <tag>面试</tag>
+        <tag>找工作</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[几个相似的分布]]></title>
+    <url>%2Farchive%2F2019-02-27%2FSome-Similar-Destribution%2F</url>
+    <content type="text"><![CDATA[概率统计中有几个常见的分布，他们在机器学习中应用非常广泛。他们之间有着非常密切的联系，但很多时候我们往往分不清楚，这篇文章着重讲清以下几个内容： 各个分布的定义 对应的随机实验 共同点 区别 伯努利分布-Bernoulli Distribution二项分布-Binomial Distribution多元伯努利分布-Multinoulli Distribution多项式分布-Multinomial Distribution总结]]></content>
+      <categories>
+        <category>Machine Learning</category>
+      </categories>
+      <tags>
+        <tag>Distribution</tag>
+        <tag>分布</tag>
+        <tag>Binomial</tag>
+        <tag>Multinomial</tag>
+        <tag>Bernoulli</tag>
+        <tag>Multinoulli</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[学术论文写作方法与技巧]]></title>
     <url>%2Farchive%2F2019-02-22%2FMethods-and-skills-on-writing-research-papers%2F</url>
     <content type="text"><![CDATA[这篇文章是阅读清华大学刘洋老师在2014年第十届全国机器翻译研讨会上所做的有关学术写作与论文发表的报告(download)的笔记，并且将领域从机器翻译换到了情感分类，以下为正文。 此外，这篇文章处在持续完善过程中 ing… 论文发表流程 确定方向： 情感分类 确定问题：利用情感词典加强文本的情感表示 确定思路：将辞典作为“监督信息” 来监督注意力生成过程 确定方法：用辞典形成的门监督attention权重。 实验验证：数据集、基线系统、评测指标 撰写论文：投稿一个近期会议（2个月、至多3个月之内的会议，切忌时间太久！） 选择方向 热门方向 优点：可利用的资源（论文，代码，教程，etc.）很多，相对容易上手。 缺点：千军万马过独木桥，你的点子可能早已经被别人想到。 冷门方向 优点：还是价值洼地，可摘取的低枝果实很多。 缺点：资源较少，入门相对费力。 选择的智慧就在于切中以下几个要点以及作出平衡（需要有经验的导师指导或者自己天赋异禀）： 重要问题、重大挑战 自己非常有兴趣 即将成为热门（这个需要有判断力和深厚的学术功底才可以做到，比如你的导师） 高风险性（自己可否承担？） 解决问题 独立思维 先思考，再去查找文献互相印证 语言学意义 具有语言学理论、心理学理论的支撑，符合语言学、心理学角度的直觉。 数学意义 使用数学工具做形式化，不臆造公式。 简洁优美 简单、干净、优美 确定思路与方法像外行一样思考，像内行一样实践。 思考 实践 境界 外行 专家 独树一帜、炉火纯青 专家 专家 经验丰富、男脱窠臼 外行 外行 天马行空、眼高手低 专家 外行 思维僵化、束手无策 论文撰写概述写论文时什么最重要? 审稿人时如何审稿的？你认为应该是这样的： 审稿人是领域专家，无所不知。打印出来，认真仔细读你的文章，反复琢磨句子含义，推敲公式。在花了审稿人大量时间之后，终于明白了你工作的意义并认可它，最后决定给你一个border line或以上的分数。 而真实情况下，审稿人往往是这样做的： 他很可能不是领域专家，一直很忙拖着没有审稿，在deadline到来之前一天需要完成n篇文章的审稿任务。 他往往先看题目、摘要，扫一下 Introduction以便了解你做什么，然后直接翻到最后找核心实验结果（性能好不好？），然后基本确定录还会不录（也许只需要5～10分钟！）。如果决定录，剩下的就是写一些赞美的话，指出一些次要的小毛病。如果决定❌，下面的过程就是仔细看中间的部分找理由拒了。 总结起来就是：第一印象定录拒，5分钟内说服审稿人！ 来自微博上的佐证， 观念必须转变以作者为核心整理工作 $\Longrightarrow$ 以读者为核心阐述工作 信息的呈现符合读者的认知习惯 深入浅出 引人入胜 让读者可以最快速地找到想要的信息 尽量降低读者的理解难度 合理恰当地综合使用信息要素：图-&gt;曲线-&gt;表-&gt;正文-&gt;公式 语言简洁明快，切忌超长复杂句式频繁出现！ 尽量提高读者阅读时的舒适度 思想新颖、符合直觉 组织合理、逻辑严密、论证充分 文笔优美、排版美观 阅读与写作的关系阅读与写作的区别：层次分明，角度不同决定优先级不同，如下图所示。 作者在写文章时，要将思想-信息-论文完美地统一起来，而不要让读者感到各个部分时割裂的。在写作时大致应当遵循下述规律： 对自己的思想做个摘要简化，得出最核心的部分 通过实验得出那些可以反应自己思想的信息 用论文的形式承载这些信息，合理组织以清楚、充分地表达作者思想 降低信息理解难度是关键 论文撰写技巧这部分，按照一篇完整学术论文的组成部分，分别介绍各个部分的写作技巧。 标题写作技巧-Title标题的重要性 如何查看浩若烟海的文献？ 根据标题过滤 50% 根据摘要再过滤 20% 根据介绍再过滤 20% 剩下的10%，才是需要仔细看的论文 例子： 用一句话概括你所做的工作 考虑搜索引擎的影响，包含关键字 可以适当地别出心裁 也要冒一定风险 摘要的写作技巧-Abstract 核心：几句话概括你的工作！ 误区 力图把所有细节说清楚 用很专业的术语来描述 出现数学符号！ 用语要简单，让外行能看懂！！！ 经典示例 介绍的写作技巧-Introduction 比题目和摘要要更进一步，用几段话说清楚你的工作 要点是充分论证你所做工作的必要性和重要性，要让审稿人认同并且迫不及待想往下看。 兴文逻辑严密，论证充分。 经典逻辑最 常见的逻辑: 说明问题是什么❓ 简单罗列前人工作 描述我们的工作 此外更好的逻辑: 说明问题是什么❓ 目前最好的工作面临什么挑战❓ 我们的方法可以缓解上述挑战 例子： 问题 挑战 我们的工作 段落的写法 每一个段落都有一个论断性的中心句 其余部分都是支撑句，围绕中心句展开论证 前人工作 具体数据 支撑句之间可分类组织 段尾可加上衔接句 例子： 中心句与支撑句 衔接句 支撑句论证要严密 新技巧 首页放置一个图或者表，让读者一目了然你所做的工作 不要去写 “This paper is organnized as follows. Section 2…”, 而是直接列出自己的贡献。 信息元素的易理解程度 读者潜意识里会优先选择更加易理解的信息元素 首页加图表 信息流的变化 图和表的重要性 图和表示论文的骨架，争取要让读者按照顺序看就能理解论文的主要思想，不用通过正文才能看懂。 一般第一遍看，都会看图、找例子 然后翻到后面找主要结果 再从头看正文 把论文的元素放在最应该被放在的地方，符合读者的认知习惯，降低理解难度 直接列出自己的贡献 全局连贯性 方法的写作技巧（Method）如何描述自己的方法至关重要，方法好而阐述的不好并不能让审稿人简单明了地理解你的核心思想，照样免不了被拒的命运! 不要一上来就描述你的工作，可以先介绍背景知识（往往就是baseline） 有利于降低初学者或其他领域学者的理解难度 有利于对introduction 中的论文做更加详细的解释 有利于对比baseline和自己的方法 Running Example 是超级利器 英语不好，感觉自己说不清楚？用例子！ 全篇统一使用换一个running example，用来阐述你的方法（甚至是baseline） 围绕着running example, 展开描述你的工作 审稿人能从 running example中更舒服地了解你的工作，相反地，读正文会花掉他/她更多的时间 看完running example，审稿人便能知道核心思想。 方法描述中的逻辑顺序 杜绝如下 错误的 顺序 上来就是形式化描述 紧接着，开始解释数学符号 采用如下正确的顺序 首先给出running example 然后利用 running example，用通俗语言描述你的想法 最后才是形式化描述 每个公式都有语言学意义，都来自你的直觉和想法，直接告诉审稿人，不要让他/她自己去揣摩!!! 例子 实验的写作技巧（Experiment）实验设计这是最重要的，因为这是做实验、写文章的根基。 公认的标准数据和state-of-the-art系统 实验先辅后主 辅助实验（开发集）：参数的影响 主实验（测试集）：证明显著超过baseline 必须有显著性检验（词条之前，经常缺失！） 不辞辛劳，做到极致 迭代方向 minimum $\Longrightarrow$ solid $\Longrightarrow$ maximum 例子： 先辅后主 用图的误区❌ 用表的误区❌ Caption包含充分的信息 最好能直接看懂图，而不用去看正文！ 相关工作的写作技巧（Related work）首先要做到的是，明明白白，分清对错、禁忌。 错误❌ 正确✅ 没有引用重要论文（可以直接作为rejection的理由） 向审稿人显示你对本领域具有全面深刻的把握 简单的罗列和堆砌，缺乏深刻到位的评论 通过与前人工作的对比凸显你的工作的创新性 通过批评乃至攻击前人工作，证明自己的创新 为读者梳理领域的发展脉络，获得全局性的认知 例子： 讲明研究方法最初灵感来源 方法的传承与创新（！） 附录的写作技巧 并非必须，但是对于读者深入理解你的工作有帮助，并且往往非常形式化 证明 ”鸡肋“ 恰当地使用附录能显著提升论文的可读性，降低审稿人信息获取的难度。 例子 写作常见文法和格式问题常见问题大致分为以下几个类型： 句子过长 经常使用被动句 结构松散、口语化 不定冠词和定冠词的使用 公示后面文字的缩进 引用的写法 引以为戒的重要例子： 句子过长 被动句式+弱动词 结构松散+口语化+缺乏力度 a 还是 an？用不用 the？ 公式的缩进 其他问题 论文中每个数学符号都应当找得到定义，除非众所周知，比如：$\pi$ . 永远不要不加说明的使用数学符号。 要避免数学符号冲突，使用符号列表 不要生造术语，尤其是中式译法，尽量符合惯例 集成所有信息元素，排版美观和专业 提高英语写作的窍门 找著名学者（尤其是 native speaker）的的论文钻研，学习句式和词汇用法，做笔记！ 写作时手边放一部纸质的词典，经常翻看 拿不准的地方找Google：双引号查询 例子 句式和造句 利用搜索引擎 必须掌握的工具 Latex 强烈建议用 LaTex代替Word Bibtex 自动生成参考文献列表 MetaPost 编程画矢量图 例子：MetaPost 英文写作进阶一本严肃、高质量的关于科技写作的书是你所必须的。 时间管理和获得反馈 由粗到细 截稿前一个月开始写 每隔两天改一次 听取不同背景读者的反馈意见 专家：专业意见 非专家：发现信息壁垒 写到极致，完成完美精致的艺术品 总结最后这部分对之前所涉及的内容做一个概括： 写论文的本质是分享思想，传递信息 信息的传递必须符合读者-审稿人的认知习惯 全心全意为读者服务，降低阅读难度，提高阅读快感 细节决定成败 不要本末倒置：创新至上，技法为辅！ 建议，每次写一篇新的文章，从最早的确定问题和思路开始，就应当严格依照此文进行规划和写作，力求做到精益求精，把自己的思想传递给读者-审稿人！]]></content>
@@ -90,8 +131,8 @@
         <category>Multivariate Calculus</category>
       </categories>
       <tags>
-        <tag>Gradient Descent</tag>
         <tag>Linear Regression</tag>
+        <tag>Gradient Descent</tag>
         <tag>Least Squared</tag>
       </tags>
   </entry>
@@ -105,8 +146,8 @@
         <category>Multivariate Calculus</category>
       </categories>
       <tags>
-        <tag>Optimization</tag>
         <tag>Gradient Descent</tag>
+        <tag>Optimization</tag>
         <tag>Newton Method</tag>
         <tag>Parameters Space</tag>
       </tags>
@@ -248,9 +289,9 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[学习列表]]></title>
+    <title></title>
     <url>%2Farchive%2F2018-06-21%2FPopoblue-s-Learning-List%2F</url>
-    <content type="text"><![CDATA[Fundamental Knowledge for Deep Learning &amp; Natural Language ProcessingThis list just includes the core of related knowledge in deep learning and natural language processing. The all the courses listed here is personally tested by myself. I believ they are the best until now from and only from my personal persepctive. This list is updating as time goes on... Natural Language Processing * Book Dan Jurafsky( 3rd) Manning Natural Language Processing-Jacob Eisenstein-Nov 13, 2018 Course CS 124: From Languages to Information (First course in NLP!) CSE490U: Natural Language Processing - Winter 2017 (for undergraduates) - Noah Smith CSEP 517: Natural Language Processing - Spring 2017 (for professional master students) - Noah Smith University of WashingtonInstructor: Noah Smith Syllabus and Vedio Lectures CSE 517: NLP (for Ph.D. students)-Spring 2018 - Noah Smith CSE 599D1: Advanced NLP (for Ph.D. students)-Spring 2016 - Noah Smith 601.465 - Natural Language Processing - Fall 2017 - Jason Eisner COMP 790.139: Natural Language Processing (Fall 2017)- Mohit Bansal CS4650 - Natural Language Understanding (Spring 2017) - Jacob Einsten CMU NLP Courses (Theory+Practice) CMU CS-11-711: Algorithms for NLP, Fall 2017 CMU CS 11-747: Neural Networks for NLP, Spring 2019 CIS 700: Advanced Machine Learning for Natural Language Processing-Dan Roth Fall 2016 – CS6501 Natural Language Processing – Kw Chang CS269 Seminar: Machine Learning in Natural Language Processing - Kw Chang CMU-CS-11-731: Machine Learning and Sequence to Sequence Models -Graham Neubig Machine LearningIntroduction Level Book A Course in Machine Learning(2017 2ed.超级经典！) - by DumIII ​ General Notations and Introduction Neural Networks Demystified (非常好的神经网络入门讲解资源- from youtube) Course CMU-10601- Introduction to machine learning Spring 2015(with all meterials) Spring 2018(only slides) CS229- Fall 2017 - Andrew Ng. * Machine Learning - Fall 2017 - 李宏毅 * Alex Smola (very important and systematic) * CMU-10701-Fall 2015: Introduction to Machine Learning CMU-10715-Fall 2015: Advanced Introduction to Machine Learning DS-GA 1003 Spring 2017- Machine Learning and Computational Statistics OXFORD - Machine Learning( 2014~2015) - Nando de Freitas CPSC340 - Machine Learning and Data Mining - (Undergraduate Level)-2012 - Nando de Freitas CPSC540 - Machine Learning - Mastter Level -2013-Nando de Freitas CS446 - Machine Learning - Dan Roth More Advanced Spring 2017 – CS6501 Advanced Machine Learning – Kw Chang OXFORD 2016-2017–Advanced Machine Learning CMU-10-725-Fall 2016: Convex Optimization CMU-10-702-Spring 2017: Statistical Machine Learning Assuming sutdent have taken: 10-715 and 36-705 NYU-DS-GA-1005 - Inference and Representation Deep Learning Book Deep Learning Book - Ian Goodfellow etc. -Dive into Deep Learning- Li Mu and Alex Smola（非常重要） 中文版 英文版 General and Introduction 深层神经网络涉及理念（vedio） Deep Learning 公开课-Yann LeCun General Deep Learning Course UC Berkely(适合入门，hands on！) Berkeley STAT-157: Introduction to Deep Learning (Mxnet based，十分重要可作为第一门课程) 上述课程李沐早期版本（中文） Stanford CS 230- Deep Learning(Andrew Ng) Neural Networks for Machine Learning (Hinton) Machine Learning and Having It Deep and Structured - Spring 2018-李宏毅(持续更新中) MLDS - Spring 2017 - 李宏毅 EPFL-IDIAP-EE-559-Deep Learning MIT 6.S191: Introduction to Deep Learning CMU-Deep Learning CMU-11-785: Introduction to Deep Learning CMU-10-707: Deep Learning DS-GA-1008 Deep Learning, Spring 2017- Yann LeCun fast.ai course For Natural language processing * CMU-CS 11-747- Neural Networks for NLP-Spring 2019 OXFORD- Deep Learning for Natural Language Processing: 2016-2017 (Phil Blunsom) Home page Github-lecture resources Stanford-CS224N: Natural Language Processing with Deep Learning-2018 Home page, 2017 page Video lecture (Small Lesson) - Embeddings and Deep Learning - Hinrich Schutze DS-GA 1011 Fall 2017- Natural Language processing with Representation Learning ( Bowan and Cho ) Lab Git Repository For Computer Vision Course Stanford CS 231N Learning to see (很好的讲CV入门的课程，from youtube) Reforcement Learning ( with deep or not) Introduction and General notations Introduction to RL- by [Joelle Pineau] Course CS294-UC Berkeley-Deep Reinforcement Learning, Spring 2017 CS234 - Stanford CMU-10370- Deep Reinforcement Learning and Control Spring 2017 David Sliver’s Reinforcement Learning Course-2015 Introduction to Reinforcement Learning- Udacity MathematicsCalculus Single Variable Calculus (MIT 18.01) Auroux - Maltivariable Calculus -2017-Fall Lectures(mit 18.02) Linear / Abstract Algebra Book Introduction to linear algebra 5-th edition Coding the Matrix: Linear Algebra through Applications to Computer Science. 1st It’s corresponding course: The Matrix in Computer Science. Course MIT 18.06- Strang (Should be the FIRST CHOICE!) * 18.06 on OCW with vedio lectures 18.06-SC (Optional) MIT 18.06 -Fall 2017-new by other people. Essence of Linear algebra(3Blue1Brown) Coding the Matrix Probabaility, Stats and Informaton theory BOOK Probability and Statistics 4th - DeGroot &amp; Schervish Course MITx-6.041Probability HARVARD - Statistics 110: Probability (Should be the first one!) * CS109: Probability for Computer Scientists (Or this is the 1st) * DS-GA 1001 Introduction to Data Science (2017) Jupyter Versions DS-GA 1002: Statistical and Mathematical methods(2015) DS-GA 1002: Probability and Statistics for Data Science(2017) DUKE-STA663: Computational Statistics and Statistical Computing ( Should be the first one! ) CMU-10-705: Intermediate Statistics - Larry Wasserman ECE598: Information-theoretic methods in high-dimensional statistics STAT364/664: Information theory Math for Machine Learning Book Video Math for CS and EE EE103/CME103: Introduction to Matrix Methods Computational Science and Engineering- Gilbert Strang I: MIT18.085 II: MIT18.086 Stanford-CS103 - Mathematical Foundations of Computing Mathematics for Computer Science Hands-ON AND APPLICAITON ORIENTEDTensorflow Stanford CS20- Tensorflow for deep learninng research TensorFlow_Course Tensorflow for deep learning research(youtube) Deep Learning with Tensorflow(EdX) TensorFlow 101 Pytorch x y MxNet ​ ​ DyNet Homepage Data ScienceFirst of all, a curriculum about data science created by David Venturi is here. It’s serious and important for someone want to engage into data science. I promise! Book Python Data Science HandBook Course Duke-BIOS 821: Data Science Foundations with Python]]></content>
+    <content type="text"><![CDATA[Fundamental Knowledge for Deep Learning &amp; Natural Language ProcessingThis list just includes the core of related knowledge in deep learning and natural language processing. The all the courses listed here is personally tested by myself. I believ they are the best until now from and only from my personal persepctive. This list is updating as time goes on... Natural Language Processing * Book Dan Jurafsky( 3rd) Manning Natural Language Processing-Jacob Eisenstein-Nov 13, 2018 Course CS 124: From Languages to Information (First course in NLP!) CSE490U: Natural Language Processing - Winter 2017 (for undergraduates) - Noah Smith CSEP 517: Natural Language Processing - Spring 2017 (for professional master students) - Noah Smith University of WashingtonInstructor: Noah Smith Syllabus and Vedio Lectures CSE 517: NLP (for Ph.D. students)-Spring 2018 - Noah Smith CSE 599D1: Advanced NLP (for Ph.D. students)-Spring 2016 - Noah Smith 601.465 - Natural Language Processing - Fall 2017 - Jason Eisner COMP 790.139: Natural Language Processing (Fall 2017)- Mohit Bansal CS4650 - Natural Language Understanding (Spring 2017) - Jacob Einsten CMU NLP Courses (Theory+Practice) CMU CS-11-711: Algorithms for NLP, Fall 2017 CMU CS 11-747: Neural Networks for NLP, Spring 2019 CIS 700: Advanced Machine Learning for Natural Language Processing-Dan Roth Fall 2016 – CS6501 Natural Language Processing – Kw Chang CS269 Seminar: Machine Learning in Natural Language Processing - Kw Chang CMU-CS-11-731: Machine Learning and Sequence to Sequence Models -Graham Neubig Machine LearningIntroduction Level Book A Course in Machine Learning(2017 2ed.超级经典！) - by DumIII ​ General Notations and Introduction Neural Networks Demystified (非常好的神经网络入门讲解资源- from youtube) Course CMU-10601- Introduction to machine learning Spring 2015(with all meterials) Spring 2018(only slides) CS229- Fall 2017 - Andrew Ng. * Machine Learning - Fall 2017 - 李宏毅 * DS-GA 1003 Spring 2017- Machine Learning and Computational Statistics OXFORD - Machine Learning( 2014~2015) - Nando de Freitas CPSC340 - Machine Learning and Data Mining - (Undergraduate Level)-2012 - Nando de Freitas CPSC540 - Machine Learning - Mastter Level -2013-Nando de Freitas CS446 - Machine Learning - Dan Roth More Advanced Alex Smola (very important and systematic)-Ph.D. Level* CMU-10701-Fall 2015: Introduction to Machine Learning CMU-10715-Fall 2015: Advanced Introduction to Machine Learning Spring 2017 – CS6501 Advanced Machine Learning – Kw Chang OXFORD 2016-2017–Advanced Machine Learning CMU-10-725-Fall 2016: Convex Optimization CMU-10-702-Spring 2017: Statistical Machine Learning Assuming sutdent have taken: 10-715 and 36-705 NYU-DS-GA-1005 - Inference and Representation Deep Learning Book Deep Learning Book - Ian Goodfellow etc. -Dive into Deep Learning- Li Mu and Alex Smola（非常重要） 中文版 英文版 General and Introduction 深层神经网络涉及理念（vedio） Deep Learning 公开课-Yann LeCun General Deep Learning Course UC Berkely(适合入门，hands on！) Berkeley STAT-157: Introduction to Deep Learning (Mxnet based，十分重要可作为第一门课程) 上述课程李沐早期版本（中文） Stanford CS 230- Deep Learning(Andrew Ng) Neural Networks for Machine Learning (Hinton) Machine Learning and Having It Deep and Structured - Spring 2018-李宏毅(持续更新中) MLDS - Spring 2017 - 李宏毅 EPFL-IDIAP-EE-559-Deep Learning MIT 6.S191: Introduction to Deep Learning CMU-Deep Learning CMU-11-785: Introduction to Deep Learning CMU-10-707: Deep Learning DS-GA-1008 Deep Learning, Spring 2017- Yann LeCun fast.ai course For Natural language processing * CMU-CS 11-747- Neural Networks for NLP-Spring 2019 OXFORD- Deep Learning for Natural Language Processing: 2016-2017 (Phil Blunsom) Home page Github-lecture resources Stanford-CS224N: Natural Language Processing with Deep Learning-2018 Home page, 2017 page Video lecture (Small Lesson) - Embeddings and Deep Learning - Hinrich Schutze DS-GA 1011 Fall 2017- Natural Language processing with Representation Learning ( Bowan and Cho ) Lab Git Repository For Computer Vision Course Stanford CS 231N Learning to see (很好的讲CV入门的课程，from youtube) Reforcement Learning ( with deep or not) Introduction and General notations Introduction to RL- by [Joelle Pineau] Course CS294-UC Berkeley-Deep Reinforcement Learning, Spring 2017 CS234 - Stanford CMU-10370- Deep Reinforcement Learning and Control Spring 2017 David Sliver’s Reinforcement Learning Course-2015 Introduction to Reinforcement Learning- Udacity MathematicsCalculus Single Variable Calculus (MIT 18.01) Auroux - Maltivariable Calculus -2017-Fall Lectures(mit 18.02) Linear / Abstract Algebra Book Introduction to linear algebra 5-th edition Coding the Matrix: Linear Algebra through Applications to Computer Science. 1st It’s corresponding course: The Matrix in Computer Science. Course MIT 18.06- Strang (Should be the FIRST CHOICE!) * 18.06 on OCW with vedio lectures 18.06-SC (Optional) MIT 18.06 -Fall 2017-new by other people. Essence of Linear algebra(3Blue1Brown) Coding the Matrix Probabaility, Stats and Informaton theory BOOK Probability and Statistics 4th - DeGroot &amp; Schervish Course MITx-6.041Probability HARVARD - Statistics 110: Probability (Should be the first one!) * CS109: Probability for Computer Scientists (Or this is the 1st) * DS-GA 1001 Introduction to Data Science (2017) Jupyter Versions DS-GA 1002: Statistical and Mathematical methods(2015) DS-GA 1002: Probability and Statistics for Data Science(2017) DUKE-STA663: Computational Statistics and Statistical Computing ( Should be the first one! ) CMU-10-705: Intermediate Statistics - Larry Wasserman ECE598: Information-theoretic methods in high-dimensional statistics STAT364/664: Information theory Math for Machine Learning Book Video Math for CS and EE EE103/CME103: Introduction to Matrix Methods Computational Science and Engineering- Gilbert Strang I: MIT18.085 II: MIT18.086 Stanford-CS103 - Mathematical Foundations of Computing Mathematics for Computer Science Hands-ON AND APPLICAITON ORIENTEDTensorflow Stanford CS20- Tensorflow for deep learninng research TensorFlow_Course Tensorflow for deep learning research(youtube) Deep Learning with Tensorflow(EdX) TensorFlow 101 Pytorch x y MxNet ​ ​ DyNet Homepage Data ScienceFirst of all, a curriculum about data science created by David Venturi is here. It’s serious and important for someone want to engage into data science. I promise! Book Python Data Science HandBook Course Duke-BIOS 821: Data Science Foundations with Python]]></content>
       <categories>
         <category>资源</category>
       </categories>
@@ -312,9 +353,9 @@
         <category>NLP</category>
       </categories>
       <tags>
+        <tag>N-Grams</tag>
         <tag>Markov Models</tag>
         <tag>Markov Assumption</tag>
-        <tag>N-Grams</tag>
       </tags>
   </entry>
   <entry>
@@ -325,8 +366,8 @@
         <category>NLP</category>
       </categories>
       <tags>
-        <tag>N-Grams</tag>
         <tag>Language Model</tag>
+        <tag>N-Grams</tag>
       </tags>
   </entry>
   <entry>
@@ -375,8 +416,8 @@
         <category>NLP</category>
       </categories>
       <tags>
-        <tag>NLP</tag>
         <tag>Attention</tag>
+        <tag>NLP</tag>
         <tag>Encoder-Decoder</tag>
       </tags>
   </entry>
@@ -529,8 +570,8 @@
         <category>随笔</category>
       </categories>
       <tags>
-        <tag>毛主席</tag>
         <tag>信念</tag>
+        <tag>毛主席</tag>
         <tag>男人</tag>
       </tags>
   </entry>
