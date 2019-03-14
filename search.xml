@@ -1,9 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[2019时间线]]></title>
+    <url>%2Farchive%2F2019-03-14%2FTimeline2019%2F</url>
+    <content type="text"><![CDATA[#三月 15 读论文做笔记 asd asd asd UC Berkeley 2019 Introduction to Deep Learning 课程 ad ad ad 概率教程阅读与总结 ad a]]></content>
+      <categories>
+        <category>科研</category>
+      </categories>
+      <tags>
+        <tag>日志</tag>
+        <tag>Timeline</tag>
+        <tag>记录</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[值得记在心底的事]]></title>
     <url>%2Farchive%2F2019-03-13%2FThing-worth-remembering%2F</url>
-    <content type="text"><![CDATA[个人价值 任何你想达到的成就，都必须通过自己去争取。 成功的要诀有三条： 努力工作 坚持不懈 高度自律 任何值得学习的事情，你都可以通过学习学会它，无一例外。 家庭生活 父母是最亲密的人生守护者，超越你的伴侣和子女；伴侣是最亲密的战友和朋友，超越其他任何人；子女是你未来的希望。 照顾年迈的父母、给伴侣最深的安全感、培养教育子女，是任何一个成年人最大的责任，没有之一。 财务管理 善于管理自己的财产，不要乱花！ 投资 制定计划 分配比例 长久操作而不是短期投机 想办法赚更多的钱。只要是合法的赚钱，就是值得尊敬的。]]></content>
+    <content type="text"><![CDATA[个人价值 任何你想达到的成就，都必须通过自己去争取。 保持一个好身体 工作是最大的修行 工作中要全神贯注，当然你可以换换脑经以便更加有利于工作，但必须服务于工作。 建立自己的心流模式 工作中获得成功的要诀有三条： 努力工作 坚持不懈 高度自律 任何值得学习的事情，你都可以通过学习学会它，无一例外。 家庭生活 父母是最亲密的人生守护者，超越子女；伴侣是最亲密的战友和朋友，超越其他任何人；子女是你未来的希望。 照顾年迈的父母、给伴侣最深的安全感、培养教育子女，是任何一个成年人最大的责任，没有之一。 财务管理 善于管理自己的财产，不要乱花！ 投资 制定计划 分配比例 长久操作而不是短期投机 想办法赚更多的钱。只要是合法的赚钱，就是值得尊敬的。]]></content>
       <categories>
         <category>生活</category>
       </categories>
@@ -131,8 +144,8 @@
         <category>Multivariate Calculus</category>
       </categories>
       <tags>
-        <tag>Linear Regression</tag>
         <tag>Gradient Descent</tag>
+        <tag>Linear Regression</tag>
         <tag>Least Squared</tag>
       </tags>
   </entry>
@@ -146,8 +159,8 @@
         <category>Multivariate Calculus</category>
       </categories>
       <tags>
-        <tag>Gradient Descent</tag>
         <tag>Optimization</tag>
+        <tag>Gradient Descent</tag>
         <tag>Newton Method</tag>
         <tag>Parameters Space</tag>
       </tags>
@@ -416,8 +429,8 @@
         <category>NLP</category>
       </categories>
       <tags>
-        <tag>Attention</tag>
         <tag>NLP</tag>
+        <tag>Attention</tag>
         <tag>Encoder-Decoder</tag>
       </tags>
   </entry>
@@ -429,9 +442,9 @@
         <category>课程笔记</category>
       </categories>
       <tags>
+        <tag>NLP</tag>
         <tag>CMU</tag>
         <tag>Neural Works</tag>
-        <tag>NLP</tag>
       </tags>
   </entry>
   <entry>
