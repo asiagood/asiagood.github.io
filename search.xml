@@ -1,9 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[自学]]></title>
+    <url>%2Farchive%2F2019-03-26%2F%E8%87%AA%E5%AD%A6%2F</url>
+    <content type="text"><![CDATA[想要什么学什么，为什么如何自学？参考一片在深度学习领域自学的文章 [^ apple ] 自学经历 Asdasd [^ apple ]: Here is the textnote.]]></content>
+      <categories>
+        <category>科研</category>
+      </categories>
+      <tags>
+        <tag>自学</tag>
+        <tag>自我提升</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[古典的智慧]]></title>
+    <url>%2Farchive%2F2019-03-26%2F%E5%8F%A4%E5%85%B8%E7%9A%84%E6%99%BA%E6%85%A7%2F</url>
+    <content type="text"><![CDATA[韩国相关 房玄龄说韩国 “彼高丽者，边夷贱类，不足待以仁义，不可责以常理。” 《世祖实录》 且贱隶久为人役，常有未逞之心，若一朝得志，则多反噬其主。]]></content>
+      <categories>
+        <category>随笔</category>
+      </categories>
+      <tags>
+        <tag>历史</tag>
+        <tag>古典</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[2019时间线]]></title>
     <url>%2Farchive%2F2019-03-14%2FTimeline2019%2F</url>
-    <content type="text"><![CDATA[#三月 15 读论文做笔记 asd asd asd UC Berkeley 2019 Introduction to Deep Learning 课程 ad ad ad 概率教程阅读与总结 ad a]]></content>
+    <content type="text"><![CDATA[#三月 21 读论文做笔记 Cascading Multiway Attenntion for Document-level Sentiment Classification Joint Learning for Targeted Sentiment Analysis 笔记待做，因为还没完全理解。主要是对于sequence labeling的问题没有理解。 Knowledge-enriched Two-Layered Attention Network for Sentiment Analysis UC Berkeley 2019 Introduction to Deep Learning 课程 ad ad ad 概率教程阅读与总结 ad a 22 读论文做笔记- 今天的主题是：如何将知识引入NNmodel，提升情感分类模型。 A Lexicon-Based Supervised Attention Model for Neural Sentiment Analysis ad Ad]]></content>
       <categories>
         <category>科研</category>
       </categories>
@@ -77,8 +101,8 @@
         <category>PCA</category>
       </categories>
       <tags>
-        <tag>Dimensonality Reduction</tag>
         <tag>PCA</tag>
+        <tag>Dimensonality Reduction</tag>
         <tag>Compressing</tag>
         <tag>Changing of Basis</tag>
         <tag>Geometric</tag>
@@ -96,10 +120,10 @@
         <category>PCA</category>
       </categories>
       <tags>
+        <tag>Dimensonality Reduction</tag>
         <tag>Orthogonal Projection</tag>
         <tag>Projection Matrix</tag>
         <tag>Orthogonality</tag>
-        <tag>Dimensonality Reduction</tag>
       </tags>
   </entry>
   <entry>
@@ -442,9 +466,9 @@
         <category>课程笔记</category>
       </categories>
       <tags>
-        <tag>NLP</tag>
         <tag>CMU</tag>
         <tag>Neural Works</tag>
+        <tag>NLP</tag>
       </tags>
   </entry>
   <entry>
@@ -531,8 +555,8 @@
         <category>编程</category>
       </categories>
       <tags>
-        <tag>python</tag>
         <tag>pandas</tag>
+        <tag>python</tag>
       </tags>
   </entry>
   <entry>
