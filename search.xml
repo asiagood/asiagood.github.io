@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Reading List]]></title>
+    <url>%2Farchive%2F2019-04-21%2Freading-list%2F</url>
+    <content type="text"><![CDATA[科学专著 Introduction to Linear Algebra 5th Edition - Gilbert Strang (沉潜往复-2019) Linear Algebra and Learning from data- Gilbert Strang（沉潜往复-2019） Introduction to Probability 2nd Edition-John N. Tsitsiklis et al. (ing-2019) Mathematics for Machine Learning-Marc Peter Deisenroth et al.(ing-2019) Deep Learning Book- Goodfellow et al. (ing-2019) A Course in Machine Learning-Hal Daumé III (done-2017) Neural Networks for Natural Language Processing-Goldberg (ing-2019) 哲学 毛选五卷（沉潜往复） 道德经（沉潜往复） 文史 苦难辉煌-金一南（done-2017） 浴血荣光-金一南（done-2018） 重读毛泽东：从1893到1949-韩毓海（done-2018） 天下：包纳四夷的中国-韩毓海（done-2018） 人间正道-韩毓海（done-2018） 一篇读罢头飞雪：重读马克思-韩毓海（done-2018） 国文国史三十年-孔庆东（done-2018） 政经 论中国-基辛格（ing-2019） 投资 穷爸爸富爸爸-罗伯特$\cdot$清琦（done-2019） 指数基金定投指南-银行螺丝钉（done-2019） 投资最重要的事-韦斯特$\cdot$马克思（ing-2019）]]></content>
+      <categories>
+        <category>生活</category>
+      </categories>
+      <tags>
+        <tag>reading list</tag>
+        <tag>阅读列表</tag>
+        <tag>经典</tag>
+        <tag>书籍</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[A股最佳股形]]></title>
     <url>%2Farchive%2F2019-04-20%2F%E6%9C%80%E4%BD%B3%E8%82%A1%E5%BD%A2%2F</url>
     <content type="text"><![CDATA[以下股票是A股几十年来股形最好的票，有极好的护城河以及长期优秀的成长性。但此并非投资建议，因为投资圈有一句话：买好的不如买的好！要牢记这句话，也就是说即使票非常好，也一定要等其价格低于其价值的时期择时切入，才能获得超额收益。 大消费 茅台 五粮液 海天味业 格力 医药医疗 片仔癀 大金融 中国平安 招商银行 化工 万华化学 浙江龙盛 润土股份 其他 福耀玻璃 Updating…]]></content>
@@ -192,8 +206,8 @@
         <category>Multivariate Calculus</category>
       </categories>
       <tags>
-        <tag>Linear Regression</tag>
         <tag>Gradient Descent</tag>
+        <tag>Linear Regression</tag>
         <tag>Least Squared</tag>
       </tags>
   </entry>
@@ -207,8 +221,8 @@
         <category>Multivariate Calculus</category>
       </categories>
       <tags>
-        <tag>Gradient Descent</tag>
         <tag>Optimization</tag>
+        <tag>Gradient Descent</tag>
         <tag>Newton Method</tag>
         <tag>Parameters Space</tag>
       </tags>
@@ -477,8 +491,8 @@
         <category>NLP</category>
       </categories>
       <tags>
-        <tag>NLP</tag>
         <tag>Attention</tag>
+        <tag>NLP</tag>
         <tag>Encoder-Decoder</tag>
       </tags>
   </entry>
@@ -490,9 +504,9 @@
         <category>课程笔记</category>
       </categories>
       <tags>
-        <tag>NLP</tag>
         <tag>CMU</tag>
         <tag>Neural Works</tag>
+        <tag>NLP</tag>
       </tags>
   </entry>
   <entry>
