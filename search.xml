@@ -1,9 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[A股最佳股形]]></title>
+    <url>%2Farchive%2F2019-04-20%2F%E6%9C%80%E4%BD%B3%E8%82%A1%E5%BD%A2%2F</url>
+    <content type="text"><![CDATA[以下股票是A股几十年来股形最好的票，有极好的护城河以及长期优秀的成长性。但此并非投资建议，因为投资圈有一句话：买好的不如买的好！要牢记这句话，也就是说即使票非常好，也一定要等其价格低于其价值的时期择时切入，才能获得超额收益。 大消费 茅台 五粮液 海天味业 格力 医药医疗 片仔癀 大金融 中国平安 招商银行 化工 万华化学 浙江龙盛 润土股份 其他 福耀玻璃 Updating…]]></content>
+      <categories>
+        <category>生活</category>
+      </categories>
+      <tags>
+        <tag>投资</tag>
+        <tag>股票</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[四月科研工作列表]]></title>
     <url>%2Farchive%2F2019-04-14%2F%E5%9B%9B%E6%9C%88%E7%A7%91%E7%A0%94%E5%B7%A5%E4%BD%9C%E5%88%97%E8%A1%A8%2F</url>
-    <content type="text"><![CDATA[阅读情感分类领域论文并按照以下几条线索进行论文笔记的整理工作。 [ ] User-Product 信息利用于Document-Level Sentiment Classification [ ] KB and Sentiment Lexiconn + NN for Sentiment Classification Gated based NN model for Sentiment Classification CNN + Gated RNN + Gated Transformer based for Sentiment Classification 完成论文笔记并形成博客以记录 检验成果日期为 2019年四月30日，总结之后更行此篇文章以对比工作成果。]]></content>
+    <content type="text"><![CDATA[阅读情感分类领域论文并按照以下几条线索进行论文笔记的整理工作。 User-Product 信息利用于Document-Level Sentiment Classification KB and Sentiment Lexiconn + NN for Sentiment Classification Gated based NN model for Sentiment Classification CNN + Gated RNN + Gated Transformer based for Sentiment Classification 完成论文笔记并形成博客以记录 检验成果日期为 2019年四月30日，总结之后更行此篇文章以对比工作成果。]]></content>
       <categories>
         <category>科研</category>
       </categories>
@@ -180,8 +192,8 @@
         <category>Multivariate Calculus</category>
       </categories>
       <tags>
-        <tag>Gradient Descent</tag>
         <tag>Linear Regression</tag>
+        <tag>Gradient Descent</tag>
         <tag>Least Squared</tag>
       </tags>
   </entry>
@@ -195,8 +207,8 @@
         <category>Multivariate Calculus</category>
       </categories>
       <tags>
-        <tag>Optimization</tag>
         <tag>Gradient Descent</tag>
+        <tag>Optimization</tag>
         <tag>Newton Method</tag>
         <tag>Parameters Space</tag>
       </tags>
@@ -478,9 +490,9 @@
         <category>课程笔记</category>
       </categories>
       <tags>
+        <tag>NLP</tag>
         <tag>CMU</tag>
         <tag>Neural Works</tag>
-        <tag>NLP</tag>
       </tags>
   </entry>
   <entry>
