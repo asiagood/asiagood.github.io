@@ -1,0 +1,1275 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en,zh-Hans,ja,Latn,default">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda,Arial,STXingkai,"华文行楷",STKaiti,“华文楷体”,STFangsong,Lato:300,300italic,400,400italic,700,700italic|Roboto Slab,STKaiti,"华文楷体":300,300italic,400,400italic,700,700italic|Arial,STXingkai,华文行楷,STKaiti,华文楷体,STFangsong,华文仿宋:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="perception,感知机,PLA,梯度下降,delta法则," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="感知机- Perception， 是一种简单的线性学习模型，它在线性可分的数据上是确定收敛的。 模型描述示意图  形式化 Input : $\mathbf{x} = (x_1,x_2, …,x_d) \in \mathbb{R}^d$  ‘feature vector with d-dimentional’   正例，记为 +1，if  $\sum_{i = 1}^{d} w_i x_i &amp;gt;">
+<meta name="keywords" content="perception,感知机,PLA,梯度下降,delta法则">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Perception and PLA">
+<meta property="og:url" content="https://asiagood.github.io/archive/2019-06-13/Perception-and-PLA/index.html">
+<meta property="og:site_name" content="逝川">
+<meta property="og:description" content="感知机- Perception， 是一种简单的线性学习模型，它在线性可分的数据上是确定收敛的。 模型描述示意图  形式化 Input : $\mathbf{x} = (x_1,x_2, …,x_d) \in \mathbb{R}^d$  ‘feature vector with d-dimentional’   正例，记为 +1，if  $\sum_{i = 1}^{d} w_i x_i &amp;gt;">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://asiagood.github.io/archive/2019-06-13/Perception-and-PLA/perception.png">
+<meta property="og:image" content="https://asiagood.github.io/archive/2019-06-13/Perception-and-PLA/error1.png">
+<meta property="og:image" content="https://asiagood.github.io/archive/2019-06-13/Perception-and-PLA/error2.png">
+<meta property="og:updated_time" content="2019-06-14T21:47:12.085Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Perception and PLA">
+<meta name="twitter:description" content="感知机- Perception， 是一种简单的线性学习模型，它在线性可分的数据上是确定收敛的。 模型描述示意图  形式化 Input : $\mathbf{x} = (x_1,x_2, …,x_d) \in \mathbb{R}^d$  ‘feature vector with d-dimentional’   正例，记为 +1，if  $\sum_{i = 1}^{d} w_i x_i &amp;gt;">
+<meta name="twitter:image" content="https://asiagood.github.io/archive/2019-06-13/Perception-and-PLA/perception.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://asiagood.github.io/archive/2019-06-13/Perception-and-PLA/"/>
+
+
+
+
+
+  <title>Perception and PLA | 逝川</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">逝川</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">此间且为等闲事，花开花谢不知年</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-主页">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            主页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-关于">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://asiagood.github.io/archive/2019-06-13/Perception-and-PLA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="popoblue">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="逝川">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Perception and PLA</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-13T22:29:34+08:00">
+                2019-06-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index">
+                    <span itemprop="name">Machine Learning</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/archive/2019-06-13/Perception-and-PLA/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/archive/2019-06-13/Perception-and-PLA/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/archive/2019-06-13/Perception-and-PLA/" class="leancloud_visitors" data-flag-title="Perception and PLA">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>感知机- Perception， 是一种简单的线性学习模型，它在线性可分的数据上是确定收敛的。</p>
+<h1 id="模型描述"><a href="#模型描述" class="headerlink" title="模型描述"></a>模型描述</h1><p><strong>示意图</strong></p>
+<p><img src="perception.png" alt=""></p>
+<p><strong>形式化</strong></p>
+<p><strong>Input</strong> : $\mathbf{x} = (x_1,x_2, …,x_d) \in \mathbb{R}^d$  ‘feature vector with d-dimentional’ </p>
+<ul>
+<li><strong>正例</strong>，记为 <strong>+1</strong>，if  $\sum_{i = 1}^{d} w_i x_i &gt; \text{threshold}$</li>
+<li><strong>负例</strong>，记为 <strong>-1</strong>， if  $\sum_{i = 1}^d w_i x_i &lt; \text{threshold}$</li>
+</ul>
+<p>上述线性公式可以写成<br>$$<br>\color{red}{h}(\mathbf{x}) = \text{sign}((\sum_{i=1}^d \color{red}{w_i}x_i) - \color{red}{\text{threshold}})<br>$$<br>进一步, 令：$w_0 = -\text{threshold}$<br>$$<br>h(\mathbf{x}) = \text{sign}((\sum_{i=1}^d \color{purple}{w_i}x_i) + \color{purple}{w_0})<br>$$<br>引入额外的辅助坐标 $x_0 = 1​$,<br>$$<br>h(\mathbf{x}) = \text{sign}(\sum_{i=0}^d \color{purple}{w_i}x_i)<br>$$<br>将上述线性公式<strong>向量化</strong>，<br>$$<br>h(\mathbf{x}) = \text{sign}(\color{purple}{\mathbf {w^T}}\mathbf x)<br>$$<br>这里，$\color{purple}{\mathbf {w}}$ 和 $\mathbf x$ 都是向量空间 $\mathbb{R}^{d+1}$ 中的向量。</p>
+<blockquote>
+<p>实际上，更为严谨的写法可能是：$h(\mathbf {x;w}) =\text{sign}(\mathbf{w^Tx}) $. 因为在 Learning 过程中，我们要 update的是全年中向量，input $\mathbf x$ 是训练集已经给定的；在prediction 过程中，参数是我们已经学到的可视为常量，此时可将用以预测的测试点 $\mathbf x$ 视为变量。</p>
+</blockquote>
+<p>感知机学习(训练一个感知机)意味着选择一组权重：$\mathbf w =(w_1,w_2,…,w_d)$ 。所以，感知机学习的假设空间就是所有可能的real-valued weight vector的集合，即：<br>$$<br>\mathcal H = \lbrace\mathbf w\vert \mathbf w \in \mathbb R^d \rbrace<br>$$</p>
+<h1 id="学习算法"><a href="#学习算法" class="headerlink" title="学习算法"></a>学习算法</h1><p>回忆我们的目的，是在假设空间 $\mathcal H$ 中寻找到我们最终想要的那个假设 $g$ 。而一个具体的假设对应一组具体的参数：$\mathbf w \in \mathbb{R^d}$。我们将 $g$ 对应的参数向量记为 $\mathbf w^<em>$ 。最优参数是通过学习算法，在训练数据集中学习得来，寻找 $\mathbf w^</em>$ 的步骤-感知机学习算法， 如下：</p>
+<ol>
+<li><p>随机初始化参数向量。</p>
+</li>
+<li><p>对参数进行更新：$\mathbf w \leftarrow \mathbf w + \color{blue}{\Delta \mathbf w}​$</p>
+</li>
+<li><p>重复步骤2， 直到找到以某种度量方式来说那个最优的 $\mathbf w^*$ 或达到预先指定的迭代次数，然后终止迭代。</p>
+</li>
+<li><p>通过学习得到的感知器模型即为：$g(\mathbf x) = \text{sign}(\mathbf {(w^*)^Tx})$</p>
+<blockquote>
+<p>注意，$g(\mathbf x)$ 中不含有参数，因为在 learning 过程中算法已经得到了那个具体的最优参数-常数向量。</p>
+</blockquote>
+</li>
+</ol>
+<p>我们用 $g(\mathbf x)$ 来近似真正的目标函数 $f(\mathbf x)$， 在新的测试样本上做预测。</p>
+<p>机器学习中，有不同的学习算法可以实现上述过程，不同的算法区别往往在于对 $\color{blue}{\Delta \mathbf w}​$ 的设计不同。下面介绍2种常见的用于感知机的学习算法。</p>
+<h1 id="感知机学习算法-PLA"><a href="#感知机学习算法-PLA" class="headerlink" title="感知机学习算法-PLA"></a>感知机学习算法-PLA</h1><ol>
+<li><p>感知机：$h(\mathbf x) = \text{sign}(\mathbf {w^Tx})$</p>
+</li>
+<li><p>给定训练集(<strong>线性可分</strong>)<br>$$<br>(\mathbf{x_1},y_1),(\mathbf{x_2},y_2),…,(\mathbf{x_N},y_N)<br>$$</p>
+</li>
+<li><p>从训练集中，选择一个<strong>分类错误的点</strong>：<br>$$<br>\text{sign}(\mathbf{w^Tx_n}) \neq y_n<br>$$</p>
+</li>
+<li><p>按照下述原则更新参数向量(权重)：<br>$$<br>\color{blue}{\mathbf w} \leftarrow \color{red}{\mathbf w} + y_n\mathbf x_n<br>$$</p>
+</li>
+<li><p>重复(3)-(4), 直到算法收敛或者达到我们预设的要求(e.g. 迭代次数), 最后得到的参数我们记为：$\mathbf w^*$,  则：</p>
+<p>$$<br>f(\mathbf x) = g(\color{blue}{\mathbf x}) = \text{sign}(\mathbf{(w^*)^T}\color{blue}{\mathbf x})<br>$$</p>
+<p>$g​$ 即通过学习得到的、用以在新数据上进行预测的hypothesis.</p>
+</li>
+</ol>
+<p>这个学习算法，我们叫做感知器算法。这里，$\Delta \mathbf w = y_n\mathbf x_n$</p>
+<h2 id="PLA为何有效？"><a href="#PLA为何有效？" class="headerlink" title="PLA为何有效？"></a>PLA为何有效？</h2><p>感知机学习算法可能会带来困惑，难点在于(4)，为什么这样做就可以？我们可以从两个角度去分析。</p>
+<p>一. 从整体上去思考 $\mathbf w$ 和 $\mathbf x​$ 。</p>
+<p><strong>感知器的核心思想是</strong>：不断迭代（<strong>更新权重</strong>），使得训练集中所有误分类的点，最终都可以被最后得到的超平面（以权重向量的形式体现）正确分类。</p>
+<p><strong>因此，我们update 权重向量的原则是：有利于prediction 与 target一致。满足这个大原则的权重更新方法就是合理的，无关乎$\Delta \mathbf w$ 的具体形式为何。</strong></p>
+<p><strong>错误分类的点</strong>: $(\mathbf {x}, y)​$，有两种情况：</p>
+<ol>
+<li><p>$y = +1$ but $\mathbf {w^Tx} &lt; 0$， 即：真实类别为 +1， 然而当前参数 $\mathbf{w}$  却使得与其对应的input $\mathbf x$ 被预测为 -1. 因此，需要 update 该参数 $\mathbf w$。见下图，</p>
+<p><img src="error1.png" alt=""></p>
+<p>$\mathbf {w^Tx} &lt; 0$, 意味着权重向量与输入向量之间夹角大于 $90^\circ$, 如上图所示。我们需要更新参数，使得其与输入向量的夹角小于 $90^\circ$, 这样才能正确对误分类点 $\mathbf x$ 正确分类。一种方法是，</p>
+</li>
+</ol>
+<p>$$<br>   \begin{align}<br>   \Delta \mathbf w &amp;= \mathbf x = y\mathbf x, \ \text{because y=+1 and so, }\\<br>   \mathbf w &amp;\leftarrow \mathbf w + \Delta \mathbf w \Rightarrow \\<br>   \mathbf w &amp;\leftarrow \mathbf w + \mathbf x \Rightarrow \\<br>   \mathbf w &amp;\leftarrow \mathbf w + y\mathbf x \\<br>   \end{align}<br>$$<br>   即，在这种分类错误中，我们选择了 $\mathbf x$ 作为一个具体的 $\Delta \mathbf w $ ，进而用数学技巧将其表示为：$y\mathbf x$ 的形式。</p>
+<ol>
+<li><p>$y = -1$ but $ \mathbf {w^Tx} &gt;0$, 即：真实类别为 -1，而当前参数 $\mathbf w$ 却使得与其对应的input $\mathbf x$ 被预测为 +1. 见下图，</p>
+<p><img src="error2.png" alt=""></p>
+<p> 分析过程与第一种错误分类类似，略。</p>
+</li>
+</ol>
+<p>由此，<br>$$<br>\mathbf w \leftarrow \mathbf w + y\mathbf x<br>$$<br>可作为感知机权重更新的统一方式。并且，此种方式会使得被错误分类的point，最终被正确分类。</p>
+<p>二. 从微观角度看待 $\mathbf w​$  和 $\mathbf x​$.</p>
+<p> $\sum_{i=1}^d  w_ix_i = w_0 + w_1x_1 + …+w_dx_d $</p>
+<p>update 权重向量 $\mathbf w$，本质也就是update 其分量，因此之前的权重更新策略可以写为如下形式：<br>$$<br>w_i \leftarrow w_i + yx_i<br>$$<br>很容易得知，这种形式是之前向量形式的分量而已，没有新意。但这种形式，为我们直观理解感知机学习算法提供另一个角度。</p>
+<p>依然选择一个误分类的点 $\mathbf x​$.</p>
+<ol>
+<li><p>真实类别 $y=1​$ ，但是 $\hat y=\sum_{i=1}^d w_ix_i =&lt; 0​$. </p>
+<ul>
+<li>如果 $x_i &lt; 0$, 那么更新参数之后 $w_i$ 将变小。这很直观：由于我们需要 $\hat y &gt;0$, 因此让负数 $x_i$ 的权重小一些，降低 $x_i$ 对整体加权求和结果的影响，以便更有利于使得 $\sum_{i=1}^dw_ix_i &gt; 0$。</li>
+<li>如果 $x_i &gt; 0$, 那么更新参数之后 $w_i$ 将变大。也很直观：我们需要正数 $x_i$ 的权重大一些，增加 $x_i$ 对整体加权求和结果的影响，以便最终使得 $\sum_{i=1}^dw_ix_i  &gt; 0$, 即分类正确。</li>
+</ul>
+</li>
+<li>真实类别 $y=-1$, 但是 $\hat y=\sum_{i=1}^dw_ix_i &gt; 0$.<ul>
+<li>如果 $x_i &lt; 0​$, 那么更新参数之后 $w_i​$ 将变大。这意味着：让负数 $x_i​$ 的权重变大，增加其对整体加权求和的影响力，这更有利于 $\hat y​$ 变小，最终使得 $\hat y = \sum_{i=1}^dw_ix_i &lt;0​$, 即分类正确。</li>
+<li>如果 $x_i &gt;0$, 那么更新参数之后 $w_i$ 将变小。这意味着：让正数 $x_i$ 的权重变小，降低其对整体加权求和的影响力，这更有利于 $\hat y$ 变小， 最终使得 $\hat y = \sum_{i=1}^dw_ix_i &lt;0$, 即分类正确。</li>
+</ul>
+</li>
+</ol>
+<p>可见，无论总整体上向量夹角的角度，还是微观上数值和其权重变化的角度，感知机学习算法总是使得权重更新朝着正确分类的趋势变化，因此其总能在线性可分的数据上保证算法收敛。</p>
+<h2 id="权重更新的其他方式"><a href="#权重更新的其他方式" class="headerlink" title="权重更新的其他方式"></a>权重更新的其他方式</h2><p>从上面讲的内容，我们知道权重更新法则可以统一表述为：<br>$$<br>\mathbf w \leftarrow \mathbf w + \Delta \mathbf w<br>$$<br>在PLA中采用了如下的具体形式：<br>$$<br>\color{blue}{\Delta \mathbf w} = y\mathbf x<br>$$<br>其实，<strong>只要满足”更新后的权重向量更加有利于分类正确”这一大原则，选择任何形式的权重更新策略都是可行的</strong>。 </p>
+<p>另外一种在PLA中常见的权重更新形式为：<br>$$<br>\mathbf w \leftarrow \mathbf w + \eta(y - \hat y)\mathbf x \\<br>\color{blue}{\Delta \mathbf w} = \eta(y - \hat y)\mathbf x<br>$$<br>其中：<br>$$<br>\begin{align}<br>\eta &amp;\in \mathbb R^+ \text{: learning rate.} \\<br>y &amp;\in{+1,-1}\text{: true label/output.}\\<br>\hat y&amp;\in {+1, -1} \text{: predicted label/output.}\\<br>\mathbf x &amp;\text{: the misclassified point.}<br>\end{align}<br>$$<br>其微观形式可写为：<br>$$<br>\begin{align}<br>w_i \leftarrow w_i + \eta(y-\hat y)x_i \\<br>\Delta w_i = \eta(y-\hat y)x_i<br>\end{align}<br>$$<br>这种形式的权重更新，其合理性以及直观上的分析与之前分析雷同。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>感知机学习算法采用的权重更新策略，为以下模式：<br>$$<br>\begin{align}<br>&amp;\mathbf w \leftarrow \mathbf w + \Delta \mathbf w \\<br>&amp;\Delta \mathbf w = y\mathbf x \\<br>&amp;\Delta \mathbf w = \eta(y-\hat y)\mathbf x<br>\end{align}<br>$$<br>无论哪种形式，按照我们之前的两种分析角度: 权重向量整体分析和微观分析，均可以证明这种权重更新法则也是合理的。</p>
+<p><strong>如果训练数据集是线性可分的，感知机算法可以保证</strong>：在迭代若干次之后一定收敛，从而学习得到最终我们需要的hypothesis：$g(x)=\text{sign}(\mathbf {(w^*)^Tx})$</p>
+<p><strong>如果数据集是线性不可分的情况呢？</strong></p>
+<p>这种情况下感知机学习算法是无法收敛的，此时我们需要另外的学习算法来解决这一问题，比如：采用更加通用的delta法则和梯度下降算法，它会收敛到target fucntion 的某种最佳近似。我会在下一篇文章中进行详细解释。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创分享，您的支持是我继续创作的动力!</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="popoblue WeChat Pay"/>
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="popoblue Alipay"/>
+        <p>Alipay</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:</strong>
+    popoblue
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link:</strong>
+    <a href="https://asiagood.github.io/archive/2019-06-13/Perception-and-PLA/" title="Perception and PLA">https://asiagood.github.io/archive/2019-06-13/Perception-and-PLA/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice: </strong>
+    All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> unless stating additionally.
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/perception/" rel="tag"># perception</a>
+          
+            <a href="/tags/感知机/" rel="tag"># 感知机</a>
+          
+            <a href="/tags/PLA/" rel="tag"># PLA</a>
+          
+            <a href="/tags/梯度下降/" rel="tag"># 梯度下降</a>
+          
+            <a href="/tags/delta法则/" rel="tag"># delta法则</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/archive/2019-06-06/GMM/" rel="next" title="高斯混合模型-Gaussian Mixture Model">
+                <i class="fa fa-chevron-left"></i> 高斯混合模型-Gaussian Mixture Model
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">popoblue</p>
+              <p class="site-description motion-element" itemprop="description">知行合一，一个功夫！</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">55</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">149</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/yazhouhao" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:me@yazhouhao.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://twitter.com/yazhouhao" target="_blank" title="Twitter">
+                    
+                      <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://www.facebook.com/yazhouhao" target="_blank" title="FB Page">
+                    
+                      <i class="fa fa-fw fa-facebook"></i>FB Page</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#模型描述"><span class="nav-number">1.</span> <span class="nav-text">模型描述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#学习算法"><span class="nav-number">2.</span> <span class="nav-text">学习算法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#感知机学习算法-PLA"><span class="nav-number">3.</span> <span class="nav-text">感知机学习算法-PLA</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#PLA为何有效？"><span class="nav-number">3.1.</span> <span class="nav-text">PLA为何有效？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#权重更新的其他方式"><span class="nav-number">3.2.</span> <span class="nav-text">权重更新的其他方式</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">popoblue</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count"></span>
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'fgig2ECgFUUIzHQxQ6UEGBsw-gzGzoHsz',
+        appKey: 'qwf4KMNBL2n522kimTswJY9w',
+        placeholder: 'Just go go',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.3"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("fgig2ECgFUUIzHQxQ6UEGBsw-gzGzoHsz", "qwf4KMNBL2n522kimTswJY9w");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Linkedin,Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+  </script>
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
