@@ -127,21 +127,21 @@
 
 
 
-<meta name="description" content="感知机- Perception， 是一种简单的线性学习模型，它在线性可分的数据上是确定收敛的。 模型描述示意图  形式化 Input : $\mathbf{x} = (x_1,x_2, …,x_d) \in \mathbb{R}^d$  ‘feature vector with d-dimentional’   正例，记为 +1，if  $\sum_{i = 1}^{d} w_i x_i &amp;gt;">
+<meta name="description" content="感知机- Perception， 是一种简单的线性学习模型，它在线性可分的数据上是确定收敛的。 模型描述示意图  从示意图可知：Perception = Linear Unit + Activation Unit，只不过此处 activation unit 的具体形式选择为：$\text{sign}(\cdot)​$. 下面详细介绍感知机各组成部分的细节。 形式化 Training Data $(">
 <meta name="keywords" content="perception,感知机,PLA,梯度下降,delta法则">
 <meta property="og:type" content="article">
 <meta property="og:title" content="感知机及其学习算法-Perception and PLA">
 <meta property="og:url" content="https://asiagood.github.io/archive/2019-06-13/Perception-and-PLA/index.html">
 <meta property="og:site_name" content="逝川">
-<meta property="og:description" content="感知机- Perception， 是一种简单的线性学习模型，它在线性可分的数据上是确定收敛的。 模型描述示意图  形式化 Input : $\mathbf{x} = (x_1,x_2, …,x_d) \in \mathbb{R}^d$  ‘feature vector with d-dimentional’   正例，记为 +1，if  $\sum_{i = 1}^{d} w_i x_i &amp;gt;">
+<meta property="og:description" content="感知机- Perception， 是一种简单的线性学习模型，它在线性可分的数据上是确定收敛的。 模型描述示意图  从示意图可知：Perception = Linear Unit + Activation Unit，只不过此处 activation unit 的具体形式选择为：$\text{sign}(\cdot)​$. 下面详细介绍感知机各组成部分的细节。 形式化 Training Data $(">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://asiagood.github.io/archive/2019-06-13/Perception-and-PLA/perception.png">
 <meta property="og:image" content="https://asiagood.github.io/archive/2019-06-13/Perception-and-PLA/error1.png">
 <meta property="og:image" content="https://asiagood.github.io/archive/2019-06-13/Perception-and-PLA/error2.png">
-<meta property="og:updated_time" content="2019-06-14T21:50:25.810Z">
+<meta property="og:updated_time" content="2019-06-27T11:15:53.433Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="感知机及其学习算法-Perception and PLA">
-<meta name="twitter:description" content="感知机- Perception， 是一种简单的线性学习模型，它在线性可分的数据上是确定收敛的。 模型描述示意图  形式化 Input : $\mathbf{x} = (x_1,x_2, …,x_d) \in \mathbb{R}^d$  ‘feature vector with d-dimentional’   正例，记为 +1，if  $\sum_{i = 1}^{d} w_i x_i &amp;gt;">
+<meta name="twitter:description" content="感知机- Perception， 是一种简单的线性学习模型，它在线性可分的数据上是确定收敛的。 模型描述示意图  从示意图可知：Perception = Linear Unit + Activation Unit，只不过此处 activation unit 的具体形式选择为：$\text{sign}(\cdot)​$. 下面详细介绍感知机各组成部分的细节。 形式化 Training Data $(">
 <meta name="twitter:image" content="https://asiagood.github.io/archive/2019-06-13/Perception-and-PLA/perception.png">
 
 
@@ -470,18 +470,25 @@
         <p>感知机- Perception， 是一种简单的线性学习模型，它在线性可分的数据上是确定收敛的。</p>
 <h1 id="模型描述"><a href="#模型描述" class="headerlink" title="模型描述"></a>模型描述</h1><p><strong>示意图</strong></p>
 <p><img src="perception.png" alt=""></p>
+<p>从示意图可知：<strong>Perception = Linear Unit + Activation Unit</strong>，只不过此处 activation unit 的具体形式选择为：$\text{sign}(\cdot)​$.</p>
+<p>下面详细介绍感知机各组成部分的细节。</p>
 <p><strong>形式化</strong></p>
-<p><strong>Input</strong> : $\mathbf{x} = (x_1,x_2, …,x_d) \in \mathbb{R}^d$  ‘feature vector with d-dimentional’ </p>
+<p><strong>Training Data</strong></p>
+<p>$(\mathbf x_1, y_1),…,(\mathbf x_N,y_N)​$. </p>
+<p><strong>One example</strong> : $\mathbf{x} = (x_1,x_2, …,x_d) \in \mathbb{R}^d​$  ‘feature vector with d-dimentional’ </p>
+<p><strong>Target output</strong> : $y\in \lbrace 1, -1 \rbrace$</p>
+<p><strong>Model output:</strong></p>
 <ul>
-<li><strong>正例</strong>，记为 <strong>+1</strong>，if  $\sum_{i = 1}^{d} w_i x_i &gt; \text{threshold}$</li>
-<li><strong>负例</strong>，记为 <strong>-1</strong>， if  $\sum_{i = 1}^d w_i x_i &lt; \text{threshold}$</li>
+<li><strong>正例</strong>，记为 <strong>+1</strong>，if  $\sum_{i = 1}^{d} w_i x_i &gt; \text{threshold}​$</li>
+<li><strong>负例</strong>，记为 <strong>-1</strong>， if  $\sum_{i = 1}^d w_i x_i &lt; \text{threshold}​$</li>
 </ul>
-<p>上述线性公式可以写成<br>$$<br>\color{red}{h}(\mathbf{x}) = \text{sign}((\sum_{i=1}^d \color{red}{w_i}x_i) - \color{red}{\text{threshold}})<br>$$<br>进一步, 令：$w_0 = -\text{threshold}$<br>$$<br>h(\mathbf{x}) = \text{sign}((\sum_{i=1}^d \color{purple}{w_i}x_i) + \color{purple}{w_0})<br>$$<br>引入额外的辅助坐标 $x_0 = 1​$,<br>$$<br>h(\mathbf{x}) = \text{sign}(\sum_{i=0}^d \color{purple}{w_i}x_i)<br>$$<br>将上述线性公式<strong>向量化</strong>，<br>$$<br>h(\mathbf{x}) = \text{sign}(\color{purple}{\mathbf {w^T}}\mathbf x)<br>$$<br>这里，$\color{purple}{\mathbf {w}}$ 和 $\mathbf x$ 都是向量空间 $\mathbb{R}^{d+1}$ 中的向量。</p>
+<p>上述线性公式可以写成<br>$$<br>\color{red}{h}(\mathbf{x}) = \text{sign}((\sum_{i=1}^d \color{red}{w_i}x_i) - \color{red}{\text{threshold}})<br>$$<br>进一步, 令：$w_0 = -\text{threshold}​$<br>$$<br>h(\mathbf{x}) = \text{sign}((\sum_{i=1}^d \color{purple}{w_i}x_i) + \color{purple}{w_0})<br>$$<br>引入额外的辅助坐标 $x_0 = 1​$,<br>$$<br>h(\mathbf{x}) = \text{sign}(\sum_{i=0}^d \color{purple}{w_i}x_i)<br>$$<br>将上述线性公式<strong>向量化</strong>，<br>$$<br>h(\mathbf{x}) = \text{sign}(\color{purple}{\mathbf {w^T}}\mathbf x)<br>$$<br>这里，$\color{purple}{\mathbf {w}}$ 和 $\mathbf x$ 都是向量空间 $\mathbb{R}^{d+1}$ 中的向量。</p>
 <blockquote>
 <p>实际上，更为严谨的写法可能是：$h(\mathbf {x;w}) =\text{sign}(\mathbf{w^Tx}) $. 因为在 Learning 过程中，我们要 update的是全年中向量，input $\mathbf x$ 是训练集已经给定的；在prediction 过程中，参数是我们已经学到的可视为常量，此时可将用以预测的测试点 $\mathbf x$ 视为变量。</p>
 </blockquote>
-<p>感知机学习(训练一个感知机)意味着选择一组权重：$\mathbf w =(w_1,w_2,…,w_d)$ 。所以，感知机学习的假设空间就是所有可能的real-valued weight vector的集合，即：<br>$$<br>\mathcal H = \lbrace\mathbf w\vert \mathbf w \in \mathbb R^d \rbrace<br>$$</p>
-<h1 id="学习算法"><a href="#学习算法" class="headerlink" title="学习算法"></a>学习算法</h1><p>回忆我们的目的，是在假设空间 $\mathcal H$ 中寻找到我们最终想要的那个假设 $g$ 。而一个具体的假设对应一组具体的参数：$\mathbf w \in \mathbb{R^d}$。我们将 $g$ 对应的参数向量记为 $\mathbf w^<em>$ 。最优参数是通过学习算法，在训练数据集中学习得来，寻找 $\mathbf w^</em>$ 的步骤-感知机学习算法， 如下：</p>
+<p>感知机学习(训练一个感知机)意味着选择一组权重：$\mathbf w =(w_0, w_1,w_2,…,w_d)$ 。所以，感知机学习的假设空间就是所有可能的real-valued weight vector的集合，即：<br>$$<br>\mathcal H = \lbrace\mathbf w\vert \mathbf w \in \mathbb R^{d+1} \rbrace<br>$$</p>
+<h1 id="学习算法"><a href="#学习算法" class="headerlink" title="学习算法"></a>学习算法</h1><p>回忆我们的目的，是在假设空间 $\mathcal H$ 中寻找到我们最终想要的那个假设 $g$ 。而一个具体的假设对应一组具体的参数：$\mathbf w \in \mathbb{R}^{d+1}$，我们将 $g$ 对应的参数向量记为 $\mathbf{w^*}$ 。</p>
+<p>最优参数是通过学习算法在训练数据集中学习得来，寻找 $\mathbf {w^*}​$ 的步骤-感知机学习算法， 如下：</p>
 <ol>
 <li><p>随机初始化参数向量。</p>
 </li>
@@ -506,12 +513,12 @@
 </li>
 <li><p>按照下述原则更新参数向量(权重)：<br>$$<br>\color{blue}{\mathbf w} \leftarrow \color{red}{\mathbf w} + y_n\mathbf x_n<br>$$</p>
 </li>
-<li><p>重复(3)-(4), 直到算法收敛或者达到我们预设的要求(e.g. 迭代次数), 最后得到的参数我们记为：$\mathbf w^*$,  则：</p>
-<p>$$<br>f(\mathbf x) = g(\color{blue}{\mathbf x}) = \text{sign}(\mathbf{(w^*)^T}\color{blue}{\mathbf x})<br>$$</p>
+<li><p>重复(3)-(4), 直到算法收敛或者达到我们预设的要求(e.g. 迭代次数), 最后得到的参数我们记为：$\mathbf w^{\star}​$,  则：</p>
+<p>$$<br>f(\mathbf x) = g(\color{blue}{\mathbf x}) = \text{sign}(\mathbf{(w^{\star})^T}\color{blue}{\mathbf x})<br>$$</p>
 <p>$g​$ 即通过学习得到的、用以在新数据上进行预测的hypothesis.</p>
 </li>
 </ol>
-<p>这个学习算法，我们叫做感知器算法。这里，$\Delta \mathbf w = y_n\mathbf x_n$</p>
+<p>这个学习算法，我们叫做感知器算法。这里，$\Delta \mathbf w = y_n\mathbf x_n​$</p>
 <h2 id="PLA为何有效？"><a href="#PLA为何有效？" class="headerlink" title="PLA为何有效？"></a>PLA为何有效？</h2><p>感知机学习算法可能会带来困惑，难点在于(4)，为什么这样做就可以？我们可以从两个角度去分析。</p>
 <p>一. 从整体上去思考 $\mathbf w$ 和 $\mathbf x​$ 。</p>
 <p><strong>感知器的核心思想是</strong>：不断迭代（<strong>更新权重</strong>），使得训练集中所有误分类的点，最终都可以被最后得到的超平面（以权重向量的形式体现）正确分类。</p>
@@ -665,6 +672,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/archive/2019-11-29/投资高手汇总/" rel="prev" title="投资高手汇总">
+                投资高手汇总 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -743,7 +754,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">55</span>
+                  <span class="site-state-item-count">56</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -765,7 +776,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">149</span>
+                  <span class="site-state-item-count">153</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
